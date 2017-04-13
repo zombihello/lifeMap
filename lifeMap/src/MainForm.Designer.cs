@@ -29,21 +29,17 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.view1 = new Tao.Platform.Windows.SimpleOpenGlControl();
-            this.view2 = new Tao.Platform.Windows.SimpleOpenGlControl();
-            this.view3 = new Tao.Platform.Windows.SimpleOpenGlControl();
-            this.view4 = new Tao.Platform.Windows.SimpleOpenGlControl();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.comboBox_textureView = new System.Windows.Forms.ComboBox();
             this.label_texturePreview = new System.Windows.Forms.Label();
             this.button_texturePreview = new System.Windows.Forms.Button();
             this.panel_textureView = new System.Windows.Forms.Panel();
+            this.image_previewTexture = new System.Windows.Forms.PictureBox();
             this.panel_entitytool = new System.Windows.Forms.Panel();
-            this.label_entitytool_categories = new System.Windows.Forms.Label();
-            this.comboBox_CategEntity = new System.Windows.Forms.ComboBox();
-            this.label_entitytool_objects = new System.Windows.Forms.Label();
-            this.comboBox_ObjEntity = new System.Windows.Forms.ComboBox();
             this.button_createPrefab = new System.Windows.Forms.Button();
+            this.comboBox_ObjEntity = new System.Windows.Forms.ComboBox();
+            this.label_entitytool_objects = new System.Windows.Forms.Label();
+            this.comboBox_CategEntity = new System.Windows.Forms.ComboBox();
+            this.label_entitytool_categories = new System.Windows.Forms.Label();
             this.menuBar = new System.Windows.Forms.ToolStrip();
             this.menuBar_File = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,118 +54,21 @@
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBar_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
-            this.image_previewTexture = new System.Windows.Forms.PictureBox();
             this.button_boxtool = new System.Windows.Forms.Button();
             this.button_entitytool = new System.Windows.Forms.Button();
             this.button_camera = new System.Windows.Forms.Button();
             this.button_cursor = new System.Windows.Forms.Button();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.table_viewport = new System.Windows.Forms.TableLayoutPanel();
+            this.view1 = new Tao.Platform.Windows.SimpleOpenGlControl();
+            this.view2 = new Tao.Platform.Windows.SimpleOpenGlControl();
+            this.view3 = new Tao.Platform.Windows.SimpleOpenGlControl();
+            this.view4 = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.panel_textureView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).BeginInit();
             this.panel_entitytool.SuspendLayout();
             this.menuBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).BeginInit();
+            this.table_viewport.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // view1
-            // 
-            this.view1.AccumBits = ((byte)(0));
-            this.view1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.view1.AutoCheckErrors = false;
-            this.view1.AutoFinish = false;
-            this.view1.AutoMakeCurrent = true;
-            this.view1.AutoSwapBuffers = true;
-            this.view1.BackColor = System.Drawing.Color.Black;
-            this.view1.ColorBits = ((byte)(32));
-            this.view1.DepthBits = ((byte)(16));
-            this.view1.Location = new System.Drawing.Point(6, 6);
-            this.view1.Name = "view1";
-            this.view1.Size = new System.Drawing.Size(358, 279);
-            this.view1.StencilBits = ((byte)(0));
-            this.view1.TabIndex = 0;
-            this.view1.Paint += new System.Windows.Forms.PaintEventHandler(this.view1_Paint);
-            // 
-            // view2
-            // 
-            this.view2.AccumBits = ((byte)(0));
-            this.view2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.view2.AutoCheckErrors = false;
-            this.view2.AutoFinish = false;
-            this.view2.AutoMakeCurrent = true;
-            this.view2.AutoSwapBuffers = true;
-            this.view2.BackColor = System.Drawing.Color.Black;
-            this.view2.ColorBits = ((byte)(32));
-            this.view2.DepthBits = ((byte)(16));
-            this.view2.Location = new System.Drawing.Point(373, 294);
-            this.view2.Name = "view2";
-            this.view2.Size = new System.Drawing.Size(345, 280);
-            this.view2.StencilBits = ((byte)(0));
-            this.view2.TabIndex = 1;
-            this.view2.Paint += new System.Windows.Forms.PaintEventHandler(this.view2_Paint);
-            // 
-            // view3
-            // 
-            this.view3.AccumBits = ((byte)(0));
-            this.view3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.view3.AutoCheckErrors = false;
-            this.view3.AutoFinish = false;
-            this.view3.AutoMakeCurrent = true;
-            this.view3.AutoSwapBuffers = true;
-            this.view3.BackColor = System.Drawing.Color.Black;
-            this.view3.ColorBits = ((byte)(32));
-            this.view3.DepthBits = ((byte)(16));
-            this.view3.Location = new System.Drawing.Point(373, 6);
-            this.view3.Name = "view3";
-            this.view3.Size = new System.Drawing.Size(345, 279);
-            this.view3.StencilBits = ((byte)(0));
-            this.view3.TabIndex = 2;
-            this.view3.Paint += new System.Windows.Forms.PaintEventHandler(this.view3_Paint);
-            // 
-            // view4
-            // 
-            this.view4.AccumBits = ((byte)(0));
-            this.view4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.view4.AutoCheckErrors = false;
-            this.view4.AutoFinish = false;
-            this.view4.AutoMakeCurrent = true;
-            this.view4.AutoSwapBuffers = true;
-            this.view4.BackColor = System.Drawing.Color.Black;
-            this.view4.ColorBits = ((byte)(32));
-            this.view4.DepthBits = ((byte)(16));
-            this.view4.Location = new System.Drawing.Point(6, 294);
-            this.view4.Name = "view4";
-            this.view4.Size = new System.Drawing.Size(358, 280);
-            this.view4.StencilBits = ((byte)(0));
-            this.view4.TabIndex = 3;
-            this.view4.Paint += new System.Windows.Forms.PaintEventHandler(this.view4_Paint);
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel1.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.InsetDouble;
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.0288F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.9712F));
-            this.tableLayoutPanel1.Controls.Add(this.view1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.view4, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.view3, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.view2, 1, 1);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(51, 27);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(724, 580);
-            this.tableLayoutPanel1.TabIndex = 4;
             // 
             // comboBox_textureView
             // 
@@ -214,6 +113,16 @@
             this.panel_textureView.Size = new System.Drawing.Size(130, 195);
             this.panel_textureView.TabIndex = 14;
             // 
+            // image_previewTexture
+            // 
+            this.image_previewTexture.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.image_previewTexture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.image_previewTexture.Location = new System.Drawing.Point(7, 48);
+            this.image_previewTexture.Name = "image_previewTexture";
+            this.image_previewTexture.Size = new System.Drawing.Size(113, 103);
+            this.image_previewTexture.TabIndex = 10;
+            this.image_previewTexture.TabStop = false;
+            // 
             // panel_entitytool
             // 
             this.panel_entitytool.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -229,22 +138,22 @@
             this.panel_entitytool.Size = new System.Drawing.Size(130, 123);
             this.panel_entitytool.TabIndex = 15;
             // 
-            // label_entitytool_categories
+            // button_createPrefab
             // 
-            this.label_entitytool_categories.AutoSize = true;
-            this.label_entitytool_categories.Location = new System.Drawing.Point(4, 4);
-            this.label_entitytool_categories.Name = "label_entitytool_categories";
-            this.label_entitytool_categories.Size = new System.Drawing.Size(60, 13);
-            this.label_entitytool_categories.TabIndex = 0;
-            this.label_entitytool_categories.Text = "Categories:";
+            this.button_createPrefab.Location = new System.Drawing.Point(21, 88);
+            this.button_createPrefab.Name = "button_createPrefab";
+            this.button_createPrefab.Size = new System.Drawing.Size(99, 23);
+            this.button_createPrefab.TabIndex = 4;
+            this.button_createPrefab.Text = "Create Prefab";
+            this.button_createPrefab.UseVisualStyleBackColor = true;
             // 
-            // comboBox_CategEntity
+            // comboBox_ObjEntity
             // 
-            this.comboBox_CategEntity.FormattingEnabled = true;
-            this.comboBox_CategEntity.Location = new System.Drawing.Point(3, 20);
-            this.comboBox_CategEntity.Name = "comboBox_CategEntity";
-            this.comboBox_CategEntity.Size = new System.Drawing.Size(117, 21);
-            this.comboBox_CategEntity.TabIndex = 1;
+            this.comboBox_ObjEntity.FormattingEnabled = true;
+            this.comboBox_ObjEntity.Location = new System.Drawing.Point(4, 61);
+            this.comboBox_ObjEntity.Name = "comboBox_ObjEntity";
+            this.comboBox_ObjEntity.Size = new System.Drawing.Size(116, 21);
+            this.comboBox_ObjEntity.TabIndex = 3;
             // 
             // label_entitytool_objects
             // 
@@ -255,22 +164,22 @@
             this.label_entitytool_objects.TabIndex = 2;
             this.label_entitytool_objects.Text = "Objects:";
             // 
-            // comboBox_ObjEntity
+            // comboBox_CategEntity
             // 
-            this.comboBox_ObjEntity.FormattingEnabled = true;
-            this.comboBox_ObjEntity.Location = new System.Drawing.Point(4, 61);
-            this.comboBox_ObjEntity.Name = "comboBox_ObjEntity";
-            this.comboBox_ObjEntity.Size = new System.Drawing.Size(116, 21);
-            this.comboBox_ObjEntity.TabIndex = 3;
+            this.comboBox_CategEntity.FormattingEnabled = true;
+            this.comboBox_CategEntity.Location = new System.Drawing.Point(3, 20);
+            this.comboBox_CategEntity.Name = "comboBox_CategEntity";
+            this.comboBox_CategEntity.Size = new System.Drawing.Size(117, 21);
+            this.comboBox_CategEntity.TabIndex = 1;
             // 
-            // button_createPrefab
+            // label_entitytool_categories
             // 
-            this.button_createPrefab.Location = new System.Drawing.Point(21, 88);
-            this.button_createPrefab.Name = "button_createPrefab";
-            this.button_createPrefab.Size = new System.Drawing.Size(99, 23);
-            this.button_createPrefab.TabIndex = 4;
-            this.button_createPrefab.Text = "Create Prefab";
-            this.button_createPrefab.UseVisualStyleBackColor = true;
+            this.label_entitytool_categories.AutoSize = true;
+            this.label_entitytool_categories.Location = new System.Drawing.Point(4, 4);
+            this.label_entitytool_categories.Name = "label_entitytool_categories";
+            this.label_entitytool_categories.Size = new System.Drawing.Size(60, 13);
+            this.label_entitytool_categories.TabIndex = 0;
+            this.label_entitytool_categories.Text = "Categories:";
             // 
             // menuBar
             // 
@@ -379,24 +288,15 @@
             // toolStripMenuItem10
             // 
             this.toolStripMenuItem10.Name = "toolStripMenuItem10";
-            this.toolStripMenuItem10.Size = new System.Drawing.Size(152, 22);
+            this.toolStripMenuItem10.Size = new System.Drawing.Size(116, 22);
             this.toolStripMenuItem10.Text = "About...";
             this.toolStripMenuItem10.Click += new System.EventHandler(this.toolStripMenuItem10_Click);
-            // 
-            // image_previewTexture
-            // 
-            this.image_previewTexture.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.image_previewTexture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.image_previewTexture.Location = new System.Drawing.Point(7, 48);
-            this.image_previewTexture.Name = "image_previewTexture";
-            this.image_previewTexture.Size = new System.Drawing.Size(113, 103);
-            this.image_previewTexture.TabIndex = 10;
-            this.image_previewTexture.TabStop = false;
             // 
             // button_boxtool
             // 
             this.button_boxtool.Enabled = false;
-            this.button_boxtool.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_boxtool.FlatAppearance.BorderSize = 0;
+            this.button_boxtool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_boxtool.Image = global::lifeMap.Properties.Resources.block;
             this.button_boxtool.Location = new System.Drawing.Point(8, 163);
             this.button_boxtool.Name = "button_boxtool";
@@ -407,7 +307,8 @@
             // button_entitytool
             // 
             this.button_entitytool.Enabled = false;
-            this.button_entitytool.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_entitytool.FlatAppearance.BorderSize = 0;
+            this.button_entitytool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_entitytool.Image = global::lifeMap.Properties.Resources.entity;
             this.button_entitytool.Location = new System.Drawing.Point(8, 119);
             this.button_entitytool.Name = "button_entitytool";
@@ -419,7 +320,7 @@
             // 
             this.button_camera.Enabled = false;
             this.button_camera.FlatAppearance.BorderSize = 0;
-            this.button_camera.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_camera.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_camera.Image = global::lifeMap.Properties.Resources.camera;
             this.button_camera.Location = new System.Drawing.Point(8, 76);
             this.button_camera.Name = "button_camera";
@@ -431,7 +332,7 @@
             // 
             this.button_cursor.Enabled = false;
             this.button_cursor.FlatAppearance.BorderSize = 0;
-            this.button_cursor.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button_cursor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button_cursor.ForeColor = System.Drawing.SystemColors.ControlLightLight;
             this.button_cursor.Image = global::lifeMap.Properties.Resources.cursor;
             this.button_cursor.Location = new System.Drawing.Point(8, 33);
@@ -440,11 +341,104 @@
             this.button_cursor.TabIndex = 6;
             this.button_cursor.UseVisualStyleBackColor = true;
             // 
+            // table_viewport
+            // 
+            this.table_viewport.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.table_viewport.ColumnCount = 2;
+            this.table_viewport.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.table_viewport.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.table_viewport.Controls.Add(this.view4, 1, 1);
+            this.table_viewport.Controls.Add(this.view3, 0, 1);
+            this.table_viewport.Controls.Add(this.view2, 1, 0);
+            this.table_viewport.Controls.Add(this.view1, 0, 0);
+            this.table_viewport.Location = new System.Drawing.Point(51, 28);
+            this.table_viewport.Name = "table_viewport";
+            this.table_viewport.RowCount = 2;
+            this.table_viewport.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.table_viewport.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.table_viewport.Size = new System.Drawing.Size(724, 579);
+            this.table_viewport.TabIndex = 22;
+            // 
+            // view1
+            // 
+            this.view1.AccumBits = ((byte)(0));
+            this.view1.AutoCheckErrors = false;
+            this.view1.AutoFinish = false;
+            this.view1.AutoMakeCurrent = true;
+            this.view1.AutoSwapBuffers = true;
+            this.view1.BackColor = System.Drawing.Color.Black;
+            this.view1.ColorBits = ((byte)(32));
+            this.view1.DepthBits = ((byte)(16));
+            this.view1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.view1.Location = new System.Drawing.Point(3, 3);
+            this.view1.Name = "view1";
+            this.view1.Size = new System.Drawing.Size(356, 283);
+            this.view1.StencilBits = ((byte)(0));
+            this.view1.TabIndex = 23;
+            this.view1.Paint += new System.Windows.Forms.PaintEventHandler(this.view1_Paint);
+            // 
+            // view2
+            // 
+            this.view2.AccumBits = ((byte)(0));
+            this.view2.AutoCheckErrors = false;
+            this.view2.AutoFinish = false;
+            this.view2.AutoMakeCurrent = true;
+            this.view2.AutoSwapBuffers = true;
+            this.view2.BackColor = System.Drawing.Color.Black;
+            this.view2.ColorBits = ((byte)(32));
+            this.view2.DepthBits = ((byte)(16));
+            this.view2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.view2.Location = new System.Drawing.Point(365, 3);
+            this.view2.Name = "view2";
+            this.view2.Size = new System.Drawing.Size(356, 283);
+            this.view2.StencilBits = ((byte)(0));
+            this.view2.TabIndex = 23;
+            this.view2.Paint += new System.Windows.Forms.PaintEventHandler(this.view2_Paint);
+            // 
+            // view3
+            // 
+            this.view3.AccumBits = ((byte)(0));
+            this.view3.AutoCheckErrors = false;
+            this.view3.AutoFinish = false;
+            this.view3.AutoMakeCurrent = true;
+            this.view3.AutoSwapBuffers = true;
+            this.view3.BackColor = System.Drawing.Color.Black;
+            this.view3.ColorBits = ((byte)(32));
+            this.view3.DepthBits = ((byte)(16));
+            this.view3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.view3.Location = new System.Drawing.Point(3, 292);
+            this.view3.Name = "view3";
+            this.view3.Size = new System.Drawing.Size(356, 284);
+            this.view3.StencilBits = ((byte)(0));
+            this.view3.TabIndex = 23;
+            this.view3.Paint += new System.Windows.Forms.PaintEventHandler(this.view3_Paint);
+            // 
+            // view4
+            // 
+            this.view4.AccumBits = ((byte)(0));
+            this.view4.AutoCheckErrors = false;
+            this.view4.AutoFinish = false;
+            this.view4.AutoMakeCurrent = true;
+            this.view4.AutoSwapBuffers = true;
+            this.view4.BackColor = System.Drawing.Color.Black;
+            this.view4.ColorBits = ((byte)(32));
+            this.view4.DepthBits = ((byte)(16));
+            this.view4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.view4.Location = new System.Drawing.Point(365, 292);
+            this.view4.Name = "view4";
+            this.view4.Size = new System.Drawing.Size(356, 284);
+            this.view4.StencilBits = ((byte)(0));
+            this.view4.TabIndex = 23;
+            this.view4.Paint += new System.Windows.Forms.PaintEventHandler(this.view4_Paint);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(914, 619);
+            this.Controls.Add(this.table_viewport);
             this.Controls.Add(this.menuBar);
             this.Controls.Add(this.panel_entitytool);
             this.Controls.Add(this.panel_textureView);
@@ -452,20 +446,20 @@
             this.Controls.Add(this.button_entitytool);
             this.Controls.Add(this.button_camera);
             this.Controls.Add(this.button_cursor);
-            this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "MainForm";
             this.Text = "lifeMap";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
-            this.tableLayoutPanel1.ResumeLayout(false);
             this.panel_textureView.ResumeLayout(false);
             this.panel_textureView.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).EndInit();
             this.panel_entitytool.ResumeLayout(false);
             this.panel_entitytool.PerformLayout();
             this.menuBar.ResumeLayout(false);
             this.menuBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).EndInit();
+            this.table_viewport.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -473,11 +467,6 @@
 
         #endregion
 
-        private Tao.Platform.Windows.SimpleOpenGlControl view1;
-        private Tao.Platform.Windows.SimpleOpenGlControl view2;
-        private Tao.Platform.Windows.SimpleOpenGlControl view3;
-        private Tao.Platform.Windows.SimpleOpenGlControl view4;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Button button_cursor;
         private System.Windows.Forms.Button button_camera;
         private System.Windows.Forms.Button button_entitytool;
@@ -507,6 +496,11 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem8;
         private System.Windows.Forms.ToolStripMenuItem menuBar_Help;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
+        private System.Windows.Forms.TableLayoutPanel table_viewport;
+        private Tao.Platform.Windows.SimpleOpenGlControl view3;
+        private Tao.Platform.Windows.SimpleOpenGlControl view2;
+        private Tao.Platform.Windows.SimpleOpenGlControl view1;
+        private Tao.Platform.Windows.SimpleOpenGlControl view4;
     }
 }
 
