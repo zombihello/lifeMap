@@ -22,14 +22,41 @@ namespace lifeMap.src.brushes
 
         public void Render( Viewport.TypeViewport typeViewport )
         {
+            switch ( typeViewport ) // TODO: Перенести в класс камеры
+            {
+                case Viewport.TypeViewport.Textured_3D:
+                    Gl.glPushMatrix();
+                    Gl.glTranslatef( StartPosition.X, StartPosition.Y, StartPosition.Z );
+                    Gl.glRotatef( -15, 1, 1, 1 );
+                    Gl.glTranslatef( -StartPosition.X, -StartPosition.Y, -StartPosition.Z );
+                    break;
+
+                case Viewport.TypeViewport.Top_2D_xy:
+                    Gl.glPushMatrix();
+                    Gl.glTranslatef( StartPosition.X, StartPosition.Y, StartPosition.Z );
+                    Gl.glRotatef( -90, 1, 0, 0 );
+                    Gl.glTranslatef( -StartPosition.X, -StartPosition.Y, -StartPosition.Z );
+                    break;
+
+                case Viewport.TypeViewport.Front_2D_yz:
+                    Gl.glPushMatrix();
+                    Gl.glTranslatef( StartPosition.X, StartPosition.Y, StartPosition.Z );
+                    Gl.glRotatef( -90, 0, 1, 0 );
+                    Gl.glTranslatef( -StartPosition.X, -StartPosition.Y, -StartPosition.Z );
+                    break;
+            }
+
             Gl.glBegin( Gl.GL_LINES );
-            Gl.glColor3f( 1, 0, 0 );
-            
-            for ( int i = 0; i < Mesh.Count; i++ )
-                Gl.glVertex3f( Mesh[i].X, Mesh[i].Y, Mesh[i].Z );
+            Gl.glColor3f( colorBrush.R, colorBrush.G, colorBrush.B );
+
+            for ( int i = 0; i < mIdVertex.Count; i++ )
+            {
+                int id = mIdVertex[i];
+                Gl.glVertex3f( mVertex[id].X, mVertex[id].Y, mVertex[id].Z );
+            }
 
             Gl.glEnd();
-
+            Gl.glPopMatrix();
         }
 
         //-------------------------------------------------------------------------//
@@ -43,12 +70,38 @@ namespace lifeMap.src.brushes
             Size.X = EndPosition.X - StartPosition.X;
             Size.Y = EndPosition.Y - StartPosition.Y;
             Size.Z = EndPosition.Z - StartPosition.Z;
+
+            this.StartPosition = StartPosition;
         }
 
         //-------------------------------------------------------------------------//
 
-        public List<Vector3f> Mesh = new List<Vector3f>();
+        protected void AddVertex( Vector3f PositionVertex )
+        {
+            mVertex.Add( PositionVertex );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        protected void AddVertex( float x, float y, float z )
+        {
+            mVertex.Add( new Vector3f( x, y, z ) );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        protected void AddIdVertex( int id )
+        {
+            mIdVertex.Add( id );
+        }
+
+        //-------------------------------------------------------------------------//
 
         protected Vector3f Size = new Vector3f();
+        protected Color colorBrush = new Color( 1, 0, 0 );
+
+        private Vector3f StartPosition = new Vector3f();
+        private List<Vector3f> mVertex = new List<Vector3f>();
+        private List<int> mIdVertex = new List<int>();
     }
 }

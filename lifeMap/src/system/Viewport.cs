@@ -32,10 +32,12 @@ namespace lifeMap.src
         public Viewport( SimpleOpenGlControl View, Label labeViewport, VScrollBar scrollBarV, HScrollBar scrollBarH )
         {
             this.View = View;
-            this.View.InitializeContexts();
+            Camera = new Camera( View );
             LabelViewport = labeViewport;
             vScrollBar = scrollBarV;
             hScrollBar = scrollBarH;
+
+            this.View.InitializeContexts();
         }
 
         //-------------------------------------------------------------------------//
@@ -43,12 +45,14 @@ namespace lifeMap.src
         public Viewport( SimpleOpenGlControl View, TypeViewport TypeViewport, Label labeViewport, VScrollBar scrollBarV, HScrollBar scrollBarH )
         {
             this.View = View;
-            this.View.InitializeContexts();
+            Camera = new Camera( View );
             type = TypeViewport;
             LabelViewport = labeViewport;
             LabelViewport.Text = type.ToString();
             vScrollBar = scrollBarV;
             hScrollBar = scrollBarH;
+
+            this.View.InitializeContexts();
 
             if ( type == TypeViewport.Textured_3D )
             {
@@ -63,84 +67,24 @@ namespace lifeMap.src
         {
             View.MakeCurrent();
 
-            //Инициализация PpenGL
+            //Инициализация OpenGL
+            Gl.glMatrixMode( Gl.GL_PROJECTION );
             Gl.glLoadIdentity();
             Gl.glViewport( 0, 0, View.Width, View.Height );
-            Gl.glOrtho( 0, View.Width, 0, View.Height, 0, View.Width );
+            Gl.glOrtho( 0, View.Width, 0, View.Height, -View.Width, View.Width );
 
             Gl.glClearColor( 0, 0, 0, 0 );
             Gl.glClear( Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT );
 
             if ( bEnabled )
-                switch ( type )
-                {
-                    case TypeViewport.Front_2D_yz:
-                        RenderGrid();
-                        UpdateFront2D_YZ();
-                        break;
+            {
+                //Camera.Update( type );
 
-                    case TypeViewport.Side_2D_xz:
-                        RenderGrid();
-                        UpdateSide2D_XZ();
-                        break;
+                if ( type != TypeViewport.Textured_3D )
+                    RenderGrid();
 
-                    case TypeViewport.Top_2D_xy:
-                        RenderGrid();
-                        UpdateTop2D_XY();
-                        break;
-
-                    case TypeViewport.Textured_3D:
-                        UpdateTextured_3D();
-                        break;
-                }
-        }
-
-        //-------------------------------------------------------------------------//
-
-        private void UpdateFront2D_YZ()
-        {
-            for ( int i = 0; i < Brushes.Count; i++ )
-                Brushes[i].Render( TypeViewport.Front_2D_yz );
-
-                Brushes.Clear();
-
-                Gl.glClear( Gl.GL_DEPTH_BUFFER_BIT );
-        }
-
-        //-------------------------------------------------------------------------//
-
-        private void UpdateSide2D_XZ()
-        {
-            for ( int i = 0; i < Brushes.Count; i++ )
-                Brushes[i].Render( TypeViewport.Side_2D_xz );
-
-            Brushes.Clear();
-
-            Gl.glClear( Gl.GL_DEPTH_BUFFER_BIT );
-        }
-
-        //-------------------------------------------------------------------------//
-
-        private void UpdateTop2D_XY()
-        {
-            for ( int i = 0; i < Brushes.Count; i++ )
-                Brushes[i].Render( TypeViewport.Top_2D_xy );
-
-            Brushes.Clear();
-
-            Gl.glClear( Gl.GL_DEPTH_BUFFER_BIT );
-        }
-
-        //-------------------------------------------------------------------------//
-
-        private void UpdateTextured_3D()
-        {
-            for ( int i = 0; i < Brushes.Count; i++ )
-                Brushes[i].Render( TypeViewport.Top_2D_xy );
-
-            Brushes.Clear();
-
-            Gl.glClear( Gl.GL_DEPTH_BUFFER_BIT );
+                Scene.UpdateScene( type );
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -149,7 +93,7 @@ namespace lifeMap.src
         {
             Gl.glColor3f( colorGrid.R, colorGrid.G, colorGrid.B );
 
-            for ( int i = 0; i < View.Width; i++ ) 
+            for ( int i = 0; i < View.Width; i++ )
             {
                 Gl.glBegin( Gl.GL_LINES );
                 Gl.glVertex2f( i * fSize, 0 );
@@ -166,13 +110,6 @@ namespace lifeMap.src
             }
 
             Gl.glClear( Gl.GL_DEPTH_BUFFER_BIT );
-        }
-
-        //-------------------------------------------------------------------------//
-
-        public void AddToRender( BasicBrush Brush )
-        {
-            Brushes.Add( Brush );
         }
 
         //-------------------------------------------------------------------------//
@@ -199,16 +136,17 @@ namespace lifeMap.src
 
         //-------------------------------------------------------------------------//
 
-        public bool bEnabled = true;
         public static float fSize = 20f;
-        public SimpleOpenGlControl View;
-        public static Color colorGrid = new Color( 0, 0, 0.7f );
+        public static Color colorGrid = new Color( 0.2f, 0.2f, 0.2f );
+
+        public bool bEnabled = true;
+        public SimpleOpenGlControl View;     
         public TypeViewport type;
         public Label LabelViewport;
 
         private VScrollBar vScrollBar;
         private HScrollBar hScrollBar;
-        private List<BasicBrush> Brushes = new List<BasicBrush>();
+        private Camera Camera = null;
     }
 
     //-------------------------------------------------------------------------//

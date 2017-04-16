@@ -7,3 +7,4 @@ E:\Egor\projects\GameEngine\lifeMap\lifeMap\obj\Release\lifeMap.MainForm.resourc
 E:\Egor\projects\GameEngine\lifeMap\lifeMap\obj\Release\lifeMap.csproj.GenerateResource.Cache
 E:\Egor\projects\GameEngine\lifeMap\lifeMap\obj\Release\lifeMap.exe
 E:\Egor\projects\GameEngine\lifeMap\lifeMap\obj\Release\lifeMap.pdb
+E:\Egor\projects\GameEngine\lifeMap\lifeMap\obj\Release\lifeMap.csprojResolveAssemblyReference.cache

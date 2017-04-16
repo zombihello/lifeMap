@@ -65,18 +65,20 @@
             this.view1 = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.table_viewport = new System.Windows.Forms.TableLayoutPanel();
             this.panel_viewport4 = new System.Windows.Forms.Panel();
-            this.label_viewport4 = new System.Windows.Forms.Label();
             this.vScrollBar_viewport4 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar_viewport4 = new System.Windows.Forms.HScrollBar();
+            this.label_viewport4 = new System.Windows.Forms.Label();
             this.panel_viewport3 = new System.Windows.Forms.Panel();
-            this.label_viewport3 = new System.Windows.Forms.Label();
             this.vScrollBar_viewport3 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar_viewport3 = new System.Windows.Forms.HScrollBar();
+            this.label_viewport3 = new System.Windows.Forms.Label();
             this.panel_viewport2 = new System.Windows.Forms.Panel();
             this.label_viewport2 = new System.Windows.Forms.Label();
             this.vScrollBar__viewport2 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar_viewport2 = new System.Windows.Forms.HScrollBar();
             this.panel_viewport1 = new System.Windows.Forms.Panel();
+            this.vScrollBar_viewport1 = new System.Windows.Forms.VScrollBar();
+            this.hScrollBar_viewport1 = new System.Windows.Forms.HScrollBar();
             this.label_viewport1 = new System.Windows.Forms.Label();
             this.menuTypeViewport = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.dFrontXYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -84,8 +86,6 @@
             this.dTopZYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.dTexturedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.vScrollBar_viewport1 = new System.Windows.Forms.VScrollBar();
-            this.hScrollBar_viewport1 = new System.Windows.Forms.HScrollBar();
             this.panel_textureView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).BeginInit();
             this.panel_entitytool.SuspendLayout();
@@ -482,21 +482,6 @@
             this.panel_viewport4.Size = new System.Drawing.Size(356, 284);
             this.panel_viewport4.TabIndex = 3;
             // 
-            // label_viewport4
-            // 
-            this.label_viewport4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_viewport4.AutoSize = true;
-            this.label_viewport4.BackColor = System.Drawing.Color.Black;
-            this.label_viewport4.ForeColor = System.Drawing.Color.White;
-            this.label_viewport4.Location = new System.Drawing.Point(-2, 0);
-            this.label_viewport4.Name = "label_viewport4";
-            this.label_viewport4.Size = new System.Drawing.Size(35, 13);
-            this.label_viewport4.TabIndex = 24;
-            this.label_viewport4.Text = "label1";
-            this.label_viewport4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.label_viewport4_MouseClick);
-            // 
             // vScrollBar_viewport4
             // 
             this.vScrollBar_viewport4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -515,6 +500,21 @@
             this.hScrollBar_viewport4.Size = new System.Drawing.Size(336, 17);
             this.hScrollBar_viewport4.TabIndex = 2;
             // 
+            // label_viewport4
+            // 
+            this.label_viewport4.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_viewport4.AutoSize = true;
+            this.label_viewport4.BackColor = System.Drawing.Color.Black;
+            this.label_viewport4.ForeColor = System.Drawing.Color.White;
+            this.label_viewport4.Location = new System.Drawing.Point(-2, 0);
+            this.label_viewport4.Name = "label_viewport4";
+            this.label_viewport4.Size = new System.Drawing.Size(35, 13);
+            this.label_viewport4.TabIndex = 24;
+            this.label_viewport4.Text = "label1";
+            this.label_viewport4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.label_viewport4_MouseClick);
+            // 
             // panel_viewport3
             // 
             this.panel_viewport3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -527,21 +527,6 @@
             this.panel_viewport3.Name = "panel_viewport3";
             this.panel_viewport3.Size = new System.Drawing.Size(356, 284);
             this.panel_viewport3.TabIndex = 2;
-            // 
-            // label_viewport3
-            // 
-            this.label_viewport3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.label_viewport3.AutoSize = true;
-            this.label_viewport3.BackColor = System.Drawing.Color.Black;
-            this.label_viewport3.ForeColor = System.Drawing.Color.White;
-            this.label_viewport3.Location = new System.Drawing.Point(-3, 0);
-            this.label_viewport3.Name = "label_viewport3";
-            this.label_viewport3.Size = new System.Drawing.Size(35, 13);
-            this.label_viewport3.TabIndex = 24;
-            this.label_viewport3.Text = "label1";
-            this.label_viewport3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.label_viewport3_MouseClick);
             // 
             // vScrollBar_viewport3
             // 
@@ -560,6 +545,21 @@
             this.hScrollBar_viewport3.Name = "hScrollBar_viewport3";
             this.hScrollBar_viewport3.Size = new System.Drawing.Size(336, 17);
             this.hScrollBar_viewport3.TabIndex = 2;
+            // 
+            // label_viewport3
+            // 
+            this.label_viewport3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label_viewport3.AutoSize = true;
+            this.label_viewport3.BackColor = System.Drawing.Color.Black;
+            this.label_viewport3.ForeColor = System.Drawing.Color.White;
+            this.label_viewport3.Location = new System.Drawing.Point(-3, 0);
+            this.label_viewport3.Name = "label_viewport3";
+            this.label_viewport3.Size = new System.Drawing.Size(35, 13);
+            this.label_viewport3.TabIndex = 24;
+            this.label_viewport3.Text = "label1";
+            this.label_viewport3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.label_viewport3_MouseClick);
             // 
             // panel_viewport2
             // 
@@ -621,6 +621,25 @@
             this.panel_viewport1.Size = new System.Drawing.Size(356, 283);
             this.panel_viewport1.TabIndex = 0;
             // 
+            // vScrollBar_viewport1
+            // 
+            this.vScrollBar_viewport1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.vScrollBar_viewport1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.vScrollBar_viewport1.Location = new System.Drawing.Point(336, -1);
+            this.vScrollBar_viewport1.Name = "vScrollBar_viewport1";
+            this.vScrollBar_viewport1.Size = new System.Drawing.Size(17, 280);
+            this.vScrollBar_viewport1.TabIndex = 26;
+            // 
+            // hScrollBar_viewport1
+            // 
+            this.hScrollBar_viewport1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.hScrollBar_viewport1.Location = new System.Drawing.Point(0, 263);
+            this.hScrollBar_viewport1.Name = "hScrollBar_viewport1";
+            this.hScrollBar_viewport1.Size = new System.Drawing.Size(336, 17);
+            this.hScrollBar_viewport1.TabIndex = 25;
+            // 
             // label_viewport1
             // 
             this.label_viewport1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -680,25 +699,6 @@
             this.dTexturedToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.dTexturedToolStripMenuItem.Text = "3D Textured";
             this.dTexturedToolStripMenuItem.Click += new System.EventHandler(this.dTexturedToolStripMenuItem_Click);
-            // 
-            // vScrollBar_viewport1
-            // 
-            this.vScrollBar_viewport1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.vScrollBar_viewport1.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.vScrollBar_viewport1.Location = new System.Drawing.Point(336, -1);
-            this.vScrollBar_viewport1.Name = "vScrollBar_viewport1";
-            this.vScrollBar_viewport1.Size = new System.Drawing.Size(17, 280);
-            this.vScrollBar_viewport1.TabIndex = 26;
-            // 
-            // hScrollBar_viewport1
-            // 
-            this.hScrollBar_viewport1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.hScrollBar_viewport1.Location = new System.Drawing.Point(0, 263);
-            this.hScrollBar_viewport1.Name = "hScrollBar_viewport1";
-            this.hScrollBar_viewport1.Size = new System.Drawing.Size(336, 17);
-            this.hScrollBar_viewport1.TabIndex = 25;
             // 
             // MainForm
             // 

@@ -150,6 +150,8 @@ namespace lifeMap
             panel_entitytool.Enabled = false;
             panel_textureView.Enabled = false;
 
+            Scene.Clear();
+
             Refresh();
         }
 
@@ -163,12 +165,9 @@ namespace lifeMap
 
                 if ( Mouse.MouseClick )
                 {
-                    Brush_Box box = new Brush_Box();
-                    box.Create( Mouse.ClickPosition, Mouse.Position );
-                    Viewport1.AddToRender( box );
-                    Viewport2.AddToRender( box );
-                    Viewport3.AddToRender( box );
-                    Viewport4.AddToRender( box );
+                    BrushSelect BrushSelect = new BrushSelect();
+                    BrushSelect.Create( Mouse.ClickPosition, Mouse.Position );
+                    Scene.SetBrushSelect( BrushSelect );
                     Refresh();
                 }      
             }
@@ -186,7 +185,17 @@ namespace lifeMap
                     Mouse.MouseClick = true;
                 }
                 else
+                {
+                    if ( Scene.GetBrushSelect() != null )
+                    {
+                        BrushBox BrushBox = new BrushBox();
+                        BrushBox.Create( Mouse.ClickPosition, Mouse.Position );
+                        Scene.AddBrush( BrushBox );
+                        Scene.ClearBrushSelect();
+                        Refresh();
+                    }
                     Mouse.MouseClick = false;
+                }
             }
         }
 
