@@ -4,13 +4,25 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using lifeMap.src.system;
+
 namespace lifeMap
 {
     static class Program
     {
-        /// <summary>
-        /// Главная точка входа для приложения.
-        /// </summary>
+        //-------------------------------------------------------------------------//
+
+        public enum SelectTool
+        {
+            None,
+            CursorTool,
+            CameraTool,
+            EntityTool,
+            BoxTool
+        };
+
+        //-------------------------------------------------------------------------//
+
         [STAThread]
         static void Main()
         {
@@ -27,5 +39,15 @@ namespace lifeMap
         }
 
         //-------------------------------------------------------------------------//
+
+        public static Vector3f ToNewCoords( Vector3f NewCenterCoord, Vector3f PositionPoint )
+        {
+            Vector3f NewPosition = new Vector3f( PositionPoint.X - NewCenterCoord.X, PositionPoint.Y - NewCenterCoord.Y, PositionPoint.Z - NewCenterCoord.Z );
+            return NewPosition;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static SelectTool selectTool = SelectTool.None;
     }
 }

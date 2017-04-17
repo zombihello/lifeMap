@@ -22,30 +22,6 @@ namespace lifeMap.src.brushes
 
         public void Render( Viewport.TypeViewport typeViewport )
         {
-            switch ( typeViewport ) // TODO: Перенести в класс камеры
-            {
-                case Viewport.TypeViewport.Textured_3D:
-                    Gl.glPushMatrix();
-                    Gl.glTranslatef( StartPosition.X, StartPosition.Y, StartPosition.Z );
-                    Gl.glRotatef( -15, 1, 1, 1 );
-                    Gl.glTranslatef( -StartPosition.X, -StartPosition.Y, -StartPosition.Z );
-                    break;
-
-                case Viewport.TypeViewport.Top_2D_xy:
-                    Gl.glPushMatrix();
-                    Gl.glTranslatef( StartPosition.X, StartPosition.Y, StartPosition.Z );
-                    Gl.glRotatef( -90, 1, 0, 0 );
-                    Gl.glTranslatef( -StartPosition.X, -StartPosition.Y, -StartPosition.Z );
-                    break;
-
-                case Viewport.TypeViewport.Front_2D_yz:
-                    Gl.glPushMatrix();
-                    Gl.glTranslatef( StartPosition.X, StartPosition.Y, StartPosition.Z );
-                    Gl.glRotatef( -90, 0, 1, 0 );
-                    Gl.glTranslatef( -StartPosition.X, -StartPosition.Y, -StartPosition.Z );
-                    break;
-            }
-
             Gl.glBegin( Gl.GL_LINES );
             Gl.glColor3f( colorBrush.R, colorBrush.G, colorBrush.B );
 
@@ -56,16 +32,20 @@ namespace lifeMap.src.brushes
             }
 
             Gl.glEnd();
-            Gl.glPopMatrix();
         }
 
         //-------------------------------------------------------------------------//
 
         protected void InitBrush( Vector3f StartPosition, Vector3f EndPosition )
         {
-            EndPosition.X = Program.Align( EndPosition.X, Viewport.fSize );
-            EndPosition.Y = Program.Align( EndPosition.Y, Viewport.fSize );
-            EndPosition.Z = Program.Align( EndPosition.Z, Viewport.fSize );
+            if ( StartPosition.X == 0 )
+                StartPosition.X = Viewport.fSize;
+
+            if ( StartPosition.Y == 0 )
+                StartPosition.Y = Viewport.fSize;
+
+            if ( StartPosition.Z == 0 )
+                StartPosition.Z = Viewport.fSize;
 
             Size.X = EndPosition.X - StartPosition.X;
             Size.Y = EndPosition.Y - StartPosition.Y;

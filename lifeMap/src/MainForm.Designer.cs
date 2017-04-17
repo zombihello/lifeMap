@@ -331,6 +331,7 @@
             this.button_boxtool.Size = new System.Drawing.Size(37, 36);
             this.button_boxtool.TabIndex = 9;
             this.button_boxtool.UseVisualStyleBackColor = true;
+            this.button_boxtool.Click += new System.EventHandler(this.button_boxtool_Click);
             // 
             // button_entitytool
             // 
@@ -343,6 +344,7 @@
             this.button_entitytool.Size = new System.Drawing.Size(37, 38);
             this.button_entitytool.TabIndex = 8;
             this.button_entitytool.UseVisualStyleBackColor = true;
+            this.button_entitytool.Click += new System.EventHandler(this.button_entitytool_Click);
             // 
             // button_camera
             // 
@@ -355,6 +357,7 @@
             this.button_camera.Size = new System.Drawing.Size(37, 37);
             this.button_camera.TabIndex = 7;
             this.button_camera.UseVisualStyleBackColor = true;
+            this.button_camera.Click += new System.EventHandler(this.button_camera_Click);
             // 
             // button_cursor
             // 
@@ -368,6 +371,7 @@
             this.button_cursor.Size = new System.Drawing.Size(37, 37);
             this.button_cursor.TabIndex = 6;
             this.button_cursor.UseVisualStyleBackColor = true;
+            this.button_cursor.Click += new System.EventHandler(this.button_cursor_Click);
             // 
             // view4
             // 

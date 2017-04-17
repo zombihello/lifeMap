@@ -19,6 +19,7 @@ namespace lifeMap.src
     class Viewport
     {
         //-------------------------------------------------------------------------//
+
         public enum TypeViewport
         {
             Top_2D_xy,
@@ -68,20 +69,30 @@ namespace lifeMap.src
             View.MakeCurrent();
 
             //Инициализация OpenGL
-            Gl.glMatrixMode( Gl.GL_PROJECTION );
+            Gl.glMatrixMode( Gl.GL_MODELVIEW );
             Gl.glLoadIdentity();
             Gl.glViewport( 0, 0, View.Width, View.Height );
-            Gl.glOrtho( 0, View.Width, 0, View.Height, -View.Width, View.Width );
+
+            if ( type != TypeViewport.Textured_3D )
+                Gl.glOrtho( 0, View.Width, 0, View.Height, -View.Width, View.Width ); // TODO: Сделать зум вьюпорта
+            else
+            {
+                Glu.gluPerspective( 45f, ( float )View.Width / ( float )View.Height, 0.1f, 1000.0f );
+                Camera.SetPosition( new Vector3f( 0, 0, -300 ) );
+            }
 
             Gl.glClearColor( 0, 0, 0, 0 );
             Gl.glClear( Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT );
 
             if ( bEnabled )
             {
-                //Camera.Update( type );
+                Camera.Update( type );
 
                 if ( type != TypeViewport.Textured_3D )
+                {
                     RenderGrid();
+                    Camera.RenderCamera();
+                }
 
                 Scene.UpdateScene( type );
             }
@@ -91,25 +102,35 @@ namespace lifeMap.src
 
         private void RenderGrid()
         {
+            if ( type == TypeViewport.Top_2D_xy )
+                Gl.glRotatef( 90, 1, 0, 0 );
+            else if ( type == TypeViewport.Front_2D_yz )
+                Gl.glRotatef( -90, 0, 1, 0 );
+
             Gl.glColor3f( colorGrid.R, colorGrid.G, colorGrid.B );
 
-            for ( int i = 0; i < View.Width; i++ )
+            for ( int i = -1000; i < 1000; i++ )
             {
                 Gl.glBegin( Gl.GL_LINES );
-                Gl.glVertex2f( i * fSize, 0 );
-                Gl.glVertex2f( i * fSize, View.Height );
+                Gl.glVertex3f( i * fSize, -1000, 0 );
+                Gl.glVertex3f( i * fSize, 1000, 0 );
                 Gl.glEnd();
             }
 
-            for ( int i = 0; i < View.Height; i++ )
+            for ( int i = -1000; i < 1000; i++ )
             {
                 Gl.glBegin( Gl.GL_LINES );
-                Gl.glVertex2f( 0, i * fSize );
-                Gl.glVertex2f( View.Width, i * fSize );
+                Gl.glVertex3f( -1000, i * fSize, 0 );
+                Gl.glVertex3f( 1000, i * fSize, 0 );
                 Gl.glEnd();
             }
 
             Gl.glClear( Gl.GL_DEPTH_BUFFER_BIT );
+
+            if ( type == TypeViewport.Top_2D_xy )
+                Gl.glRotatef( -90, 1, 0, 0 );
+            else if ( type == TypeViewport.Front_2D_yz )
+                Gl.glRotatef( 90, 0, 1, 0 );
         }
 
         //-------------------------------------------------------------------------//
@@ -140,13 +161,13 @@ namespace lifeMap.src
         public static Color colorGrid = new Color( 0.2f, 0.2f, 0.2f );
 
         public bool bEnabled = true;
-        public SimpleOpenGlControl View;     
+        public SimpleOpenGlControl View;
         public TypeViewport type;
         public Label LabelViewport;
+        public Camera Camera = null;
 
         private VScrollBar vScrollBar;
         private HScrollBar hScrollBar;
-        private Camera Camera = null;
     }
 
     //-------------------------------------------------------------------------//

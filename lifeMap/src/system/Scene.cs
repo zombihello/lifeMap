@@ -21,11 +21,11 @@ namespace lifeMap.src.system
         {
             RenderXYZ();
 
-            if ( BrushSelect != null )
-                BrushSelect.Render( typeViewport );
-
             for ( int i = 0; i < mBrush.Count; i++ )
                 mBrush[i].Render( typeViewport );
+
+            if ( BrushSelect != null )
+                BrushSelect.Render( typeViewport );
         }
 
         //-------------------------------------------------------------------------//
@@ -37,11 +37,11 @@ namespace lifeMap.src.system
             Gl.glVertex3f( 0, 0, 0 );
             Gl.glVertex3f( 100, 0, 0 );
 
-            Gl.glColor3f( 0, 1, 0 );
+            Gl.glColor3f( 0, 0, 1 );
             Gl.glVertex3f( 0, 0, 0 );
             Gl.glVertex3f( 0, 100, 0 );
 
-            Gl.glColor3f( 0, 0, 1 );
+            Gl.glColor3f( 0, 1, 0 );
             Gl.glVertex3f( 0, 0, 0 );
             Gl.glVertex3f( 0, 0, 100 );
             Gl.glEnd();
@@ -49,16 +49,55 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public static void SetBrushSelect( BrushSelect brushSelect )
+        public static void CreateBrushSelect( Viewport.TypeViewport typeViewport, Camera Camera )
         {
-            BrushSelect = brushSelect;
+            Vector3f StartPosition = Program.ToNewCoords( Camera.Position, Mouse.ClickPosition );
+            Vector3f EndPosition = Program.ToNewCoords( Camera.Position, Mouse.Position );
+
+            switch ( typeViewport )
+            {
+                case Viewport.TypeViewport.Top_2D_xy:
+                    BrushSelect = new BrushSelect();
+                    StartPosition.Z = StartPosition.Y; 
+                    EndPosition.Z = EndPosition.Y;
+                    StartPosition.Y = EndPosition.Y = 0;
+                    BrushSelect.Create( StartPosition, EndPosition );
+                    break;
+
+                case Viewport.TypeViewport.Front_2D_yz:
+                    BrushSelect = new BrushSelect();
+                    StartPosition.Z = StartPosition.X;
+                    EndPosition.Z = EndPosition.X;
+                    StartPosition.X = EndPosition.X = 0;
+                    BrushSelect.Create( StartPosition, EndPosition );
+                    break;
+
+                case Viewport.TypeViewport.Side_2D_xz:
+                    BrushSelect = new BrushSelect();
+                    StartPosition.Z = EndPosition.Z = 0;
+                    BrushSelect.Create( StartPosition, EndPosition );
+                    break;
+            }
         }
 
         //-------------------------------------------------------------------------//
 
-        public static void AddBrush( BasicBrush brush )
+        public static void CreateBrush()
         {
-            mBrush.Add( brush );
+            if ( BrushSelect != null )
+            {
+                BrushBox BrushBox = new BrushBox();
+                BrushBox.Create( BrushSelect.startPosition, BrushSelect.endPosition );
+                mBrush.Add( BrushBox );
+                ClearBrushSelect();
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static void SetWorldCamera( Camera camera )
+        {
+            WorldCamera = camera;
         }
 
         //-------------------------------------------------------------------------//
@@ -84,6 +123,8 @@ namespace lifeMap.src.system
         }
 
         //-------------------------------------------------------------------------//
+
+        public static Camera WorldCamera = null;
 
         private static BrushSelect BrushSelect = null;
         private static List<BasicBrush> mBrush = new List<BasicBrush>();

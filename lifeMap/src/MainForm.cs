@@ -28,11 +28,11 @@ namespace lifeMap
         {
             InitializeComponent();
 
-            Viewport1 = new Viewport( view1, Viewport.TypeViewport.Textured_3D, label_viewport1, vScrollBar_viewport1, hScrollBar_viewport1 );
+            Viewport1 = new Viewport( view1, Viewport.TypeViewport.Textured_3D, label_viewport1, vScrollBar_viewport1, hScrollBar_viewport1 );           
             Viewport1.bEnabled = false;
 
             Viewport2 = new Viewport( view2, Viewport.TypeViewport.Top_2D_xy, label_viewport2, vScrollBar__viewport2, hScrollBar_viewport2 );
-            Viewport2.bEnabled = false;
+            Viewport2.bEnabled = false;          
 
             Viewport3 = new Viewport( view3, Viewport.TypeViewport.Front_2D_yz, label_viewport3, vScrollBar_viewport3, hScrollBar_viewport3 );
             Viewport3.bEnabled = false;
@@ -40,10 +40,15 @@ namespace lifeMap
             Viewport4 = new Viewport( view4, Viewport.TypeViewport.Side_2D_xz, label_viewport4, vScrollBar_viewport4, hScrollBar_viewport4 );
             Viewport4.bEnabled = false;
 
-            view1.MouseWheel += new MouseEventHandler( view1_MouseWheel );   
+            view1.MouseWheel += new MouseEventHandler( view1_MouseWheel );
             view2.MouseWheel += new MouseEventHandler( view2_MouseWheel );
             view3.MouseWheel += new MouseEventHandler( view3_MouseWheel );
-            view4.MouseWheel += new MouseEventHandler( view4_MouseWheel );   
+            view4.MouseWheel += new MouseEventHandler( view4_MouseWheel );
+
+            Scene.SetWorldCamera( Viewport1.Camera );
+            Viewport2.Camera.SetPosition( new Vector3f( view2.Width / 2, view2.Height / 2, 0 ) );
+            Viewport3.Camera.SetPosition( new Vector3f( view2.Width / 2, view2.Height / 2, 0 ) );
+            Viewport4.Camera.SetPosition( new Vector3f( view2.Width / 2, view2.Height / 2, 0 ) );
         }
 
         //-------------------------------------------------------------------------//
@@ -161,15 +166,26 @@ namespace lifeMap
         {
             if ( Viewport2.bEnabled )
             {
-                Mouse.Position = new Vector3f( e.X, Math.Abs( e.Y - view2.Height ), 0 );
+                Mouse.UpdatePosition( e.X, Math.Abs( e.Y - view2.Height ), Viewport.fSize );
 
-                if ( Mouse.MouseClick )
+                if ( Mouse.IsClick )
                 {
-                    BrushSelect BrushSelect = new BrushSelect();
-                    BrushSelect.Create( Mouse.ClickPosition, Mouse.Position );
-                    Scene.SetBrushSelect( BrushSelect );
+                    switch ( Program.selectTool )
+                    {
+                        case Program.SelectTool.BoxTool:
+                        case Program.SelectTool.CursorTool:
+                            Scene.CreateBrushSelect( Viewport2.type, Viewport2.Camera );
+                            break;
+
+                        case Program.SelectTool.CameraTool:
+                            break;
+
+                        case Program.SelectTool.EntityTool:
+                            break;
+                    }
+
                     Refresh();
-                }      
+                }
             }
         }
 
@@ -179,22 +195,30 @@ namespace lifeMap
         {
             if ( Viewport2.bEnabled )
             {
-                if ( !Mouse.MouseClick )
-                {
-                    Mouse.ClickPosition = new Vector3f( Program.Align( Mouse.Position.X, Viewport.fSize ), Program.Align( Mouse.Position.Y, Viewport.fSize ), 0 ); ;
-                    Mouse.MouseClick = true;
-                }
+                if ( !Mouse.IsClick )
+                    Mouse.SetClick();
                 else
                 {
-                    if ( Scene.GetBrushSelect() != null )
+                    switch ( Program.selectTool )
                     {
-                        BrushBox BrushBox = new BrushBox();
-                        BrushBox.Create( Mouse.ClickPosition, Mouse.Position );
-                        Scene.AddBrush( BrushBox );
-                        Scene.ClearBrushSelect();
-                        Refresh();
+                        case Program.SelectTool.CursorTool:
+                            if ( Scene.GetBrushSelect() != null )
+                                Scene.ClearBrushSelect();
+                            break;
+
+                        case Program.SelectTool.CameraTool:
+                            break;
+
+                        case Program.SelectTool.EntityTool:
+                            break;
+
+                        case Program.SelectTool.BoxTool:
+                            Scene.CreateBrush();
+                            break;
                     }
-                    Mouse.MouseClick = false;
+
+                    Refresh();
+                    Mouse.RemoveClick();
                 }
             }
         }
@@ -203,24 +227,126 @@ namespace lifeMap
 
         private void view3_Click( object sender, EventArgs e )
         {
+            if ( Viewport3.bEnabled )
+            {
+                if ( !Mouse.IsClick )
+                    Mouse.SetClick();
+                else
+                {
+                    switch ( Program.selectTool )
+                    {
+                        case Program.SelectTool.CursorTool:
+                            if ( Scene.GetBrushSelect() != null )
+                                Scene.ClearBrushSelect();
+                            break;
+
+                        case Program.SelectTool.CameraTool:
+                            break;
+
+                        case Program.SelectTool.EntityTool:
+                            break;
+
+                        case Program.SelectTool.BoxTool:
+                            Scene.CreateBrush();
+                            break;
+                    }
+
+                    Refresh();
+                    Mouse.RemoveClick();
+                }
+            }
         }
 
         //-------------------------------------------------------------------------//
 
         private void view3_MouseMove( object sender, MouseEventArgs e )
         {
+            if ( Viewport3.bEnabled )
+            {
+                Mouse.UpdatePosition( e.X, Math.Abs( e.Y - view2.Height ), Viewport.fSize );
+
+                if ( Mouse.IsClick )
+                {
+                    switch ( Program.selectTool )
+                    {
+                        case Program.SelectTool.BoxTool:
+                        case Program.SelectTool.CursorTool:
+                            Scene.CreateBrushSelect( Viewport3.type, Viewport3.Camera );
+                            break;
+
+                        case Program.SelectTool.CameraTool:
+                            break;
+
+                        case Program.SelectTool.EntityTool:
+                            break;
+                    }
+
+                    Refresh();
+                }
+            }
         }
 
         //-------------------------------------------------------------------------//
 
         private void view4_Click( object sender, EventArgs e )
         {
+            if ( Viewport4.bEnabled )
+            {
+                if ( !Mouse.IsClick )
+                    Mouse.SetClick();
+                else
+                {
+                    switch ( Program.selectTool )
+                    {
+                        case Program.SelectTool.CursorTool:
+                            if ( Scene.GetBrushSelect() != null )
+                                Scene.ClearBrushSelect();
+                            break;
+
+                        case Program.SelectTool.CameraTool:
+                            break;
+
+                        case Program.SelectTool.EntityTool:
+                            break;
+
+                        case Program.SelectTool.BoxTool:
+                            Scene.CreateBrush();
+                            break;
+                    }
+
+                    Refresh();
+                    Mouse.RemoveClick();
+                }
+            }
         }
 
         //-------------------------------------------------------------------------//
 
         private void view4_MouseMove( object sender, MouseEventArgs e )
         {
+            if ( Viewport2.bEnabled )
+            {
+                Mouse.UpdatePosition( e.X, Math.Abs( e.Y - view2.Height ), Viewport.fSize );
+
+                if ( Mouse.IsClick )
+                {
+                    switch ( Program.selectTool )
+                    {
+                        case Program.SelectTool.BoxTool:
+                        case Program.SelectTool.CursorTool:
+                            Scene.CreateBrushSelect( Viewport4.type, Viewport4.Camera );
+                            break;
+
+                        case Program.SelectTool.CameraTool:
+                            break;
+
+                        case Program.SelectTool.EntityTool:
+                            break;
+                    }
+
+                    Refresh();
+                }
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -397,8 +523,47 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        private void button_cursor_Click( object sender, EventArgs e )
+        {
+            Program.selectTool = Program.SelectTool.CursorTool;
+            Scene.ClearBrushSelect();
+            Mouse.RemoveClick();
+            Refresh();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void button_camera_Click( object sender, EventArgs e )
+        {
+            Program.selectTool = Program.SelectTool.CameraTool;
+            Scene.ClearBrushSelect();        
+            Mouse.RemoveClick();
+            Refresh();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void button_entitytool_Click( object sender, EventArgs e )
+        {
+            Program.selectTool = Program.SelectTool.EntityTool;
+            Scene.ClearBrushSelect();
+            Mouse.RemoveClick();
+            Refresh();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void button_boxtool_Click( object sender, EventArgs e )
+        {
+            Program.selectTool = Program.SelectTool.BoxTool;
+            Scene.ClearBrushSelect();
+            Mouse.RemoveClick();
+            Refresh();
+        }
+
+        //-------------------------------------------------------------------------//
+
         private Viewport TmpViewport;
-        private Mouse Mouse = new Mouse();
         private Viewport Viewport1;
         private Viewport Viewport2;
         private Viewport Viewport3;
