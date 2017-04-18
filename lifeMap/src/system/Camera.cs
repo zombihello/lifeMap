@@ -14,6 +14,10 @@ namespace lifeMap.src.system
     {
         //-------------------------------------------------------------------------//
 
+        public Camera() { }
+
+        //-------------------------------------------------------------------------//
+
         public Camera( SimpleOpenGlControl view )
         {
             View = view;
@@ -28,18 +32,18 @@ namespace lifeMap.src.system
             switch ( typeViewport )
             {
                 case Viewport.TypeViewport.Textured_3D:
-                    if ( Program.selectTool == Program.SelectTool.CameraTool )
+                    if ( Mouse.TypeViewportClicked == typeViewport && Program.selectTool == Program.SelectTool.CameraTool )
                     {
-                        Angle.X = View.Width / 2 - System.Windows.Forms.Cursor.Position.X;
-                        Angle.Y = View.Height / 2 - System.Windows.Forms.Cursor.Position.Y;
-
+                        Angle.X = View.Width / 2 - System.Windows.Forms.Form.MousePosition.X;
+                        Angle.Y = View.Height / 2 - System.Windows.Forms.Form.MousePosition.Y;
+                     
                         if ( Angle.Y < -89.0f )
                             Angle.Y = -89.0f;
                         else if ( Angle.Y > 89.0f )
                             Angle.Y = 89.0f;
                     }
 
-                    Glu.gluLookAt( Position.X, Position.Y, Position.Z, Position.X - Math.Sin( Angle.X / 180 * 3.14f ), Position.Y + Math.Tan( Angle.Y / 180 * 3.14f ), Position.Z- Math.Cos( Angle.X / 180 * 3.14f ), 0, 1, 0 );
+                    Glu.gluLookAt( Position.X, Position.Y, Position.Z, Position.X - Math.Sin( Angle.X / 180 * 3.14f ), Position.Y + Math.Tan( Angle.Y / 180 * 3.14f ), Position.Z - Math.Cos( Angle.X / 180 * 3.14f ), 0, 1, 0 );
                     break;
 
                 case Viewport.TypeViewport.Top_2D_xy:
@@ -58,8 +62,8 @@ namespace lifeMap.src.system
         {
             Gl.glEnable( Gl.GL_POINT_SMOOTH );
             Gl.glPointSize( 5f );
-                    
-            Gl.glBegin( Gl.GL_POINTS );        
+
+            Gl.glBegin( Gl.GL_POINTS );
             Gl.glColor3f( 0.5f, 0.5f, 1 );
 
             Gl.glVertex3f( Scene.WorldCamera.Position.X, Scene.WorldCamera.Position.Y, Scene.WorldCamera.Position.Z );
@@ -74,6 +78,13 @@ namespace lifeMap.src.system
         {
             this.Position = Position;
             Gl.glTranslatef( Position.X, Position.Y, Position.Z );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public void SetViewport( SimpleOpenGlControl view )
+        {
+            View = view;
         }
 
         //-------------------------------------------------------------------------//

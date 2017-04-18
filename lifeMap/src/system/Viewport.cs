@@ -22,6 +22,7 @@ namespace lifeMap.src
 
         public enum TypeViewport
         {
+            None,
             Top_2D_xy,
             Front_2D_yz,
             Side_2D_xz,
@@ -78,7 +79,7 @@ namespace lifeMap.src
             else
             {
                 Glu.gluPerspective( 45f, ( float )View.Width / ( float )View.Height, 0.1f, 1000.0f );
-                Camera.SetPosition( new Vector3f( 0, 0, -300 ) );
+                Scene.WorldCamera.SetPosition( Scene.WorldCamera.Position );
             }
 
             Gl.glClearColor( 0, 0, 0, 0 );
@@ -86,13 +87,14 @@ namespace lifeMap.src
 
             if ( bEnabled )
             {
-                Camera.Update( type );
-
                 if ( type != TypeViewport.Textured_3D )
                 {
+                    Camera.Update( type );
                     RenderGrid();
                     Camera.RenderCamera();
                 }
+                else
+                    Scene.WorldCamera.Update( type );
 
                 Scene.UpdateScene( type );
             }

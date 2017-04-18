@@ -449,7 +449,10 @@
             this.view1.Size = new System.Drawing.Size(352, 279);
             this.view1.StencilBits = ((byte)(0));
             this.view1.TabIndex = 23;
+            this.view1.Click += new System.EventHandler(this.view1_Click);
             this.view1.Paint += new System.Windows.Forms.PaintEventHandler(this.view1_Paint);
+            this.view1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view1_KeyDown);
+            this.view1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view1_MouseMove);
             // 
             // table_viewport
             // 
@@ -494,6 +497,8 @@
             this.vScrollBar_viewport4.Name = "vScrollBar_viewport4";
             this.vScrollBar_viewport4.Size = new System.Drawing.Size(17, 285);
             this.vScrollBar_viewport4.TabIndex = 3;
+            this.vScrollBar_viewport4.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar_viewport4_Scroll);
+            this.vScrollBar_viewport4.ValueChanged += new System.EventHandler(this.vScrollBar_viewport4_ValueChanged);
             // 
             // hScrollBar_viewport4
             // 
@@ -503,6 +508,8 @@
             this.hScrollBar_viewport4.Name = "hScrollBar_viewport4";
             this.hScrollBar_viewport4.Size = new System.Drawing.Size(336, 17);
             this.hScrollBar_viewport4.TabIndex = 2;
+            this.hScrollBar_viewport4.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar_viewport4_Scroll);
+            this.hScrollBar_viewport4.ValueChanged += new System.EventHandler(this.hScrollBar_viewport4_ValueChanged);
             // 
             // label_viewport4
             // 
@@ -540,6 +547,8 @@
             this.vScrollBar_viewport3.Name = "vScrollBar_viewport3";
             this.vScrollBar_viewport3.Size = new System.Drawing.Size(17, 282);
             this.vScrollBar_viewport3.TabIndex = 3;
+            this.vScrollBar_viewport3.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar_viewport3_Scroll);
+            this.vScrollBar_viewport3.ValueChanged += new System.EventHandler(this.vScrollBar_viewport3_ValueChanged);
             // 
             // hScrollBar_viewport3
             // 
@@ -549,6 +558,8 @@
             this.hScrollBar_viewport3.Name = "hScrollBar_viewport3";
             this.hScrollBar_viewport3.Size = new System.Drawing.Size(336, 17);
             this.hScrollBar_viewport3.TabIndex = 2;
+            this.hScrollBar_viewport3.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar_viewport3_Scroll);
+            this.hScrollBar_viewport3.ValueChanged += new System.EventHandler(this.hScrollBar_viewport3_ValueChanged);
             // 
             // label_viewport3
             // 
@@ -597,20 +608,26 @@
             // 
             this.vScrollBar__viewport2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.vScrollBar__viewport2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.vScrollBar__viewport2.Cursor = System.Windows.Forms.Cursors.Default;
             this.vScrollBar__viewport2.Location = new System.Drawing.Point(336, -2);
             this.vScrollBar__viewport2.Name = "vScrollBar__viewport2";
             this.vScrollBar__viewport2.Size = new System.Drawing.Size(17, 281);
             this.vScrollBar__viewport2.TabIndex = 1;
+            this.vScrollBar__viewport2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar__viewport2_Scroll);
+            this.vScrollBar__viewport2.ValueChanged += new System.EventHandler(this.vScrollBar__viewport2_ValueChanged);
             // 
             // hScrollBar_viewport2
             // 
             this.hScrollBar_viewport2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.hScrollBar_viewport2.LargeChange = 1;
             this.hScrollBar_viewport2.Location = new System.Drawing.Point(0, 262);
+            this.hScrollBar_viewport2.Minimum = -100;
             this.hScrollBar_viewport2.Name = "hScrollBar_viewport2";
             this.hScrollBar_viewport2.Size = new System.Drawing.Size(336, 17);
             this.hScrollBar_viewport2.TabIndex = 0;
+            this.hScrollBar_viewport2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar_viewport2_Scroll);
+            this.hScrollBar_viewport2.ValueChanged += new System.EventHandler(this.hScrollBar_viewport2_ValueChanged);
             // 
             // panel_viewport1
             // 
@@ -629,11 +646,13 @@
             // 
             this.vScrollBar_viewport1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.vScrollBar_viewport1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.vScrollBar_viewport1.Cursor = System.Windows.Forms.Cursors.Default;
             this.vScrollBar_viewport1.Location = new System.Drawing.Point(336, -1);
             this.vScrollBar_viewport1.Name = "vScrollBar_viewport1";
             this.vScrollBar_viewport1.Size = new System.Drawing.Size(17, 280);
             this.vScrollBar_viewport1.TabIndex = 26;
+            this.vScrollBar_viewport1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.vScrollBar_viewport1_Scroll);
+            this.vScrollBar_viewport1.ValueChanged += new System.EventHandler(this.vScrollBar_viewport1_ValueChanged);
             // 
             // hScrollBar_viewport1
             // 
@@ -643,6 +662,8 @@
             this.hScrollBar_viewport1.Name = "hScrollBar_viewport1";
             this.hScrollBar_viewport1.Size = new System.Drawing.Size(336, 17);
             this.hScrollBar_viewport1.TabIndex = 25;
+            this.hScrollBar_viewport1.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar_viewport1_Scroll);
+            this.hScrollBar_viewport1.ValueChanged += new System.EventHandler(this.hScrollBar_viewport1_ValueChanged);
             // 
             // label_viewport1
             // 

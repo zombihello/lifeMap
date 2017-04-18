@@ -95,9 +95,9 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public static void SetWorldCamera( Camera camera )
+        public static void SetViewportWorldCamera( SimpleOpenGlControl View )
         {
-            WorldCamera = camera;
+            WorldCamera.SetViewport( View );
         }
 
         //-------------------------------------------------------------------------//
@@ -124,7 +124,7 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public static Camera WorldCamera = null;
+        public static Camera WorldCamera = new Camera();
 
         private static BrushSelect BrushSelect = null;
         private static List<BasicBrush> mBrush = new List<BasicBrush>();

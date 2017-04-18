@@ -48,15 +48,26 @@ namespace lifeMap.src
 
         //-------------------------------------------------------------------------//
 
+        public static void SetClick( Viewport.TypeViewport Type )
+        {
+            ClickPosition = Position;
+            TypeViewportClicked = Type;
+            IsClick = true;
+        }
+
+        //-------------------------------------------------------------------------//
+
         public static void RemoveClick()
         {
             ClickPosition = new Vector3f();
-            IsClick = false;
+            TypeViewportClicked = Viewport.TypeViewport.None;
+            IsClick = false;    
         }
 
         //-------------------------------------------------------------------------//
 
         public static bool IsClick = false;
+        public static Viewport.TypeViewport TypeViewportClicked = Viewport.TypeViewport.None;
         public static Vector3f Position = new Vector3f();
         public static Vector3f ClickPosition = new Vector3f();
     }
