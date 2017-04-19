@@ -97,14 +97,14 @@ namespace lifeMap
                                 Scene.ClearBrushSelect();
                             break;
 
-                        case Program.SelectTool.CameraTool: 
+                        case Program.SelectTool.CameraTool:
                             break;
 
-                        case Program.SelectTool.EntityTool: 
+                        case Program.SelectTool.EntityTool:
                             break;
 
                         case Program.SelectTool.BoxTool:
-                            Scene.CreateBrush();                         
+                            Scene.CreateBrush();
                             break;
                     }
 
@@ -128,7 +128,7 @@ namespace lifeMap
                     {
                         case Program.SelectTool.BoxTool:
                         case Program.SelectTool.CursorTool:
-                            Scene.CreateBrushSelect( Viewport1.type, Viewport1.Camera );  
+                            Scene.CreateBrushSelect( Viewport1.type, Viewport1.Camera );
                             break;
 
                         case Program.SelectTool.CameraTool: break;
@@ -213,11 +213,25 @@ namespace lifeMap
         {
             if ( Viewport1.bEnabled && Viewport1.type == Viewport.TypeViewport.Textured_3D )
             {
-                if ( e.KeyCode == Keys.W )
+                bool IsMove = false;
+
+                switch ( e.KeyCode )
                 {
-                    Scene.WorldCamera.Move( new Vector3f( 0, 0, 1 ) ); // TODO: Сделать движение в сторону мыши (вверх/ввниз особено) 
-                    Refresh();
+                    case Keys.W: Scene.WorldCamera.Move( new Vector3f( 0, 0, 1 ) ); IsMove = true; break; // GO AHEAD
+
+                    case Keys.S: Scene.WorldCamera.Move( new Vector3f( 0, 0, -1 ) ); IsMove = true; break; // GO BACK
+
+                    case Keys.A: Scene.WorldCamera.Move( new Vector3f( 1, 0, 0 ) ); IsMove = true; break; // GO LEFT
+
+                    case Keys.D: Scene.WorldCamera.Move( new Vector3f( -1, 0, 0 ) ); IsMove = true; break; // GO RIGHT
+
+                    case Keys.Q: Scene.WorldCamera.Move( new Vector3f( 0, 1, 0 ) ); IsMove = true; break; // GO UP
+
+                    case Keys.E: Scene.WorldCamera.Move( new Vector3f( 0, -1, 0 ) ); IsMove = true; break; // DOWN
                 }
+
+                if ( IsMove )
+                    Refresh();
             }
         }
 
@@ -246,7 +260,7 @@ namespace lifeMap
                     {
                         case Program.SelectTool.BoxTool:
                         case Program.SelectTool.CursorTool:
-                            Scene.CreateBrushSelect( Viewport2.type, Viewport2.Camera );    
+                            Scene.CreateBrushSelect( Viewport2.type, Viewport2.Camera );
                             break;
 
                         case Program.SelectTool.CameraTool: break;
@@ -281,7 +295,7 @@ namespace lifeMap
                         case Program.SelectTool.EntityTool: break;
 
                         case Program.SelectTool.BoxTool:
-                            Scene.CreateBrush();    
+                            Scene.CreateBrush();
                             break;
                     }
 

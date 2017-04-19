@@ -70,7 +70,7 @@ namespace lifeMap.src
             View.MakeCurrent();
 
             //Инициализация OpenGL
-            Gl.glMatrixMode( Gl.GL_MODELVIEW );
+            Gl.glMatrixMode( Gl.GL_PROJECTION );
             Gl.glLoadIdentity();
             Gl.glViewport( 0, 0, View.Width, View.Height );
 
@@ -81,6 +81,9 @@ namespace lifeMap.src
                 Glu.gluPerspective( 45f, ( float )View.Width / ( float )View.Height, 0.1f, 1000.0f );
                 Scene.WorldCamera.SetPosition( Scene.WorldCamera.Position );
             }
+
+            Gl.glMatrixMode( Gl.GL_MODELVIEW );
+            Gl.glLoadIdentity();
 
             Gl.glClearColor( 0, 0, 0, 0 );
             Gl.glClear( Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT );
@@ -95,7 +98,7 @@ namespace lifeMap.src
                 }
                 else
                     Scene.WorldCamera.Update( type );
-
+                
                 Scene.UpdateScene( type );
             }
         }

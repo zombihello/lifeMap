@@ -61,7 +61,6 @@
             this.button_cursor = new System.Windows.Forms.Button();
             this.view4 = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.view3 = new Tao.Platform.Windows.SimpleOpenGlControl();
-            this.view2 = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.view1 = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.table_viewport = new System.Windows.Forms.TableLayoutPanel();
             this.panel_viewport4 = new System.Windows.Forms.Panel();
@@ -76,6 +75,7 @@
             this.label_viewport2 = new System.Windows.Forms.Label();
             this.vScrollBar__viewport2 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar_viewport2 = new System.Windows.Forms.HScrollBar();
+            this.view2 = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.panel_viewport1 = new System.Windows.Forms.Panel();
             this.vScrollBar_viewport1 = new System.Windows.Forms.VScrollBar();
             this.hScrollBar_viewport1 = new System.Windows.Forms.HScrollBar();
@@ -413,26 +413,6 @@
             this.view3.Paint += new System.Windows.Forms.PaintEventHandler(this.view3_Paint);
             this.view3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view3_MouseMove);
             // 
-            // view2
-            // 
-            this.view2.AccumBits = ((byte)(0));
-            this.view2.AutoCheckErrors = false;
-            this.view2.AutoFinish = false;
-            this.view2.AutoMakeCurrent = true;
-            this.view2.AutoSwapBuffers = true;
-            this.view2.BackColor = System.Drawing.Color.Black;
-            this.view2.ColorBits = ((byte)(32));
-            this.view2.DepthBits = ((byte)(16));
-            this.view2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.view2.Location = new System.Drawing.Point(0, 0);
-            this.view2.Name = "view2";
-            this.view2.Size = new System.Drawing.Size(352, 279);
-            this.view2.StencilBits = ((byte)(0));
-            this.view2.TabIndex = 23;
-            this.view2.Click += new System.EventHandler(this.view2_Click);
-            this.view2.Paint += new System.Windows.Forms.PaintEventHandler(this.view2_Paint);
-            this.view2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view2_MouseMove);
-            // 
             // view1
             // 
             this.view1.AccumBits = ((byte)(0));
@@ -629,6 +609,26 @@
             this.hScrollBar_viewport2.Scroll += new System.Windows.Forms.ScrollEventHandler(this.hScrollBar_viewport2_Scroll);
             this.hScrollBar_viewport2.ValueChanged += new System.EventHandler(this.hScrollBar_viewport2_ValueChanged);
             // 
+            // view2
+            // 
+            this.view2.AccumBits = ((byte)(0));
+            this.view2.AutoCheckErrors = false;
+            this.view2.AutoFinish = false;
+            this.view2.AutoMakeCurrent = true;
+            this.view2.AutoSwapBuffers = true;
+            this.view2.BackColor = System.Drawing.Color.Black;
+            this.view2.ColorBits = ((byte)(32));
+            this.view2.DepthBits = ((byte)(16));
+            this.view2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.view2.Location = new System.Drawing.Point(0, 0);
+            this.view2.Name = "view2";
+            this.view2.Size = new System.Drawing.Size(352, 279);
+            this.view2.StencilBits = ((byte)(0));
+            this.view2.TabIndex = 23;
+            this.view2.Click += new System.EventHandler(this.view2_Click);
+            this.view2.Paint += new System.Windows.Forms.PaintEventHandler(this.view2_Paint);
+            this.view2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view2_MouseMove);
+            // 
             // panel_viewport1
             // 
             this.panel_viewport1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
@@ -798,7 +798,6 @@
         private System.Windows.Forms.ToolStripMenuItem menuBar_Help;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
         private Tao.Platform.Windows.SimpleOpenGlControl view3;
-        private Tao.Platform.Windows.SimpleOpenGlControl view2;
         private Tao.Platform.Windows.SimpleOpenGlControl view1;
         private Tao.Platform.Windows.SimpleOpenGlControl view4;
         private System.Windows.Forms.TableLayoutPanel table_viewport;
@@ -824,6 +823,7 @@
         private System.Windows.Forms.ToolStripMenuItem dTexturedToolStripMenuItem;
         private System.Windows.Forms.VScrollBar vScrollBar_viewport1;
         private System.Windows.Forms.HScrollBar hScrollBar_viewport1;
+        private Tao.Platform.Windows.SimpleOpenGlControl view2;
     }
 }
 

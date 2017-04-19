@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
+using System.Windows.Forms;
 
 using Tao.OpenGl;
 using Tao.FreeGlut;
@@ -21,6 +23,8 @@ namespace lifeMap.src.system
         public Camera( SimpleOpenGlControl view )
         {
             View = view;
+            Point centerView = View.PointToScreen( new Point( View.Width / 2, View.Height / 2 ) );
+            CenterView = new Vector3f( centerView.X, centerView.Y, 0 );
         }
 
         //-------------------------------------------------------------------------//
@@ -34,16 +38,18 @@ namespace lifeMap.src.system
                 case Viewport.TypeViewport.Textured_3D:
                     if ( Mouse.TypeViewportClicked == typeViewport && Program.selectTool == Program.SelectTool.CameraTool )
                     {
-                        Angle.X = View.Width / 2 - System.Windows.Forms.Form.MousePosition.X;
-                        Angle.Y = View.Height / 2 - System.Windows.Forms.Form.MousePosition.Y;
-                     
+                        Angle.X = ( CenterView.X - Control.MousePosition.X ) / 4;
+                        Angle.Y = ( CenterView.Y - Control.MousePosition.Y ) / 4;
+
                         if ( Angle.Y < -89.0f )
                             Angle.Y = -89.0f;
                         else if ( Angle.Y > 89.0f )
                             Angle.Y = 89.0f;
+
+                        //Cursor.Position = View.PointToScreen( new Point( View.Width / 2, View.Height / 2 ) );
                     }
 
-                    Glu.gluLookAt( Position.X, Position.Y, Position.Z, Position.X - Math.Sin( Angle.X / 180 * 3.14f ), Position.Y + Math.Tan( Angle.Y / 180 * 3.14f ), Position.Z - Math.Cos( Angle.X / 180 * 3.14f ), 0, 1, 0 );
+                    Glu.gluLookAt( 0, 0, 0, -Math.Sin( Angle.X / 180 * 3.14f ), Math.Tan( Angle.Y / 180 * 3.14f ), -Math.Cos( Angle.X / 180 * 3.14f ), 0, 1, 0 );
                     break;
 
                 case Viewport.TypeViewport.Top_2D_xy:
@@ -85,6 +91,8 @@ namespace lifeMap.src.system
         public void SetViewport( SimpleOpenGlControl view )
         {
             View = view;
+            Point centerView = View.PointToScreen( new Point( View.Width / 2, View.Height / 2 ) );
+            CenterView = new Vector3f( centerView.X, centerView.Y, 0 );
         }
 
         //-------------------------------------------------------------------------//
@@ -98,8 +106,10 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        private SimpleOpenGlControl View = null;
         public Vector3f Position = new Vector3f();
         public Vector3f Angle = new Vector3f();
+
+        private SimpleOpenGlControl View = null;
+        private Vector3f CenterView = new Vector3f();
     }
 }
