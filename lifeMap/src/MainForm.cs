@@ -72,23 +72,30 @@ namespace lifeMap
 
 
         //-------------------------------------------------------------------------//
-        //                             VIEWPORT 1                                  //
+        //                             VIEWPORT                                    //
         //-------------------------------------------------------------------------//
 
-        private void view1_Paint( object sender, PaintEventArgs e )
+        //-------------------------------------------------------------------------//
+
+        private void Viewport_MouseDown( Viewport Viewport, Vector3f MousePosition )
         {
-            Viewport1.UpdateViewport();
+            if ( Viewport.bEnabled )
+                if ( !Mouse.IsClick )
+                {
+                    Mouse.UpdatePosition( new Vector3f( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), 0 ) );
+                    Mouse.SetClick( Viewport.type );
+
+                    if ( Program.selectTool == Program.SelectTool.CursorTool )
+                        Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ) );
+                }
         }
 
         //-------------------------------------------------------------------------//
 
-        private void view1_Click( object sender, EventArgs e )
+        private void Viewport_MouseUp( Viewport Viewport )
         {
-            if ( Viewport1.bEnabled )
-            {
-                if ( !Mouse.IsClick )
-                    Mouse.SetClick( Viewport1.type );
-                else
+            if ( Viewport.bEnabled )
+                if ( Mouse.IsClick )
                 {
                     switch ( Program.selectTool )
                     {
@@ -97,11 +104,9 @@ namespace lifeMap
                                 Scene.ClearBrushSelect();
                             break;
 
-                        case Program.SelectTool.CameraTool:
-                            break;
+                        case Program.SelectTool.CameraTool: break;
 
-                        case Program.SelectTool.EntityTool:
-                            break;
+                        case Program.SelectTool.EntityTool: break;
 
                         case Program.SelectTool.BoxTool:
                             Scene.CreateBrush();
@@ -109,26 +114,28 @@ namespace lifeMap
                     }
 
                     Refresh();
+
                     Mouse.RemoveClick();
                 }
-            }
         }
 
         //-------------------------------------------------------------------------//
-
-        private void view1_MouseMove( object sender, MouseEventArgs e )
+        private void Viewport_MouseMove( Viewport Viewport, Vector3f MousePosition )
         {
-            if ( Viewport1.bEnabled )
+            if ( Viewport.bEnabled )
             {
-                Mouse.UpdatePosition( e.X, Math.Abs( e.Y - view1.Height ), Viewport.fSize );
+                Mouse.UpdatePosition( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), Viewport.fSize );
 
                 if ( Mouse.IsClick )
                 {
                     switch ( Program.selectTool )
                     {
                         case Program.SelectTool.BoxTool:
+                            Scene.CreateBrushSelect( Viewport.type, Viewport.Camera );
+                            break;
+
                         case Program.SelectTool.CursorTool:
-                            Scene.CreateBrushSelect( Viewport1.type, Viewport1.Camera );
+                            Scene.CreateBrushSelect( Viewport.type, Viewport.Camera );
                             break;
 
                         case Program.SelectTool.CameraTool: break;
@@ -143,96 +150,148 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        private void label_viewport1_MouseClick( object sender, MouseEventArgs e )
+        private void Viewport_Scroll( float OldValue, float NewValue, int IdCoord )
         {
-            if ( Viewport1.bEnabled )
+            if ( IdCoord == 1 )
+                FactorMoveCamera = new Vector3f( -( NewValue - OldValue ) * Viewport.fSize, 0, 0 );
+            else if ( IdCoord == 2 )
+                FactorMoveCamera = new Vector3f( 0, ( NewValue - OldValue ) * Viewport.fSize, 0 );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void Viewport_ValueChanged( Viewport Viewport )
+        {
+            Viewport.Camera.Move( FactorMoveCamera );
+            Viewport.View.Refresh();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void Viewport_SelectTypeViewport( Viewport Viewport )
+        {
+            if ( Viewport.bEnabled )
             {
-                TmpViewport = Viewport1;
+                TmpViewport = Viewport;
                 menuTypeViewport.Show( Cursor.Position.X, Cursor.Position.Y );
             }
         }
 
         //-------------------------------------------------------------------------//
 
-        private void view1_MouseWheel( object sender, MouseEventArgs e )
+        private void Viewport_MouseWheel( Viewport Viewport, HScrollBar hScrollBar, VScrollBar vScrollBar, float Delta )
         {
-            if ( Viewport1.bEnabled && Viewport1.type != Viewport.TypeViewport.Textured_3D )
+            if ( Viewport.bEnabled && Viewport.type != Viewport.TypeViewport.Textured_3D )
             {
-                if ( e.Delta > 0 )
+                if ( Delta > 0 )
                 {
-                    if ( vScrollBar_viewport1.Value < vScrollBar_viewport1.Maximum )
-                        vScrollBar_viewport1.Value += vScrollBar_viewport1.SmallChange;
+                    if ( vScrollBar.Value < vScrollBar.Maximum )
+                        vScrollBar.Value += vScrollBar.SmallChange;
 
-                    if ( hScrollBar_viewport1.Value < hScrollBar_viewport1.Maximum )
-                        hScrollBar_viewport1.Value += hScrollBar_viewport1.SmallChange;
+                    if ( hScrollBar.Value < hScrollBar.Maximum )
+                        hScrollBar.Value += hScrollBar.SmallChange;
                 }
                 else
                 {
-                    if ( hScrollBar_viewport1.Value > hScrollBar_viewport1.Minimum )
-                        hScrollBar_viewport1.Value -= hScrollBar_viewport1.SmallChange;
+                    if ( hScrollBar.Value > hScrollBar.Minimum )
+                        hScrollBar.Value -= hScrollBar.SmallChange;
 
-                    if ( vScrollBar_viewport1.Value > vScrollBar_viewport1.Minimum )
-                        vScrollBar_viewport1.Value -= vScrollBar_viewport1.SmallChange;
+                    if ( vScrollBar.Value > vScrollBar.Minimum )
+                        vScrollBar.Value -= vScrollBar.SmallChange;
                 }
             }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void Viewport_KeyDown( Viewport Viewport, Keys KeyCode )
+        {
+            if ( Viewport.bEnabled && Viewport.type == Viewport.TypeViewport.Textured_3D )
+            {
+                Scene.WorldCamera.Move( KeyCode );
+                Refresh();
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        //-------------------------------------------------------------------------//
+        //                             VIEWPORT 1                                  //
+        //-------------------------------------------------------------------------//
+
+        private void view1_Paint( object sender, PaintEventArgs e )
+        {
+            Viewport1.UpdateViewport();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view1_MouseUp( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseUp( Viewport1 );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view1_MouseDown( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseDown( Viewport1, new Vector3f( e.X, e.Y, 0 ) );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view1_MouseMove( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseMove( Viewport1, new Vector3f( e.X, e.Y, 0 ) );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void label_viewport1_MouseClick( object sender, MouseEventArgs e )
+        {
+            Viewport_SelectTypeViewport( Viewport1 );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view1_MouseWheel( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseWheel( Viewport1, hScrollBar_viewport1, vScrollBar_viewport1, e.Delta );
         }
 
         //-------------------------------------------------------------------------//
 
         private void hScrollBar_viewport1_Scroll( object sender, ScrollEventArgs e )
         {
-            FactorMoveCamera = new Vector3f( -( e.NewValue - e.OldValue ), 0, 0 );
+            Viewport_Scroll( e.OldValue, e.NewValue, 1 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void vScrollBar_viewport1_Scroll( object sender, ScrollEventArgs e )
         {
-            FactorMoveCamera = new Vector3f( 0, e.NewValue - e.OldValue, 0 );
+            Viewport_Scroll( e.OldValue, e.NewValue, 2 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void hScrollBar_viewport1_ValueChanged( object sender, EventArgs e )
         {
-            Viewport1.Camera.Move( FactorMoveCamera );
-            view1.Refresh();
+            Viewport_ValueChanged( Viewport1 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void vScrollBar_viewport1_ValueChanged( object sender, EventArgs e )
         {
-            Viewport1.Camera.Move( FactorMoveCamera );
-            view1.Refresh();
+            Viewport_ValueChanged( Viewport1 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view1_KeyDown( object sender, KeyEventArgs e )
         {
-            if ( Viewport1.bEnabled && Viewport1.type == Viewport.TypeViewport.Textured_3D )
-            {
-                bool IsMove = false;
-
-                switch ( e.KeyCode )
-                {
-                    case Keys.W: Scene.WorldCamera.Move( new Vector3f( 0, 0, 1 ) ); IsMove = true; break; // GO AHEAD
-
-                    case Keys.S: Scene.WorldCamera.Move( new Vector3f( 0, 0, -1 ) ); IsMove = true; break; // GO BACK
-
-                    case Keys.A: Scene.WorldCamera.Move( new Vector3f( 1, 0, 0 ) ); IsMove = true; break; // GO LEFT
-
-                    case Keys.D: Scene.WorldCamera.Move( new Vector3f( -1, 0, 0 ) ); IsMove = true; break; // GO RIGHT
-
-                    case Keys.Q: Scene.WorldCamera.Move( new Vector3f( 0, 1, 0 ) ); IsMove = true; break; // GO UP
-
-                    case Keys.E: Scene.WorldCamera.Move( new Vector3f( 0, -1, 0 ) ); IsMove = true; break; // DOWN
-                }
-
-                if ( IsMove )
-                    Refresh();
-            }
+            Viewport_KeyDown( Viewport1, e.KeyCode );
         }
 
         //-------------------------------------------------------------------------//
@@ -248,132 +307,75 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        private void view2_MouseMove( object sender, MouseEventArgs e )
+        private void view2_MouseDown( object sender, MouseEventArgs e )
         {
-            if ( Viewport2.bEnabled )
-            {
-                Mouse.UpdatePosition( e.X, Math.Abs( e.Y - view2.Height ), Viewport.fSize );
-
-                if ( Mouse.IsClick )
-                {
-                    switch ( Program.selectTool )
-                    {
-                        case Program.SelectTool.BoxTool:
-                        case Program.SelectTool.CursorTool:
-                            Scene.CreateBrushSelect( Viewport2.type, Viewport2.Camera );
-                            break;
-
-                        case Program.SelectTool.CameraTool: break;
-
-                        case Program.SelectTool.EntityTool: break;
-                    }
-
-                    Refresh();
-                }
-            }
+            Viewport_MouseDown( Viewport2, new Vector3f( e.X, e.Y, 0 ) );
         }
 
         //-------------------------------------------------------------------------//
 
-        private void view2_Click( object sender, EventArgs e )
+        private void view2_MouseUp( object sender, MouseEventArgs e )
         {
-            if ( Viewport2.bEnabled )
-            {
-                if ( !Mouse.IsClick )
-                    Mouse.SetClick( Viewport2.type );
-                else
-                {
-                    switch ( Program.selectTool )
-                    {
-                        case Program.SelectTool.CursorTool:
-                            if ( Scene.GetBrushSelect() != null )
-                                Scene.ClearBrushSelect();
-                            break;
+            Viewport_MouseUp( Viewport2 );
+        }
 
-                        case Program.SelectTool.CameraTool: break;
+        //-------------------------------------------------------------------------//
 
-                        case Program.SelectTool.EntityTool: break;
-
-                        case Program.SelectTool.BoxTool:
-                            Scene.CreateBrush();
-                            break;
-                    }
-
-                    Refresh();
-                    Mouse.RemoveClick();
-                }
-            }
+        private void view2_MouseMove( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseMove( Viewport2, new Vector3f( e.X, e.Y, 0 ) );
         }
 
         //-------------------------------------------------------------------------//
 
         private void label_viewport2_MouseClick( object sender, MouseEventArgs e )
         {
-            if ( Viewport2.bEnabled )
-            {
-                TmpViewport = Viewport2;
-                menuTypeViewport.Show( Cursor.Position.X, Cursor.Position.Y );
-            }
+            Viewport_SelectTypeViewport( Viewport2 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view2_MouseWheel( object sender, MouseEventArgs e )
         {
-            if ( Viewport2.bEnabled && Viewport2.type != Viewport.TypeViewport.Textured_3D )
-            {
-                if ( e.Delta > 0 )
-                {
-                    if ( vScrollBar__viewport2.Value < vScrollBar__viewport2.Maximum )
-                        vScrollBar__viewport2.Value += vScrollBar__viewport2.SmallChange;
-
-                    if ( hScrollBar_viewport2.Value < hScrollBar_viewport2.Maximum )
-                        hScrollBar_viewport2.Value += hScrollBar_viewport2.SmallChange;
-                }
-                else
-                {
-                    if ( hScrollBar_viewport2.Value > hScrollBar_viewport2.Minimum )
-                        hScrollBar_viewport2.Value -= hScrollBar_viewport2.SmallChange;
-
-                    if ( vScrollBar__viewport2.Value > vScrollBar__viewport2.Minimum )
-                        vScrollBar__viewport2.Value -= vScrollBar__viewport2.SmallChange;
-                }
-            }
+            Viewport_MouseWheel( Viewport2, hScrollBar_viewport2, vScrollBar__viewport2, e.Delta );
         }
 
         //-------------------------------------------------------------------------//
 
         private void hScrollBar_viewport2_Scroll( object sender, ScrollEventArgs e )
         {
-            FactorMoveCamera = new Vector3f( -( e.NewValue - e.OldValue ), 0, 0 );
+            Viewport_Scroll( e.OldValue, e.NewValue, 1 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void vScrollBar__viewport2_Scroll( object sender, ScrollEventArgs e )
         {
-            FactorMoveCamera = new Vector3f( 0, e.NewValue - e.OldValue, 0 );
+            Viewport_Scroll( e.OldValue, e.NewValue, 2 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void hScrollBar_viewport2_ValueChanged( object sender, EventArgs e )
         {
-            Viewport2.Camera.Move( FactorMoveCamera );
-            view2.Refresh();
+            Viewport_ValueChanged( Viewport2 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void vScrollBar__viewport2_ValueChanged( object sender, EventArgs e )
         {
-            Viewport2.Camera.Move( FactorMoveCamera );
-            view2.Refresh();
+            Viewport_ValueChanged( Viewport2 );
         }
 
         //-------------------------------------------------------------------------//
 
+        private void view2_KeyDown( object sender, KeyEventArgs e )
+        {
+            Viewport_KeyDown( Viewport2, e.KeyCode );
+        }
 
+        //-------------------------------------------------------------------------//
 
         //-------------------------------------------------------------------------//
         //                             VIEWPORT 3                                  //
@@ -386,136 +388,75 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        private void view3_Click( object sender, EventArgs e )
+        private void view3_MouseUp( object sender, MouseEventArgs e )
         {
-            if ( Viewport3.bEnabled )
-            {
-                if ( !Mouse.IsClick )
-                    Mouse.SetClick( Viewport3.type );
-                else
-                {
-                    switch ( Program.selectTool )
-                    {
-                        case Program.SelectTool.CursorTool:
-                            if ( Scene.GetBrushSelect() != null )
-                                Scene.ClearBrushSelect();
-                            break;
+            Viewport_MouseUp( Viewport3 );
+        }
 
-                        case Program.SelectTool.CameraTool:
-                            break;
+        //-------------------------------------------------------------------------//
 
-                        case Program.SelectTool.EntityTool:
-                            break;
-
-                        case Program.SelectTool.BoxTool:
-                            Scene.CreateBrush();
-                            break;
-                    }
-
-                    Refresh();
-                    Mouse.RemoveClick();
-                }
-            }
+        private void view3_MouseDown( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseDown( Viewport3, new Vector3f( e.X, e.Y, 0 ) );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view3_MouseMove( object sender, MouseEventArgs e )
         {
-            if ( Viewport3.bEnabled )
-            {
-                Mouse.UpdatePosition( e.X, Math.Abs( e.Y - view3.Height ), Viewport.fSize );
-
-                if ( Mouse.IsClick )
-                {
-                    switch ( Program.selectTool )
-                    {
-                        case Program.SelectTool.BoxTool:
-                        case Program.SelectTool.CursorTool:
-                            Scene.CreateBrushSelect( Viewport3.type, Viewport3.Camera );
-                            break;
-
-                        case Program.SelectTool.CameraTool:
-                            break;
-
-                        case Program.SelectTool.EntityTool:
-                            break;
-                    }
-
-                    Refresh();
-                }
-            }
+            Viewport_MouseMove( Viewport3, new Vector3f( e.X, e.Y, 0 ) );
         }
 
         //-------------------------------------------------------------------------//
 
         private void label_viewport3_MouseClick( object sender, MouseEventArgs e )
         {
-            if ( Viewport3.bEnabled )
-            {
-                TmpViewport = Viewport3;
-                menuTypeViewport.Show( Cursor.Position.X, Cursor.Position.Y );
-            }
+            Viewport_SelectTypeViewport( Viewport3 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view3_MouseWheel( object sender, MouseEventArgs e )
         {
-            if ( Viewport3.bEnabled && Viewport3.type != Viewport.TypeViewport.Textured_3D )
-            {
-                if ( e.Delta > 0 )
-                {
-                    if ( vScrollBar_viewport3.Value < vScrollBar_viewport3.Maximum )
-                        vScrollBar_viewport3.Value += vScrollBar_viewport3.SmallChange;
-
-                    if ( hScrollBar_viewport3.Value < hScrollBar_viewport3.Maximum )
-                        hScrollBar_viewport3.Value += hScrollBar_viewport3.SmallChange;
-                }
-                else
-                {
-                    if ( hScrollBar_viewport3.Value > hScrollBar_viewport3.Minimum )
-                        hScrollBar_viewport3.Value -= hScrollBar_viewport3.SmallChange;
-
-                    if ( vScrollBar_viewport3.Value > vScrollBar_viewport3.Minimum )
-                        vScrollBar_viewport3.Value -= vScrollBar_viewport3.SmallChange;
-                }
-            }
+            Viewport_MouseWheel( Viewport3, hScrollBar_viewport3, vScrollBar_viewport3, e.Delta );
         }
 
         //-------------------------------------------------------------------------//
 
         private void hScrollBar_viewport3_Scroll( object sender, ScrollEventArgs e )
         {
-            FactorMoveCamera = new Vector3f( -( e.NewValue - e.OldValue ), 0, 0 );
+            Viewport_Scroll( e.OldValue, e.NewValue, 1 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void vScrollBar_viewport3_Scroll( object sender, ScrollEventArgs e )
         {
-            FactorMoveCamera = new Vector3f( 0, e.NewValue - e.OldValue, 0 );
+            Viewport_Scroll( e.OldValue, e.NewValue, 2 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void hScrollBar_viewport3_ValueChanged( object sender, EventArgs e )
         {
-            Viewport3.Camera.Move( FactorMoveCamera );
-            view3.Refresh();
+            Viewport_ValueChanged( Viewport3 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void vScrollBar_viewport3_ValueChanged( object sender, EventArgs e )
         {
-            Viewport3.Camera.Move( FactorMoveCamera );
-            view3.Refresh();
+            Viewport_ValueChanged( Viewport3 );
         }
 
         //-------------------------------------------------------------------------//
 
+        private void view3_KeyDown( object sender, KeyEventArgs e )
+        {
+            Viewport_KeyDown( Viewport3, e.KeyCode );
+        }
 
+        //-------------------------------------------------------------------------//
 
         //-------------------------------------------------------------------------//
         //                             VIEWPORT 4                                  //
@@ -528,136 +469,75 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        private void view4_Click( object sender, EventArgs e )
+        private void view4_MouseUp( object sender, MouseEventArgs e )
         {
-            if ( Viewport4.bEnabled )
-            {
-                if ( !Mouse.IsClick )
-                    Mouse.SetClick( Viewport4.type );
-                else
-                {
-                    switch ( Program.selectTool )
-                    {
-                        case Program.SelectTool.CursorTool:
-                            if ( Scene.GetBrushSelect() != null )
-                                Scene.ClearBrushSelect();
-                            break;
+            Viewport_MouseUp( Viewport4 );
+        }
 
-                        case Program.SelectTool.CameraTool:
-                            break;
+        //-------------------------------------------------------------------------//
 
-                        case Program.SelectTool.EntityTool:
-                            break;
-
-                        case Program.SelectTool.BoxTool:
-                            Scene.CreateBrush();
-                            break;
-                    }
-
-                    Refresh();
-                    Mouse.RemoveClick();
-                }
-            }
+        private void view4_MouseDown( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseDown( Viewport4, new Vector3f( e.X, e.Y, 0 ) );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view4_MouseMove( object sender, MouseEventArgs e )
         {
-            if ( Viewport2.bEnabled )
-            {
-                Mouse.UpdatePosition( e.X, Math.Abs( e.Y - view4.Height ), Viewport.fSize );
-
-                if ( Mouse.IsClick )
-                {
-                    switch ( Program.selectTool )
-                    {
-                        case Program.SelectTool.BoxTool:
-                        case Program.SelectTool.CursorTool:
-                            Scene.CreateBrushSelect( Viewport4.type, Viewport4.Camera );
-                            break;
-
-                        case Program.SelectTool.CameraTool:
-                            break;
-
-                        case Program.SelectTool.EntityTool:
-                            break;
-                    }
-
-                    Refresh();
-                }
-            }
+            Viewport_MouseMove( Viewport4, new Vector3f( e.X, e.Y, 0 ) );
         }
 
         //-------------------------------------------------------------------------//
 
         private void label_viewport4_MouseClick( object sender, MouseEventArgs e )
         {
-            if ( Viewport4.bEnabled )
-            {
-                TmpViewport = Viewport4;
-                menuTypeViewport.Show( Cursor.Position.X, Cursor.Position.Y );
-            }
+            Viewport_SelectTypeViewport( Viewport4 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view4_MouseWheel( object sender, MouseEventArgs e )
         {
-            if ( Viewport4.bEnabled && Viewport4.type != Viewport.TypeViewport.Textured_3D )
-            {
-                if ( e.Delta > 0 )
-                {
-                    if ( vScrollBar_viewport4.Value < vScrollBar_viewport4.Maximum )
-                        vScrollBar_viewport4.Value += vScrollBar_viewport4.SmallChange;
-
-                    if ( hScrollBar_viewport4.Value < hScrollBar_viewport4.Maximum )
-                        hScrollBar_viewport4.Value += hScrollBar_viewport4.SmallChange;
-                }
-                else
-                {
-                    if ( hScrollBar_viewport4.Value > hScrollBar_viewport4.Minimum )
-                        hScrollBar_viewport4.Value -= hScrollBar_viewport4.SmallChange;
-
-                    if ( vScrollBar_viewport4.Value > vScrollBar_viewport4.Minimum )
-                        vScrollBar_viewport4.Value -= vScrollBar_viewport4.SmallChange;
-                }
-            }
+            Viewport_MouseWheel( Viewport4, hScrollBar_viewport4, vScrollBar_viewport4, e.Delta );
         }
 
         //-------------------------------------------------------------------------//
 
         private void hScrollBar_viewport4_Scroll( object sender, ScrollEventArgs e )
         {
-            FactorMoveCamera = new Vector3f( -( e.NewValue - e.OldValue ), 0, 0 );
+            Viewport_Scroll( e.OldValue, e.NewValue, 1 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void vScrollBar_viewport4_Scroll( object sender, ScrollEventArgs e )
         {
-            FactorMoveCamera = new Vector3f( 0, e.NewValue - e.OldValue, 0 );
+            Viewport_Scroll( e.OldValue, e.NewValue, 2 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void hScrollBar_viewport4_ValueChanged( object sender, EventArgs e )
         {
-            Viewport4.Camera.Move( FactorMoveCamera );
-            view4.Refresh();
+            Viewport_ValueChanged( Viewport4 );
         }
 
         //-------------------------------------------------------------------------//
 
         private void vScrollBar_viewport4_ValueChanged( object sender, EventArgs e )
         {
-            Viewport4.Camera.Move( FactorMoveCamera );
-            view4.Refresh();
+            Viewport_ValueChanged( Viewport4 );
         }
 
         //-------------------------------------------------------------------------//
 
+        private void view4_KeyDown( object sender, KeyEventArgs e )
+        {
+            Viewport_KeyDown( Viewport4, e.KeyCode );
+        }
 
+        //-------------------------------------------------------------------------//
 
         //-------------------------------------------------------------------------//
         //                             MENU BAR                                    //
@@ -809,8 +689,6 @@ namespace lifeMap
         }
 
         //-------------------------------------------------------------------------//
-
-
 
         private Viewport TmpViewport;
         private Viewport Viewport1;

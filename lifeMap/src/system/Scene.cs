@@ -58,7 +58,7 @@ namespace lifeMap.src.system
             {
                 case Viewport.TypeViewport.Top_2D_xy:
                     BrushSelect = new BrushSelect();
-                    StartPosition.Z = StartPosition.Y; 
+                    StartPosition.Z = StartPosition.Y;
                     EndPosition.Z = EndPosition.Y;
                     StartPosition.Y = EndPosition.Y = 0;
                     BrushSelect.Create( StartPosition, EndPosition );
@@ -90,6 +90,27 @@ namespace lifeMap.src.system
                 BrushBox.Create( BrushSelect.startPosition, BrushSelect.endPosition );
                 mBrush.Add( BrushBox );
                 ClearBrushSelect();
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static void SelectBrush( Vector3f PositionClick )
+        {
+            Random rand = new Random();
+            for ( int i = 0; i < mBrush.Count; i++ )
+            {
+                if ( PositionClick.X >= mBrush[i].CenterBrush.X - 5 &&
+                     PositionClick.X <= mBrush[i].CenterBrush.X + 5 ||
+                     PositionClick.Y >= mBrush[i].CenterBrush.Y - 5 &&
+                     PositionClick.Y <= mBrush[i].CenterBrush.Y + 5 )
+
+                    if ( PositionClick.Y >= mBrush[i].CenterBrush.Y - 5 &&
+                        PositionClick.Y <= mBrush[i].CenterBrush.Y + 5 ||
+                        PositionClick.Y >= mBrush[i].CenterBrush.Z - 5 &&
+                        PositionClick.Y <= mBrush[i].CenterBrush.Z + 5 )
+
+                        mBrush[i].SetColorBrush( new Color( rand.Next( 0, 255 ) / 100, rand.Next( 0, 255 ) / 100, rand.Next( 0, 255 ) / 100 ) );
             }
         }
 

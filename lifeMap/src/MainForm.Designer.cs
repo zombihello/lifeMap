@@ -389,9 +389,11 @@
             this.view4.Size = new System.Drawing.Size(352, 280);
             this.view4.StencilBits = ((byte)(0));
             this.view4.TabIndex = 23;
-            this.view4.Click += new System.EventHandler(this.view4_Click);
             this.view4.Paint += new System.Windows.Forms.PaintEventHandler(this.view4_Paint);
+            this.view4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view4_KeyDown);
+            this.view4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view4_MouseDown);
             this.view4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view4_MouseMove);
+            this.view4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.view4_MouseUp);
             // 
             // view3
             // 
@@ -409,9 +411,11 @@
             this.view3.Size = new System.Drawing.Size(352, 280);
             this.view3.StencilBits = ((byte)(0));
             this.view3.TabIndex = 23;
-            this.view3.Click += new System.EventHandler(this.view3_Click);
             this.view3.Paint += new System.Windows.Forms.PaintEventHandler(this.view3_Paint);
+            this.view3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view3_KeyDown);
+            this.view3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view3_MouseDown);
             this.view3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view3_MouseMove);
+            this.view3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.view3_MouseUp);
             // 
             // view1
             // 
@@ -429,10 +433,11 @@
             this.view1.Size = new System.Drawing.Size(352, 279);
             this.view1.StencilBits = ((byte)(0));
             this.view1.TabIndex = 23;
-            this.view1.Click += new System.EventHandler(this.view1_Click);
             this.view1.Paint += new System.Windows.Forms.PaintEventHandler(this.view1_Paint);
             this.view1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view1_KeyDown);
+            this.view1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view1_MouseDown);
             this.view1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view1_MouseMove);
+            this.view1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.view1_MouseUp);
             // 
             // table_viewport
             // 
@@ -534,7 +539,9 @@
             // 
             this.hScrollBar_viewport3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.hScrollBar_viewport3.LargeChange = 1;
             this.hScrollBar_viewport3.Location = new System.Drawing.Point(0, 263);
+            this.hScrollBar_viewport3.Minimum = -400;
             this.hScrollBar_viewport3.Name = "hScrollBar_viewport3";
             this.hScrollBar_viewport3.Size = new System.Drawing.Size(336, 17);
             this.hScrollBar_viewport3.TabIndex = 2;
@@ -625,9 +632,11 @@
             this.view2.Size = new System.Drawing.Size(352, 279);
             this.view2.StencilBits = ((byte)(0));
             this.view2.TabIndex = 23;
-            this.view2.Click += new System.EventHandler(this.view2_Click);
             this.view2.Paint += new System.Windows.Forms.PaintEventHandler(this.view2_Paint);
+            this.view2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view2_KeyDown);
+            this.view2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view2_MouseDown);
             this.view2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view2_MouseMove);
+            this.view2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.view2_MouseUp);
             // 
             // panel_viewport1
             // 

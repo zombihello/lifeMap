@@ -22,8 +22,10 @@ namespace lifeMap.src.brushes
 
         public void Render( Viewport.TypeViewport typeViewport )
         {
+            RenderCenterBrush( typeViewport );
+
             Gl.glBegin( Gl.GL_LINES );
-            Gl.glColor3f( colorBrush.R, colorBrush.G, colorBrush.B );
+            Gl.glColor3f( ColorBrush.R, ColorBrush.G, ColorBrush.B );
 
             for ( int i = 0; i < mIdVertex.Count; i++ )
             {
@@ -32,6 +34,33 @@ namespace lifeMap.src.brushes
             }
 
             Gl.glEnd();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        protected void RenderCenterBrush( Viewport.TypeViewport typeViewport )
+        {
+            if ( typeViewport != Viewport.TypeViewport.Textured_3D )
+            {
+                Gl.glBegin( Gl.GL_LINES );
+                Gl.glColor3f( ColorBrush.R, ColorBrush.G, ColorBrush.B );
+
+                Gl.glVertex3f( CenterBrush.X - 4, CenterBrush.Y - 4, CenterBrush.Z - 4 );
+                Gl.glVertex3f( CenterBrush.X + 4, CenterBrush.Y + 4, CenterBrush.Z + 4 );
+
+                if ( typeViewport != Viewport.TypeViewport.Front_2D_yz )
+                {
+                    Gl.glVertex3f( CenterBrush.X + 4, CenterBrush.Y - 4, CenterBrush.Z - 4 );
+                    Gl.glVertex3f( CenterBrush.X - 4, CenterBrush.Y + 4, CenterBrush.Z + 4 );
+                }
+                else
+                {
+                    Gl.glVertex3f( CenterBrush.X + 4, CenterBrush.Y - 4, CenterBrush.Z + 4 );
+                    Gl.glVertex3f( CenterBrush.X - 4, CenterBrush.Y + 4, CenterBrush.Z - 4 );
+                }
+
+                Gl.glEnd();
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -50,6 +79,8 @@ namespace lifeMap.src.brushes
             Size.X = EndPosition.X - StartPosition.X;
             Size.Y = EndPosition.Y - StartPosition.Y;
             Size.Z = EndPosition.Z - StartPosition.Z;
+
+            CenterBrush = new Vector3f( StartPosition.X + Size.X / 2f, StartPosition.Y + Size.Y/2, StartPosition.Z + Size.Z / 2f );
 
             this.StartPosition = StartPosition;
         }
@@ -77,8 +108,17 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
-        protected Vector3f Size = new Vector3f();
-        protected Color colorBrush = new Color( 1, 0, 0 );
+        public void SetColorBrush( Color color )
+        {
+            ColorBrush = color;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public Vector3f CenterBrush = new Vector3f();
+
+        protected Vector3f Size = new Vector3f();      
+        protected Color ColorBrush = new Color( 1, 0, 0 );
 
         private Vector3f StartPosition = new Vector3f();
         private List<Vector3f> mVertex = new List<Vector3f>();

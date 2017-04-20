@@ -22,14 +22,14 @@ namespace lifeMap.src.brushes
             // Front
             AddVertex( StartPosition.X, StartPosition.Y, StartPosition.Z ); // 0
             AddVertex( StartPosition.X + Size.X, StartPosition.Y, StartPosition.Z ); // 1
-            AddVertex( StartPosition.X + Size.X, StartPosition.Y + Viewport.fSize, StartPosition.Z ); // 2
-            AddVertex( StartPosition.X, StartPosition.Y + Viewport.fSize, StartPosition.Z ); // 3
+            AddVertex( StartPosition.X + Size.X, StartPosition.Y + Size.Y, StartPosition.Z ); // 2
+            AddVertex( StartPosition.X, StartPosition.Y + Size.Y, StartPosition.Z ); // 3
 
             // Back
             AddVertex( StartPosition.X, StartPosition.Y, StartPosition.Z + Size.Z ); // 4
             AddVertex( StartPosition.X + Size.X, StartPosition.Y, StartPosition.Z + Size.Z ); // 5
-            AddVertex( StartPosition.X + Size.X, StartPosition.Y + Viewport.fSize, StartPosition.Z + Size.Z ); // 6
-            AddVertex( StartPosition.X, StartPosition.Y + Viewport.fSize, StartPosition.Z + Size.Z ); // 7
+            AddVertex( StartPosition.X + Size.X, StartPosition.Y + Size.Y, StartPosition.Z + Size.Z ); // 6
+            AddVertex( StartPosition.X, StartPosition.Y + Size.Y, StartPosition.Z + Size.Z ); // 7
 
             // Front
             AddIdVertex( 0 ); AddIdVertex( 1 ); AddIdVertex( 2 ); AddIdVertex( 3 );

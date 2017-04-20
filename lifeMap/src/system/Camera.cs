@@ -23,33 +23,41 @@ namespace lifeMap.src.system
         public Camera( SimpleOpenGlControl view )
         {
             View = view;
-            Point centerView = View.PointToScreen( new Point( View.Width / 2, View.Height / 2 ) );
-            CenterView = new Vector3f( centerView.X, centerView.Y, 0 );
         }
 
         //-------------------------------------------------------------------------//
 
         public void Update( Viewport.TypeViewport typeViewport )
         {
-            Gl.glTranslatef( Position.X, Position.Y, Position.Z );
+            if ( typeViewport != Viewport.TypeViewport.Textured_3D )
+                Gl.glTranslatef( Position.X, Position.Y, Position.Z );
 
             switch ( typeViewport )
             {
                 case Viewport.TypeViewport.Textured_3D:
                     if ( Mouse.TypeViewportClicked == typeViewport && Program.selectTool == Program.SelectTool.CameraTool )
                     {
-                        Angle.X = ( CenterView.X - Control.MousePosition.X ) / 4;
-                        Angle.Y = ( CenterView.Y - Control.MousePosition.Y ) / 4;
+                        Point CenterView = View.PointToScreen( new Point( View.Width / 2, View.Height / 2 ) );
+
+                        Angle.X += ( CenterView.X - Control.MousePosition.X ) / 4;
+                        Angle.Y += ( CenterView.Y - Control.MousePosition.Y ) / 4;
 
                         if ( Angle.Y < -89.0f )
                             Angle.Y = -89.0f;
                         else if ( Angle.Y > 89.0f )
                             Angle.Y = 89.0f;
 
-                        //Cursor.Position = View.PointToScreen( new Point( View.Width / 2, View.Height / 2 ) );
+                        Cursor.Position = CenterView;
+
+                        CenterPosition = new Vector3f
+                            (
+                            Position.X - ( float )Math.Sin( Angle.X / 180 * Math.PI ),
+                            Position.Y + ( float )Math.Tan( Angle.Y / 180 * Math.PI ),
+                            Position.Z - ( float )Math.Cos( Angle.X / 180 * Math.PI )
+                            );
                     }
 
-                    Glu.gluLookAt( 0, 0, 0, -Math.Sin( Angle.X / 180 * 3.14f ), Math.Tan( Angle.Y / 180 * 3.14f ), -Math.Cos( Angle.X / 180 * 3.14f ), 0, 1, 0 );
+                    Glu.gluLookAt( Position.X, Position.Y, Position.Z, CenterPosition.X, CenterPosition.Y, CenterPosition.Z, 0, 1, 0 );
                     break;
 
                 case Viewport.TypeViewport.Top_2D_xy:
@@ -83,7 +91,6 @@ namespace lifeMap.src.system
         public void SetPosition( Vector3f Position )
         {
             this.Position = Position;
-            Gl.glTranslatef( Position.X, Position.Y, Position.Z );
         }
 
         //-------------------------------------------------------------------------//
@@ -91,8 +98,36 @@ namespace lifeMap.src.system
         public void SetViewport( SimpleOpenGlControl view )
         {
             View = view;
-            Point centerView = View.PointToScreen( new Point( View.Width / 2, View.Height / 2 ) );
-            CenterView = new Vector3f( centerView.X, centerView.Y, 0 );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public void Move( Keys KeyPress )
+        {
+            switch ( KeyPress )
+            {
+                case Keys.W:
+                    Position.X -= ( float )Math.Sin( Angle.X / 180 * Math.PI ) * Speed;
+                    Position.Y += ( float )Math.Tan( Angle.Y / 180 * Math.PI ) * Speed;
+                    Position.Z -= ( float )Math.Cos( Angle.X / 180 * Math.PI ) * Speed;
+                    break;
+
+                case Keys.S:
+                    Position.X += ( float )Math.Sin( Angle.X / 180 * Math.PI ) * Speed;
+                    Position.Y -= ( float )Math.Tan( Angle.Y / 180 * Math.PI ) * Speed;
+                    Position.Z += ( float )Math.Cos( Angle.X / 180 * Math.PI ) * Speed;
+                    break;
+
+                case Keys.A:
+                    Position.X += ( float )Math.Sin( ( Angle.X - 90 ) / 180 * Math.PI ) * Speed;
+                    Position.Z += ( float )Math.Cos( ( Angle.X - 90 ) / 180 * Math.PI ) * Speed;
+                    break;
+
+                case Keys.D:
+                    Position.X += ( float )Math.Sin( ( Angle.X + 90 ) / 180 * Math.PI ) * Speed;
+                    Position.Z += ( float )Math.Cos( ( Angle.X + 90 ) / 180 * Math.PI ) * Speed;
+                    break;
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -108,8 +143,9 @@ namespace lifeMap.src.system
 
         public Vector3f Position = new Vector3f();
         public Vector3f Angle = new Vector3f();
+        public float Speed = 10f;
 
         private SimpleOpenGlControl View = null;
-        private Vector3f CenterView = new Vector3f();
+        private Vector3f CenterPosition = new Vector3f( 0, 0, 0 );
     }
 }
