@@ -95,22 +95,43 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public static void SelectBrush( Vector3f PositionClick )
+        public static void SelectBrush( Vector3f PositionClick, Viewport.TypeViewport typeViewport )
         {
             Random rand = new Random();
+
             for ( int i = 0; i < mBrush.Count; i++ )
             {
-                if ( PositionClick.X >= mBrush[i].CenterBrush.X - 5 &&
-                     PositionClick.X <= mBrush[i].CenterBrush.X + 5 ||
-                     PositionClick.Y >= mBrush[i].CenterBrush.Y - 5 &&
-                     PositionClick.Y <= mBrush[i].CenterBrush.Y + 5 )
+                Vector3f centerBrush = new Vector3f();
 
-                    if ( PositionClick.Y >= mBrush[i].CenterBrush.Y - 5 &&
-                        PositionClick.Y <= mBrush[i].CenterBrush.Y + 5 ||
-                        PositionClick.Y >= mBrush[i].CenterBrush.Z - 5 &&
-                        PositionClick.Y <= mBrush[i].CenterBrush.Z + 5 )
+                switch ( typeViewport )
+                {
+                    case Viewport.TypeViewport.Top_2D_xy:
+                        centerBrush = new Vector3f( mBrush[i].CenterBrush.X, mBrush[i].CenterBrush.Z, 0 );
+                        break;
 
-                        mBrush[i].SetColorBrush( new Color( rand.Next( 0, 255 ) / 100, rand.Next( 0, 255 ) / 100, rand.Next( 0, 255 ) / 100 ) );
+                    case Viewport.TypeViewport.Front_2D_yz:
+                        centerBrush = new Vector3f( mBrush[i].CenterBrush.Z, mBrush[i].CenterBrush.Y, 0 );
+                        break;
+
+                    case Viewport.TypeViewport.Side_2D_xz:
+                        centerBrush = new Vector3f( mBrush[i].CenterBrush.X, mBrush[i].CenterBrush.Y, 0 );
+                        break;
+
+                    case Viewport.TypeViewport.Textured_3D:
+                        //TODO: Сделать возможность выбора браша в 3д
+                        break;
+                }
+
+                if ( PositionClick.X >= centerBrush.X - 5 &&
+                     PositionClick.X <= centerBrush.X + 5 )
+                    if ( PositionClick.Y >= centerBrush.Y - 5 &&
+                         PositionClick.Y <= centerBrush.Y + 5 )
+                    {
+                        mBrush[i].SetColorBrush( new Color( 1, 1, 1 ) );
+                        Mouse.IsSelectBrush = true;
+                        Mouse.BrushSelect = mBrush[i];
+                        return;
+                    }
             }
         }
 
@@ -134,6 +155,18 @@ namespace lifeMap.src.system
         public static void ClearBrushSelect()
         {
             BrushSelect = null;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static void RemoveBrush( BasicBrush SelectBrush )
+        {
+            for ( int i = 0; i < mBrush.Count; i++ )
+                if ( mBrush[i] == SelectBrush )
+                {
+                    mBrush.Remove( SelectBrush );
+                    return;
+                }
         }
 
         //-------------------------------------------------------------------------//

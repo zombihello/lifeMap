@@ -48,6 +48,13 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        public static float ToNewCoords( float NewCenter, float PositionPoint )
+        {
+            return PositionPoint - NewCenter;
+        }
+
+        //-------------------------------------------------------------------------//
+
         public static SelectTool selectTool = SelectTool.None;
     }
 }

@@ -30,10 +30,39 @@ namespace lifeMap.src.brushes
             for ( int i = 0; i < mIdVertex.Count; i++ )
             {
                 int id = mIdVertex[i];
-                Gl.glVertex3f( mVertex[id].X, mVertex[id].Y, mVertex[id].Z );
+                Gl.glVertex3f( mGlobalVertex[id].X, mGlobalVertex[id].Y, mGlobalVertex[id].Z );
             }
 
             Gl.glEnd();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public void SetPosition( Vector3f position, Viewport.TypeViewport typeViewport )
+        {
+            for ( int i = 0; i < mLocalVertex.Count; i++ )
+            {
+                switch ( typeViewport )
+                {
+                    case Viewport.TypeViewport.Front_2D_yz:
+                        Position = new Vector3f( Position.X, position.Y - Size.Y/2, position.X -Size.Z/2 );
+                        ToGloablCoords();
+                        break;
+
+                    case Viewport.TypeViewport.Side_2D_xz:
+                        Position = new Vector3f( position.X - Size.X/2, position.Y - Size.Y/2, Position.Z );
+                        ToGloablCoords();
+                        break;
+
+                    case Viewport.TypeViewport.Top_2D_xy:
+                        Position = new Vector3f( position.X - Size.X/2, Position.Y, position.Y -Size.Z/2 );
+                        ToGloablCoords();
+                        break;
+
+                    case Viewport.TypeViewport.Textured_3D:
+                        break;
+                }
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -80,23 +109,40 @@ namespace lifeMap.src.brushes
             Size.Y = EndPosition.Y - StartPosition.Y;
             Size.Z = EndPosition.Z - StartPosition.Z;
 
-            CenterBrush = new Vector3f( StartPosition.X + Size.X / 2f, StartPosition.Y + Size.Y/2, StartPosition.Z + Size.Z / 2f );
+            CenterBrush = new Vector3f( StartPosition.X + Size.X / 2f, StartPosition.Y + Size.Y / 2, StartPosition.Z + Size.Z / 2f );
+            Position = StartPosition;
+        }
 
-            this.StartPosition = StartPosition;
+        //-------------------------------------------------------------------------//
+
+        protected void ToGloablCoords()
+        {
+            for ( int i = 0; i < mLocalVertex.Count; i++ )
+            {
+                mGlobalVertex[i].X = mLocalVertex[i].X + Position.X;
+                mGlobalVertex[i].Y = mLocalVertex[i].Y + Position.Y;
+                mGlobalVertex[i].Z = mLocalVertex[i].Z + Position.Z;
+            }
+
+            CenterBrush.X = Position.X + Size.X / 2;
+            CenterBrush.Y = Position.Y + Size.Y / 2;
+            CenterBrush.Z = Position.Z + Size.Z / 2;
         }
 
         //-------------------------------------------------------------------------//
 
         protected void AddVertex( Vector3f PositionVertex )
         {
-            mVertex.Add( PositionVertex );
+            mLocalVertex.Add( PositionVertex );
+            mGlobalVertex.Add( PositionVertex );
         }
 
         //-------------------------------------------------------------------------//
 
         protected void AddVertex( float x, float y, float z )
         {
-            mVertex.Add( new Vector3f( x, y, z ) );
+            mLocalVertex.Add( new Vector3f( x, y, z ) );
+            mGlobalVertex.Add( new Vector3f( x, y, z ) );
         }
 
         //-------------------------------------------------------------------------//
@@ -115,13 +161,22 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
-        public Vector3f CenterBrush = new Vector3f();
+        public void SetDefaultColorBrush( Color color )
+        {
+            DefaultColorBrush = color;
+        }
 
-        protected Vector3f Size = new Vector3f();      
+        //-------------------------------------------------------------------------//
+
+        public Vector3f CenterBrush = new Vector3f();
+        public Color DefaultColorBrush = new Color( 1, 0, 0 );
+
+        protected Vector3f Size = new Vector3f();
         protected Color ColorBrush = new Color( 1, 0, 0 );
 
-        private Vector3f StartPosition = new Vector3f();
-        private List<Vector3f> mVertex = new List<Vector3f>();
+        private Vector3f Position = new Vector3f();
+        private List<Vector3f> mLocalVertex = new List<Vector3f>();
+        private List<Vector3f> mGlobalVertex = new List<Vector3f>();
         private List<int> mIdVertex = new List<int>();
     }
 }

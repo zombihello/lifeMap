@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using lifeMap.src.system;
+using lifeMap.src.brushes;
 
 namespace lifeMap.src
 {
@@ -59,6 +60,13 @@ namespace lifeMap.src
 
         public static void RemoveClick()
         {
+            if ( IsSelectBrush )
+            {
+                IsSelectBrush = false;
+                BrushSelect.SetColorBrush( BrushSelect.DefaultColorBrush );
+                BrushSelect = null;
+            }
+
             ClickPosition = new Vector3f();
             TypeViewportClicked = Viewport.TypeViewport.None;
             IsClick = false;    
@@ -67,7 +75,10 @@ namespace lifeMap.src
         //-------------------------------------------------------------------------//
 
         public static bool IsClick = false;
+        public static bool IsSelectBrush = false;
+
         public static Viewport.TypeViewport TypeViewportClicked = Viewport.TypeViewport.None;
+        public static BasicBrush BrushSelect = null;
         public static Vector3f Position = new Vector3f();
         public static Vector3f ClickPosition = new Vector3f();
     }

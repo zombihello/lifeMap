@@ -86,7 +86,7 @@ namespace lifeMap
                     Mouse.SetClick( Viewport.type );
 
                     if ( Program.selectTool == Program.SelectTool.CursorTool )
-                        Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ) );
+                        Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
                 }
         }
 
@@ -104,7 +104,8 @@ namespace lifeMap
                                 Scene.ClearBrushSelect();
                             break;
 
-                        case Program.SelectTool.CameraTool: break;
+                        case Program.SelectTool.CameraTool:
+                            break;
 
                         case Program.SelectTool.EntityTool: break;
 
@@ -135,10 +136,12 @@ namespace lifeMap
                             break;
 
                         case Program.SelectTool.CursorTool:
-                            Scene.CreateBrushSelect( Viewport.type, Viewport.Camera );
+                            if ( Mouse.IsSelectBrush )
+                                Mouse.BrushSelect.SetPosition( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
                             break;
 
-                        case Program.SelectTool.CameraTool: break;
+                        case Program.SelectTool.CameraTool:
+                            break;
 
                         case Program.SelectTool.EntityTool: break;
                     }
