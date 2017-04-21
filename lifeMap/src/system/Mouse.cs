@@ -51,6 +51,15 @@ namespace lifeMap.src
 
         public static void SetClick( Viewport.TypeViewport Type )
         {
+            if ( IsSelectBrush && BrushSelect != null )
+            {
+                IsSelectBrush = false;
+                BrushSelect.SetColorBrush( BrushSelect.DefaultColorBrush );
+                BrushSelect = null;
+            }
+            else if ( IsSelectBrush && BrushSelect == null )
+                IsSelectBrush = false;
+
             ClickPosition = Position;
             TypeViewportClicked = Type;
             IsClick = true;
@@ -60,13 +69,6 @@ namespace lifeMap.src
 
         public static void RemoveClick()
         {
-            if ( IsSelectBrush )
-            {
-                IsSelectBrush = false;
-                BrushSelect.SetColorBrush( BrushSelect.DefaultColorBrush );
-                BrushSelect = null;
-            }
-
             ClickPosition = new Vector3f();
             TypeViewportClicked = Viewport.TypeViewport.None;
             IsClick = false;    

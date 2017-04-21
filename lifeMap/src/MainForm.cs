@@ -209,9 +209,14 @@ namespace lifeMap
 
         private void Viewport_KeyDown( Viewport Viewport, Keys KeyCode )
         {
-            if ( Viewport.bEnabled && Viewport.type == Viewport.TypeViewport.Textured_3D )
+            if ( Viewport.bEnabled )
             {
-                Scene.WorldCamera.Move( KeyCode );
+                if ( Viewport.type == Viewport.TypeViewport.Textured_3D )
+                    Scene.WorldCamera.Move( KeyCode );
+                else
+                    if ( KeyCode == Keys.Delete )
+                        Scene.RemoveBrush( Mouse.BrushSelect );
+
                 Refresh();
             }
         }

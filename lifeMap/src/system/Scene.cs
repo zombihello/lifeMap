@@ -54,6 +54,8 @@ namespace lifeMap.src.system
             Vector3f StartPosition = Program.ToNewCoords( Camera.Position, Mouse.ClickPosition );
             Vector3f EndPosition = Program.ToNewCoords( Camera.Position, Mouse.Position );
 
+           // StartPosition = Program.Align(  )
+
             switch ( typeViewport )
             {
                 case Viewport.TypeViewport.Top_2D_xy:

@@ -45,17 +45,20 @@ namespace lifeMap.src.brushes
                 switch ( typeViewport )
                 {
                     case Viewport.TypeViewport.Front_2D_yz:
-                        Position = new Vector3f( Position.X, position.Y - Size.Y/2, position.X -Size.Z/2 );
+                        Position.Y = Program.Align( position.Y - Size.Y / 2, Viewport.fSize );
+                        Position.Z = Program.Align( position.X - Size.Z / 2, Viewport.fSize );
                         ToGloablCoords();
                         break;
 
                     case Viewport.TypeViewport.Side_2D_xz:
-                        Position = new Vector3f( position.X - Size.X/2, position.Y - Size.Y/2, Position.Z );
+                        Position.X = Program.Align( position.X - Size.X / 2, Viewport.fSize );
+                        Position.Y = Program.Align( position.Y - Size.Y / 2, Viewport.fSize );
                         ToGloablCoords();
                         break;
 
                     case Viewport.TypeViewport.Top_2D_xy:
-                        Position = new Vector3f( position.X - Size.X/2, Position.Y, position.Y -Size.Z/2 );
+                        Position.X = Program.Align( position.X - Size.X / 2, Viewport.fSize );
+                        Position.Z = Program.Align( position.Y - Size.Z / 2, Viewport.fSize );
                         ToGloablCoords();
                         break;
 
@@ -105,12 +108,13 @@ namespace lifeMap.src.brushes
             if ( StartPosition.Z == 0 )
                 StartPosition.Z = Viewport.fSize;
 
-            Size.X = EndPosition.X - StartPosition.X;
-            Size.Y = EndPosition.Y - StartPosition.Y;
-            Size.Z = EndPosition.Z - StartPosition.Z;
+            Position.X = Program.Align( StartPosition.X, Viewport.fSize );
+            Position.Y = Program.Align( StartPosition.Y, Viewport.fSize );
+            Position.Z = Program.Align( StartPosition.Z, Viewport.fSize );
 
-            CenterBrush = new Vector3f( StartPosition.X + Size.X / 2f, StartPosition.Y + Size.Y / 2, StartPosition.Z + Size.Z / 2f );
-            Position = StartPosition;
+            Size.X = Program.Align( EndPosition.X, Viewport.fSize ) - Position.X;
+            Size.Y = Program.Align( EndPosition.Y, Viewport.fSize ) - Position.Y;
+            Size.Z = Program.Align( EndPosition.Z, Viewport.fSize ) - Position.Z;
         }
 
         //-------------------------------------------------------------------------//
