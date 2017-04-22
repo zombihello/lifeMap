@@ -30,6 +30,8 @@ namespace lifeMap.src
 
         public static void UpdatePosition( Vector3f position, float AlignValue = 0 )
         {
+            OldPosition = Position;
+
             if ( AlignValue != 0 )
                 Position = new Vector3f( Program.Align( position.X, AlignValue ), Program.Align( position.Y, AlignValue ), 0 );
             else
@@ -43,6 +45,8 @@ namespace lifeMap.src
 
         public static void UpdatePosition( float x, float y, float AlignValue = 0 )
         {
+            OldPosition = Position;
+
             if ( AlignValue != 0 )
                 Position = new Vector3f( Program.Align( x, AlignValue ), Program.Align( y, AlignValue ), 0 );
             else
@@ -131,7 +135,8 @@ namespace lifeMap.src
         public static Viewport.TypeViewport TypeViewportClicked = Viewport.TypeViewport.None;
         public static TypeSelectBrush typeSelectBrush = TypeSelectBrush.None;
         public static BasicBrush BrushSelect = null;
-        public static Vector3f Position = new Vector3f();
+        public static Vector3f OldPosition = new Vector3f();
+        public static Vector3f Position = new Vector3f( 0, 0, 0 );
         public static Vector3f ClickPosition = new Vector3f();
     }
 

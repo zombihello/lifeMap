@@ -54,34 +54,41 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
-        public void SetPosition( Vector3f position, Viewport.TypeViewport typeViewport )
+        public void Move( Vector3f FactorMove, Viewport.TypeViewport typeViewport )
         {
-            for ( int i = 0; i < mLocalVertex.Count; i++ )
+            switch ( typeViewport )
             {
-                switch ( typeViewport )
-                {
-                    case Viewport.TypeViewport.Front_2D_yz:
-                        Position.Y = Program.Align( position.Y - Size.Y / 2, Viewport.fSize );
-                        Position.Z = Program.Align( position.X - Size.Z / 2, Viewport.fSize );
-                        ToGloablCoords();
-                        break;
+                case Viewport.TypeViewport.Front_2D_yz:
+                    Position.Y += Program.Align( FactorMove.Y, Viewport.fSize );
+                    Position.Z += Program.Align( FactorMove.X, Viewport.fSize );
+                    ToGloablCoords();
+                    break;
 
-                    case Viewport.TypeViewport.Side_2D_xz:
-                        Position.X = Program.Align( position.X - Size.X / 2, Viewport.fSize );
-                        Position.Y = Program.Align( position.Y - Size.Y / 2, Viewport.fSize );
-                        ToGloablCoords();
-                        break;
+                case Viewport.TypeViewport.Side_2D_xz:
+                    Position.X += Program.Align( FactorMove.X, Viewport.fSize );
+                    Position.Y += Program.Align( FactorMove.Y, Viewport.fSize );
+                    ToGloablCoords();
+                    break;
 
-                    case Viewport.TypeViewport.Top_2D_xy:
-                        Position.X = Program.Align( position.X - Size.X / 2, Viewport.fSize );
-                        Position.Z = Program.Align( position.Y - Size.Z / 2, Viewport.fSize );
-                        ToGloablCoords();
-                        break;
+                case Viewport.TypeViewport.Top_2D_xy:
+                    Position.X += Program.Align( FactorMove.X, Viewport.fSize );
+                    Position.Z += Program.Align( FactorMove.Y, Viewport.fSize );
+                    ToGloablCoords();
+                    break;
 
-                    case Viewport.TypeViewport.Textured_3D:
-                        break;
-                }
+                case Viewport.TypeViewport.Textured_3D:
+                    break;
             }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public void SetPosition( Vector3f position )
+        {
+            Position.X = Program.Align( position.X, Viewport.fSize );
+            Position.Y = Program.Align( position.Y, Viewport.fSize );
+            Position.Z = Program.Align( position.Z, Viewport.fSize );
+            ToGloablCoords();
         }
 
         //-------------------------------------------------------------------------//

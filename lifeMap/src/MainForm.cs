@@ -81,16 +81,19 @@ namespace lifeMap
         {
             if ( Viewport.bEnabled )
                 if ( !Mouse.IsClick )
-                {             
+                {
                     Mouse.UpdatePosition( new Vector3f( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), 0 ) );
                     Mouse.SetClick( Viewport.type, Viewport.Camera );
-                    
+
                     if ( Program.selectTool == Program.SelectTool.CursorTool )
                     {
                         if ( !Mouse.IsSelectBrush )
                             Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
                         else
-                            Scene.SelectPointResizeBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
+                        {
+                            if ( !Scene.SelectPointResizeBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type ) )
+                                Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
+                        }
                     }
                 }
         }
@@ -146,13 +149,16 @@ namespace lifeMap
                                 switch ( Mouse.typeSelectBrush )
                                 {
                                     case Mouse.TypeSelectBrush.Move:
-                                         Mouse.BrushSelect.SetPosition( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
+                                        {
+                                            Vector3f OffsetPosition = new Vector3f( Mouse.Position.X - Mouse.OldPosition.X, Mouse.Position.Y - Mouse.OldPosition.Y, 0 );
+                                            Mouse.BrushSelect.Move( OffsetPosition, Viewport.type );
+                                        }
                                         break;
 
                                     case Mouse.TypeSelectBrush.Scale:
                                         Mouse.BrushSelect.SetSize( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
                                         break;
-                                }                                
+                                }
                             }
                             break;
 

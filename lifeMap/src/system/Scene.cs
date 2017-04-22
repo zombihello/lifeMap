@@ -95,7 +95,7 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public static void SelectBrush( Vector3f PositionClick, Viewport.TypeViewport typeViewport )
+        public static bool SelectBrush( Vector3f PositionClick, Viewport.TypeViewport typeViewport )
         {
             for ( int i = 0; i < mBrush.Count; i++ )
             {
@@ -125,31 +125,40 @@ namespace lifeMap.src.system
                     if ( PositionClick.Y >= centerBrush.Y - 5 &&
                          PositionClick.Y <= centerBrush.Y + 5 )
                     {
+                        if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
+                            Mouse.BrushSelect.SetColorBrush( Mouse.BrushSelect.DefaultColorBrush );
+
                         mBrush[i].SetColorBrush( new Color( 1, 1, 1 ) );
                         Mouse.IsSelectBrush = true;
                         Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Move;
                         Mouse.BrushSelect = mBrush[i];
-                        return;
+                        return true;
                     }
             }
+
+            return false;
         }
 
         //-------------------------------------------------------------------------//
 
-        public static void SelectPointResizeBrush( Vector3f PositionClick, Viewport.TypeViewport typeViewport )
+        public static bool SelectPointResizeBrush( Vector3f PositionClick, Viewport.TypeViewport typeViewport )
         {
-            for ( int i = 0; i < mBrush.Count; i++ )
+            if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
             {
-                BasicBrush brush = mBrush[i];
-                List<PointsResize> mPoints = brush.mPointsResize;
+                List<PointsResize> mPoints = Mouse.BrushSelect.mPointsResize;
 
-                for ( int j = 0; j < mPoints.Count; j++ )
-                    if ( mPoints[j].typeViewport == typeViewport )
+                for ( int i = 0; i < mPoints.Count; i++ )
+                    if ( mPoints[i].typeViewport == typeViewport )
                     {
-                        if ( mPoints[j].IsPointsClick( PositionClick ) )
+                        if ( mPoints[i].IsPointsClick( PositionClick ) )
+                        {
                             Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Scale;
+                            return true;
+                        }
                     }
             }
+
+            return false;
         }
 
         //-------------------------------------------------------------------------//
