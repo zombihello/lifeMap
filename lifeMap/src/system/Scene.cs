@@ -54,8 +54,6 @@ namespace lifeMap.src.system
             Vector3f StartPosition = Program.ToNewCoords( Camera.Position, Mouse.ClickPosition );
             Vector3f EndPosition = Program.ToNewCoords( Camera.Position, Mouse.Position );
 
-           // StartPosition = Program.Align(  )
-
             switch ( typeViewport )
             {
                 case Viewport.TypeViewport.Top_2D_xy:
@@ -99,8 +97,6 @@ namespace lifeMap.src.system
 
         public static void SelectBrush( Vector3f PositionClick, Viewport.TypeViewport typeViewport )
         {
-            Random rand = new Random();
-
             for ( int i = 0; i < mBrush.Count; i++ )
             {
                 Vector3f centerBrush = new Vector3f();
@@ -131,8 +127,27 @@ namespace lifeMap.src.system
                     {
                         mBrush[i].SetColorBrush( new Color( 1, 1, 1 ) );
                         Mouse.IsSelectBrush = true;
+                        Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Move;
                         Mouse.BrushSelect = mBrush[i];
                         return;
+                    }
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static void SelectPointResizeBrush( Vector3f PositionClick, Viewport.TypeViewport typeViewport )
+        {
+            for ( int i = 0; i < mBrush.Count; i++ )
+            {
+                BasicBrush brush = mBrush[i];
+                List<PointsResize> mPoints = brush.mPointsResize;
+
+                for ( int j = 0; j < mPoints.Count; j++ )
+                    if ( mPoints[j].typeViewport == typeViewport )
+                    {
+                        if ( mPoints[j].IsPointsClick( PositionClick ) )
+                            Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Scale;
                     }
             }
         }

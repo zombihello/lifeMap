@@ -16,6 +16,15 @@ namespace lifeMap.src.brushes
     {
         //-------------------------------------------------------------------------//
 
+        public BasicBrush()
+        {
+            mPointsResize.Add( new PointsResize( this, Viewport.TypeViewport.Front_2D_yz ) );
+            mPointsResize.Add( new PointsResize( this, Viewport.TypeViewport.Side_2D_xz ) );
+            mPointsResize.Add( new PointsResize( this, Viewport.TypeViewport.Top_2D_xy ) );
+        }
+
+        //-------------------------------------------------------------------------//
+
         public virtual void Create( Vector3f StartPosition, Vector3f EndPosition ) { }
 
         //-------------------------------------------------------------------------//
@@ -23,6 +32,13 @@ namespace lifeMap.src.brushes
         public void Render( Viewport.TypeViewport typeViewport )
         {
             RenderCenterBrush( typeViewport );
+
+            if ( Mouse.BrushSelect == this && typeViewport != Viewport.TypeViewport.Textured_3D )
+            {
+                for ( int i = 0; i < mPointsResize.Count; i++ )
+                    if ( mPointsResize[i].typeViewport == typeViewport )
+                        mPointsResize[i].Render();
+            }
 
             Gl.glBegin( Gl.GL_LINES );
             Gl.glColor3f( ColorBrush.R, ColorBrush.G, ColorBrush.B );
@@ -70,7 +86,21 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
-        protected void RenderCenterBrush( Viewport.TypeViewport typeViewport )
+        public void SetSize( Vector3f position, Viewport.TypeViewport typeViewport ) // TODO: Сделать изменение размеров браша
+        {
+            float dX = position.X - Position.X;
+            Position.X += dX;
+            Size.X += dX;
+
+            Random ran = new Random();
+            SetColorBrush( new Color( ran.Next( 1, 255 ) / 100, ran.Next( 1, 255 ) / 100, ran.Next( 1, 255 ) / 100 ) ); // for test
+
+            ToGloablCoords();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void RenderCenterBrush( Viewport.TypeViewport typeViewport )
         {
             if ( typeViewport != Viewport.TypeViewport.Textured_3D )
             {
@@ -112,6 +142,7 @@ namespace lifeMap.src.brushes
             Position.Y = Program.Align( StartPosition.Y, Viewport.fSize );
             Position.Z = Program.Align( StartPosition.Z, Viewport.fSize );
 
+
             Size.X = Program.Align( EndPosition.X, Viewport.fSize ) - Position.X;
             Size.Y = Program.Align( EndPosition.Y, Viewport.fSize ) - Position.Y;
             Size.Z = Program.Align( EndPosition.Z, Viewport.fSize ) - Position.Z;
@@ -131,6 +162,9 @@ namespace lifeMap.src.brushes
             CenterBrush.X = Position.X + Size.X / 2;
             CenterBrush.Y = Position.Y + Size.Y / 2;
             CenterBrush.Z = Position.Z + Size.Z / 2;
+
+            for ( int i = 0; i < mPointsResize.Count; i++ )
+                mPointsResize[i].InitPoints( this, mPointsResize[i].typeViewport );
         }
 
         //-------------------------------------------------------------------------//
@@ -173,12 +207,13 @@ namespace lifeMap.src.brushes
         //-------------------------------------------------------------------------//
 
         public Vector3f CenterBrush = new Vector3f();
+        public Vector3f Size = new Vector3f();
+        public Vector3f Position = new Vector3f();
         public Color DefaultColorBrush = new Color( 1, 0, 0 );
+        public List<PointsResize> mPointsResize = new List<PointsResize>();
 
-        protected Vector3f Size = new Vector3f();
         protected Color ColorBrush = new Color( 1, 0, 0 );
 
-        private Vector3f Position = new Vector3f();
         private List<Vector3f> mLocalVertex = new List<Vector3f>();
         private List<Vector3f> mGlobalVertex = new List<Vector3f>();
         private List<int> mIdVertex = new List<int>();
