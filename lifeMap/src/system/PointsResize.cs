@@ -18,10 +18,33 @@ namespace lifeMap.src.system
     {
         //-------------------------------------------------------------------------//
 
+        public enum PointType
+        {
+            LeftCenter,
+            RightCenter,
+            TopCenter,
+            BottomCenter,
+            LeftBottom,
+            LeftTop,
+            RightBottom,
+            RightTop
+        };
+
+        //-------------------------------------------------------------------------//
+
         public PointsResize( BasicBrush SelectBrush, Viewport.TypeViewport typeViewport )
         {
             InitPoints( SelectBrush, typeViewport );
             this.typeViewport = typeViewport;
+
+            mTypePoint.Add( PointType.LeftCenter ); // Left Center
+            mTypePoint.Add( PointType.RightCenter ); // Right Center
+            mTypePoint.Add( PointType.TopCenter ); // Top Center
+            mTypePoint.Add( PointType.BottomCenter ); // Bottom Center
+            mTypePoint.Add( PointType.LeftBottom ); // Left Bottom
+            mTypePoint.Add( PointType.LeftTop ); // Left Top
+            mTypePoint.Add( PointType.RightBottom ); // Right Bottom
+            mTypePoint.Add( PointType.RightTop ); // Right Top
         }
 
         //-------------------------------------------------------------------------//
@@ -48,49 +71,53 @@ namespace lifeMap.src.system
             mPoints.Clear();
 
             Vector3f CenterBrush = SelectBrush.CenterBrush;
-            Vector3f Size = SelectBrush.Size;
+            Vector3f Size = new Vector3f(
+               Math.Abs( CenterBrush.X - SelectBrush.Position.X ),
+               Math.Abs( CenterBrush.Y - SelectBrush.Position.Y ),
+               Math.Abs( CenterBrush.Z - SelectBrush.Position.Z ) );
 
             switch ( typeViewport )
             {
                 case Viewport.TypeViewport.Front_2D_yz:
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z - Size.Z / 2 ) ); // Left Center
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z + Size.Z / 2 ) ); // Right Center
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + Size.Y / 2, CenterBrush.Z ) ); // Top Center
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - Size.Y / 2, CenterBrush.Z ) ); // Bottom Center
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z - Size.Z ) ); // Left Center
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z + Size.Z ) ); // Right Center
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + Size.Y, CenterBrush.Z ) ); // Top Center
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - Size.Y, CenterBrush.Z ) ); // Bottom Center
 
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - Size.Y / 2, CenterBrush.Z - Size.Z / 2 ) ); // Left Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + Size.Y / 2, CenterBrush.Z - Size.Z / 2 ) ); // Left Top
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - Size.Y, CenterBrush.Z - Size.Z ) ); // Left Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + Size.Y, CenterBrush.Z - Size.Z ) ); // Left Top
 
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + Size.Y / 2, CenterBrush.Z + Size.Z / 2 ) ); // Right Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - Size.Y / 2, CenterBrush.Z + Size.Z / 2 ) ); // Right Top                
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - Size.Y, CenterBrush.Z + Size.Z ) ); // Right Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + Size.Y, CenterBrush.Z + Size.Z ) ); // Right Top
                     break;
 
                 case Viewport.TypeViewport.Side_2D_xz:
-                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X / 2, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
-                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X / 2, CenterBrush.Y, CenterBrush.Z ) ); // Right Center
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - Size.Y / 2, CenterBrush.Z ) ); // Top Center
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + Size.Y / 2, CenterBrush.Z ) ); // Bottom Center
+                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
+                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X, CenterBrush.Y, CenterBrush.Z ) ); // Right Center
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + Size.Y, CenterBrush.Z ) ); // Top Center
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - Size.Y, CenterBrush.Z ) ); // Bottom Center
 
-                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X / 2, CenterBrush.Y - Size.Y / 2, CenterBrush.Z ) ); // Left Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X / 2, CenterBrush.Y + Size.Y / 2, CenterBrush.Z ) ); // Left Top
+                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X, CenterBrush.Y - Size.Y, CenterBrush.Z ) ); // Left Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X, CenterBrush.Y + Size.Y, CenterBrush.Z ) ); // Left Top
 
-                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X / 2, CenterBrush.Y + Size.Y / 2, CenterBrush.Z ) ); // Right Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X / 2, CenterBrush.Y - Size.Y / 2, CenterBrush.Z ) ); // Right Top
+                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X, CenterBrush.Y - Size.Y, CenterBrush.Z ) ); // Right Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X, CenterBrush.Y + Size.Y, CenterBrush.Z ) ); // Right Top
                     break;
 
                 case Viewport.TypeViewport.Top_2D_xy:
-                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X / 2, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
-                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X / 2, CenterBrush.Y, CenterBrush.Z ) ); // Right Center
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z + Size.Z / 2 ) ); // Top Center
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z - Size.Z / 2 ) ); // Bottom Center
+                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
+                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X, CenterBrush.Y, CenterBrush.Z ) ); // Right Center
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z + Size.Z ) ); // Top Center
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z - Size.Z ) ); // Bottom Center
 
-                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X / 2, CenterBrush.Y, CenterBrush.Z - Size.Z / 2 ) ); // Left Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X / 2, CenterBrush.Y, CenterBrush.Z + Size.Z / 2 ) ); // Left Top
+                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X, CenterBrush.Y, CenterBrush.Z - Size.Z ) ); // Left Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X - Size.X, CenterBrush.Y, CenterBrush.Z + Size.Z ) ); // Left Top
 
-                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X / 2, CenterBrush.Y, CenterBrush.Z + Size.Z / 2 ) ); // Right Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X / 2, CenterBrush.Y, CenterBrush.Z - Size.Z / 2 ) ); // Right Top
+                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X, CenterBrush.Y, CenterBrush.Z - Size.Z ) ); // Right Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X + Size.X, CenterBrush.Y, CenterBrush.Z + Size.Z ) ); // Right Top
                     break;
             }
+
         }
 
         //-------------------------------------------------------------------------//
@@ -108,7 +135,10 @@ namespace lifeMap.src.system
                              PositionClick.X >= PositionPoint.Z - 5 &&
                              PositionClick.Y <= PositionPoint.Y + 5 &&
                              PositionClick.Y >= PositionPoint.Y - 5 )
+                        {
+                            SelectPointType = mTypePoint[i];
                             return true;
+                        }
                         break;
 
                     case Viewport.TypeViewport.Side_2D_xz:
@@ -116,7 +146,10 @@ namespace lifeMap.src.system
                              PositionClick.X >= PositionPoint.X - 5 &&
                              PositionClick.Y <= PositionPoint.Y + 5 &&
                              PositionClick.Y >= PositionPoint.Y - 5 )
+                        {
+                            SelectPointType = mTypePoint[i];
                             return true;
+                        }
                         break;
 
                     case Viewport.TypeViewport.Top_2D_xy:
@@ -124,7 +157,10 @@ namespace lifeMap.src.system
                              PositionClick.X >= PositionPoint.X - 5 &&
                              PositionClick.Y <= PositionPoint.Z + 5 &&
                              PositionClick.Y >= PositionPoint.Z - 5 )
+                        {
+                            SelectPointType = mTypePoint[i];
                             return true;
+                        }
                         break;
                 }
             }
@@ -133,8 +169,11 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public List<Vector3f> mPoints = new List<Vector3f>();
+        public static PointType SelectPointType;
+
         public Viewport.TypeViewport typeViewport;
+        public List<Vector3f> mPoints = new List<Vector3f>();
+        public List<PointType> mTypePoint = new List<PointType>();
     }
 
     //-------------------------------------------------------------------------//

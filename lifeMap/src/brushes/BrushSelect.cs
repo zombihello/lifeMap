@@ -25,31 +25,18 @@ namespace lifeMap.src.brushes
             ColorBrush = new Color( 1, 1, 1 );
             DefaultColorBrush = ColorBrush;
 
-           // Position = StartPosition;
-
             // Front
-            AddVertex( 0, 0, 0 ); // 0
-            AddVertex( Size.X, 0, 0 ); // 1
-            AddVertex( Size.X, Size.Y, 0 ); // 2
-            AddVertex( 0, Size.Y, 0 ); // 3
+            AddVertex( 0, 0, 0, Vertex.TypeVertex.LeftBottom ); // 0
+            AddVertex( Size.X, 0, 0, Vertex.TypeVertex.RightBottom ); // 1
+            AddVertex( Size.X, Size.Y, 0, Vertex.TypeVertex.RightTop ); // 2
+            AddVertex( 0, Size.Y, 0, Vertex.TypeVertex.LeftTop ); // 3
 
             // Back
-            AddVertex( 0, 0, Size.Z ); // 4
-            AddVertex( Size.X, 0, Size.Z ); // 5
-            AddVertex( Size.X, Size.Y, Size.Z ); // 6
-            AddVertex( 0, Size.Y, Size.Z ); // 7
+            AddVertex( 0, 0, Size.Z, Vertex.TypeVertex.Back_LeftBottom ); // 4
+            AddVertex( Size.X, 0, Size.Z, Vertex.TypeVertex.Back_RightBottom ); // 5
+            AddVertex( Size.X, Size.Y, Size.Z, Vertex.TypeVertex.Back_RightTop ); // 6
+            AddVertex( 0, Size.Y, Size.Z, Vertex.TypeVertex.Back_LeftTop ); // 7
             ToGloablCoords();
-           /* // Front
-            AddVertex( StartPosition.X, StartPosition.Y, StartPosition.Z ); // 0
-            AddVertex( StartPosition.X + Size.X, StartPosition.Y, StartPosition.Z ); // 1
-            AddVertex( StartPosition.X + Size.X, StartPosition.Y + Size.Y, StartPosition.Z ); // 2
-            AddVertex( StartPosition.X, StartPosition.Y + Size.Y, StartPosition.Z ); // 3
-
-            // Back
-            AddVertex( StartPosition.X, StartPosition.Y, StartPosition.Z + Size.Z ); // 4
-            AddVertex( StartPosition.X + Size.X, StartPosition.Y, StartPosition.Z + Size.Z ); // 5
-            AddVertex( StartPosition.X + Size.X, StartPosition.Y + Size.Y, StartPosition.Z + Size.Z ); // 6
-            AddVertex( StartPosition.X, StartPosition.Y + Size.Y, StartPosition.Z + Size.Z ); // 7*/
 
             // Front
             AddIdVertex( 0 ); AddIdVertex( 1 ); AddIdVertex( 2 ); AddIdVertex( 3 );

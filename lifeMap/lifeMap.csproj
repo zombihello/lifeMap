@@ -83,6 +83,7 @@
     <Compile Include="src\brushes\BasicBrush.cs" />
     <Compile Include="src\brushes\BrushBox.cs" />
     <Compile Include="src\brushes\BrushSelect.cs" />
+    <Compile Include="src\system\Vertex.cs" />
     <Compile Include="src\system\Camera.cs" />
     <Compile Include="src\system\Mouse.cs" />
     <Compile Include="src\MainForm.cs">

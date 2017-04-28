@@ -93,14 +93,180 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
-        public void SetSize( Vector3f position, Viewport.TypeViewport typeViewport ) // TODO: Сделать изменение размеров браша
+        public void Resize( Vector3f FactorSize, Viewport.TypeViewport typeViewport )
         {
-            float dX = position.X - Position.X;
-            Position.X += dX;
-            Size.X += dX;
+            FactorSize = Program.Align( FactorSize, Viewport.fSize );
 
-            Random ran = new Random();
-            SetColorBrush( new Color( ran.Next( 1, 255 ) / 100, ran.Next( 1, 255 ) / 100, ran.Next( 1, 255 ) / 100 ) ); // for test
+            switch ( PointsResize.SelectPointType )
+            {
+                //----------------------------------------------------------//
+
+                case PointsResize.PointType.BottomCenter:
+                    if ( typeViewport == Viewport.TypeViewport.Front_2D_yz || typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                    {
+                        Size.Y -= FactorSize.Y;
+                        Position.Y += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, 0 ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                    {
+                        Size.Z -= FactorSize.Y;
+                        Position.Z += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( 0, 0, FactorSize.Y ), typeViewport );
+                    }
+                    break;
+
+
+                //----------------------------------------------------------//
+
+                case PointsResize.PointType.LeftBottom:
+                    if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                    {
+                        Size.X -= FactorSize.X;
+                        Size.Z -= FactorSize.Y;
+                        Position.X += FactorSize.X;
+                        Position.Z += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( FactorSize.X, 0, FactorSize.Y ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                    {
+                        Size.Z -= FactorSize.X;
+                        Size.Y -= FactorSize.Y;
+                        Position.Z += FactorSize.X;
+                        Position.Y += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, FactorSize.X ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                    {
+                        Size.X -= FactorSize.X;
+                        Size.Y -= FactorSize.Y;
+                        Position.X += FactorSize.X;
+                        Position.Y += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( FactorSize.X, FactorSize.Y, 0 ), typeViewport );
+                    }
+                    break;
+
+                //----------------------------------------------------------//
+
+                case PointsResize.PointType.LeftCenter:
+                    if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                    {
+                        Size.Z -= FactorSize.X;
+                        Position.Z += FactorSize.X;
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Top_2D_xy || typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                    {
+                        Size.X -= FactorSize.X;
+                        Position.X += FactorSize.X;
+                    }
+
+                    ResizeLocalVertex( new Vector3f( FactorSize.X, 0, 0 ), typeViewport );
+                    break;
+
+                //----------------------------------------------------------//
+
+                case PointsResize.PointType.LeftTop:
+                    if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                    {
+                        Size.X -= FactorSize.X;
+                        Size.Z += FactorSize.Y;
+                        Position.X += FactorSize.X;
+                        ResizeLocalVertex( new Vector3f( FactorSize.X, 0, FactorSize.Y ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                    {
+                        Size.Z -= FactorSize.X;
+                        Size.Y += FactorSize.Y;
+                        Position.Z += FactorSize.X;
+                        ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, FactorSize.X ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                    {
+                        Size.X -= FactorSize.X;
+                        Size.Y += FactorSize.Y;
+                        Position.X += FactorSize.X;
+                        ResizeLocalVertex( new Vector3f( FactorSize.X, FactorSize.Y, 0 ), typeViewport );
+                    }
+                    break;
+
+                //----------------------------------------------------------//
+
+                case PointsResize.PointType.RightBottom:
+                    if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                    {
+                        Size.X += FactorSize.X;
+                        Size.Z -= FactorSize.Y;
+                        Position.Z += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( FactorSize.X, 0, FactorSize.Y ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                    {
+                        Size.Z += FactorSize.X;
+                        Size.Y -= FactorSize.Y;
+                        Position.Y += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, FactorSize.X ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                    {
+                        Size.X += FactorSize.X;
+                        Size.Y -= FactorSize.Y;
+                        Position.Y += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( FactorSize.X, FactorSize.Y, 0 ), typeViewport );
+                    }
+                    break;
+
+                //----------------------------------------------------------//
+
+                case PointsResize.PointType.RightCenter:
+                    if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                        Size.Z += FactorSize.X;
+                    else if ( typeViewport == Viewport.TypeViewport.Top_2D_xy || typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                        Size.X += FactorSize.X;
+
+                    ResizeLocalVertex( new Vector3f( FactorSize.X, 0, 0 ), typeViewport );
+                    break;
+
+                //----------------------------------------------------------//
+
+                case PointsResize.PointType.RightTop:
+                    if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                    {
+                        Size.X += FactorSize.X;
+                        Size.Z += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( FactorSize.X, 0, FactorSize.Y ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                    {
+                        Size.Z += FactorSize.X;
+                        Size.Y += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, FactorSize.X ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                    {
+                        Size.X += FactorSize.X;
+                        Size.Y += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( FactorSize.X, FactorSize.Y, 0 ), typeViewport );
+                    }
+                    break;
+
+                //----------------------------------------------------------//
+
+                case PointsResize.PointType.TopCenter:
+                    if ( typeViewport == Viewport.TypeViewport.Front_2D_yz || typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                    {
+                        Size.Y += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, 0 ), typeViewport );
+                    }
+                    else if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                    {
+                        Size.Z += FactorSize.Y;
+                        ResizeLocalVertex( new Vector3f( 0, 0, FactorSize.Y ), typeViewport );
+                    }
+                    break;
+
+                //----------------------------------------------------------//
+            }
+
 
             ToGloablCoords();
         }
@@ -145,14 +311,30 @@ namespace lifeMap.src.brushes
             if ( StartPosition.Z == 0 )
                 StartPosition.Z = Viewport.fSize;
 
-            Position.X = Program.Align( StartPosition.X, Viewport.fSize );
-            Position.Y = Program.Align( StartPosition.Y, Viewport.fSize );
-            Position.Z = Program.Align( StartPosition.Z, Viewport.fSize );
+            Position = Program.Align( StartPosition, Viewport.fSize );
+            EndPosition = Program.Align( EndPosition, Viewport.fSize );
 
+            Size.X = EndPosition.X - Position.X;
+            Size.Y = EndPosition.Y - Position.Y;
+            Size.Z = EndPosition.Z - Position.Z;
 
-            Size.X = Program.Align( EndPosition.X, Viewport.fSize ) - Position.X;
-            Size.Y = Program.Align( EndPosition.Y, Viewport.fSize ) - Position.Y;
-            Size.Z = Program.Align( EndPosition.Z, Viewport.fSize ) - Position.Z;
+            if ( Size.X < 0 )
+            {
+                Position.X = EndPosition.X;
+                Size.X = Program.Align( Math.Abs( Size.X ), Viewport.fSize );
+            }
+
+            if ( Size.Y < 0 )
+            {
+                Position.Y = EndPosition.Y;
+                Size.Y = Program.Align( Math.Abs( Size.Y ), Viewport.fSize );
+            }
+
+            if ( Size.Z < 0 )
+            {
+                Position.Z = EndPosition.Z;
+                Size.Z = Program.Align( Math.Abs( Size.Z ), Viewport.fSize );
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -161,9 +343,9 @@ namespace lifeMap.src.brushes
         {
             for ( int i = 0; i < mLocalVertex.Count; i++ )
             {
-                mGlobalVertex[i].X = mLocalVertex[i].X + Position.X;
-                mGlobalVertex[i].Y = mLocalVertex[i].Y + Position.Y;
-                mGlobalVertex[i].Z = mLocalVertex[i].Z + Position.Z;
+                mGlobalVertex[i].X = mLocalVertex[i].Position.X + Position.X;
+                mGlobalVertex[i].Y = mLocalVertex[i].Position.Y + Position.Y;
+                mGlobalVertex[i].Z = mLocalVertex[i].Position.Z + Position.Z;
             }
 
             CenterBrush.X = Position.X + Size.X / 2;
@@ -176,17 +358,465 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
-        protected void AddVertex( Vector3f PositionVertex )
+        private void ResizeLocalVertex( Vector3f FactorSize, Viewport.TypeViewport typeViewport )
         {
-            mLocalVertex.Add( PositionVertex );
+            bool IsUpdateVertexs =
+                PointsResize.SelectPointType == PointsResize.PointType.LeftCenter ||
+                PointsResize.SelectPointType == PointsResize.PointType.BottomCenter ||
+                PointsResize.SelectPointType == PointsResize.PointType.LeftTop ||
+                PointsResize.SelectPointType == PointsResize.PointType.LeftBottom ||
+                PointsResize.SelectPointType == PointsResize.PointType.RightBottom;
+
+            for ( int i = 0; i < mLocalVertex.Count; i++ )
+            {
+                Vertex vertex = mLocalVertex[i];
+
+                switch ( PointsResize.SelectPointType )
+                {
+                    //----------------------------------------------------------//
+
+                    case PointsResize.PointType.LeftCenter:
+                        if ( typeViewport == Viewport.TypeViewport.Top_2D_xy ||
+                             typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                        {
+                            if ( vertex.typeVertex == Vertex.TypeVertex.LeftTop ||
+                                vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
+                                vertex.Position.X += FactorSize.X;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                        {
+                            if ( vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                vertex.Position.Z += FactorSize.X;
+                        }
+                        break;
+
+                    //----------------------------------------------------------//
+
+                    case PointsResize.PointType.RightCenter:
+                        if ( typeViewport == Viewport.TypeViewport.Top_2D_xy ||
+                            typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                        {
+                            if ( vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                            vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
+                                vertex.Position.X += FactorSize.X;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                        {
+                            if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
+                                vertex.Position.Z += FactorSize.X;
+                        }
+                        break;
+
+                    //----------------------------------------------------------//
+
+                    case PointsResize.PointType.TopCenter:
+                        if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                        {
+                            if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
+                                    vertex.Position.Z += FactorSize.Z;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz || typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                            if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop || 
+                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop || 
+                                 vertex.typeVertex == Vertex.TypeVertex.RightTop || 
+                                 vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                    vertex.Position.Y += FactorSize.Y;
+                        break;
+
+                    //----------------------------------------------------------//
+
+                    case PointsResize.PointType.BottomCenter:
+                        if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                        {
+                            if ( vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                 vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                 vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                 vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                    vertex.Position.Z += FactorSize.Z;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz || typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                            if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom || 
+                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom || 
+                                 vertex.typeVertex == Vertex.TypeVertex.RightBottom || 
+                                 vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
+                                    vertex.Position.Y += FactorSize.Y;
+                        break;
+
+                    //----------------------------------------------------------//
+
+                    case PointsResize.PointType.LeftTop:
+                        if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                        {
+                            if ( FactorSize.X != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.LeftTop ||
+                                    vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                    vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                    vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
+                                        vertex.Position.X += FactorSize.X;
+
+                            if ( FactorSize.Z != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
+                                        vertex.Position.Z += FactorSize.Z;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                        {
+                            if ( FactorSize.Z != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                        vertex.Position.Z += FactorSize.Z;
+
+                            if ( FactorSize.Y != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                        vertex.Position.Y += FactorSize.Y;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                        {
+                            if ( FactorSize.X != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.LeftTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
+                                        vertex.Position.X += FactorSize.X;
+
+                            if ( FactorSize.Y != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                        vertex.Position.Y += FactorSize.Y;
+                        }
+                        break;
+
+                    //----------------------------------------------------------//
+
+                    case PointsResize.PointType.LeftBottom:
+                        if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                        {
+                            if ( FactorSize.X != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.LeftTop ||
+                                    vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                    vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                    vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
+                                        vertex.Position.X += FactorSize.X;
+
+                            if ( FactorSize.Z != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                        vertex.Position.Z += FactorSize.Z;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                        {
+                            if ( FactorSize.Z != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                        vertex.Position.Z += FactorSize.Z;
+
+                            if ( FactorSize.Y != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
+                                        vertex.Position.Y += FactorSize.Y;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                        {
+                            if ( FactorSize.X != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.LeftTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
+                                    vertex.Position.X += FactorSize.X;
+
+                            if ( FactorSize.Y != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
+                                        vertex.Position.Y += FactorSize.Y;
+                        }
+                        break;
+
+                    //----------------------------------------------------------//
+
+                    case PointsResize.PointType.RightTop:
+                        if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                        {
+                            if ( FactorSize.X != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
+                                        vertex.Position.X += FactorSize.X;
+
+                            if ( FactorSize.Z != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
+                                        vertex.Position.Z += FactorSize.Z;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                        {
+                            if ( FactorSize.Z != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
+                                        vertex.Position.Z += FactorSize.Z;
+
+                            if ( FactorSize.Y != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                        vertex.Position.Y += FactorSize.Y;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                        {
+                            if ( FactorSize.X != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
+                                        vertex.Position.X += FactorSize.X;
+
+                            if ( FactorSize.Y != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                        vertex.Position.Y += FactorSize.Y;
+                        }
+                        break;
+
+                    //----------------------------------------------------------//
+
+                    case PointsResize.PointType.RightBottom:
+                        if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                        {
+                            if ( FactorSize.X != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
+                                    vertex.Position.X += FactorSize.X;
+
+                            if ( FactorSize.Z != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftTop )
+                                        vertex.Position.Z += FactorSize.Z;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                        {
+                            if ( FactorSize.Z != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
+                                    vertex.Position.Z += FactorSize.Z;
+
+                            if ( FactorSize.Y != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
+                                        vertex.Position.Y += FactorSize.Y;
+                        }
+                        else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                        {
+                            if ( FactorSize.X != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
+                                    vertex.Position.X += FactorSize.X;
+
+                            if ( FactorSize.Y != 0 )
+                                if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
+                                        vertex.Position.Y += FactorSize.Y;
+                        }
+                        break;
+
+                    //----------------------------------------------------------//
+                }
+            }
+
+            //-----------------------------------------------------------------------------//
+
+            if ( IsUpdateVertexs )
+                for ( int i = 0; i < mLocalVertex.Count; i++ )
+                {
+                    Vertex vertex = mLocalVertex[i];
+
+                    switch ( PointsResize.SelectPointType )
+                    {
+                        //----------------------------------------------------------//
+
+                        case PointsResize.PointType.LeftCenter:
+                            if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
+                                 vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
+                                if ( typeViewport != Viewport.TypeViewport.Front_2D_yz )
+                                    vertex.Position.X -= FactorSize.X;
+                                else
+                                    vertex.Position.Z -= FactorSize.X;
+                            break;
+
+                        //----------------------------------------------------------//
+
+                        case PointsResize.PointType.BottomCenter:
+                            if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                            {
+                                if ( vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftTop )
+                                    vertex.Position.Z -= FactorSize.Z;
+                            }
+                            else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz || typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                            {
+                                if ( vertex.typeVertex != Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
+                                    vertex.Position.Y -= FactorSize.Y;
+                            }
+                            break;
+
+                        //----------------------------------------------------------//
+
+                        case PointsResize.PointType.LeftTop:
+                            if ( typeViewport == Viewport.TypeViewport.Top_2D_xy || typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                            {
+                                if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom )
+                                        vertex.Position.X -= FactorSize.X;
+                            }
+                            else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                            {
+                                if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
+                                        vertex.Position.Z -= FactorSize.Z;
+                            }
+                            break;
+
+                        //----------------------------------------------------------//
+
+                        case PointsResize.PointType.LeftBottom:
+                            if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                            {
+                                if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom )
+                                        vertex.Position.X -= FactorSize.X;
+
+                                if ( vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftTop )
+                                    vertex.Position.Z -= FactorSize.Z;
+                            }
+                            else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                            {
+                                if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
+                                        vertex.Position.Z -= FactorSize.Z;
+
+                                if ( vertex.typeVertex != Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
+                                        vertex.Position.Y -= FactorSize.Y;
+                            }
+                            else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
+                            {
+                                if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom )
+                                        vertex.Position.X -= FactorSize.X;
+
+                                if ( vertex.typeVertex != Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
+                                        vertex.Position.Y -= FactorSize.Y;
+                            }
+                            break;
+
+                        //----------------------------------------------------------//
+
+                        case PointsResize.PointType.RightBottom:
+                            if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
+                            {
+                                if ( vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.RightTop ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftTop )
+                                    vertex.Position.Z -= FactorSize.Z;
+                            }
+                            else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz || typeViewport == Viewport.TypeViewport.Front_2D_yz )
+                            {
+                                if ( vertex.typeVertex != Vertex.TypeVertex.Back_RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
+                                     vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
+                                    vertex.Position.Y -= FactorSize.Y;
+                            }
+                            break;
+
+                        //----------------------------------------------------------//
+                    }
+                }
+
+            //-----------------------------------------------------------------------------//
+        }
+
+        //-------------------------------------------------------------------------//
+
+        protected void AddVertex( Vector3f PositionVertex, Vertex.TypeVertex type )
+        {
+            mLocalVertex.Add( new Vertex( PositionVertex, type ) );
             mGlobalVertex.Add( PositionVertex );
         }
 
         //-------------------------------------------------------------------------//
 
-        protected void AddVertex( float x, float y, float z )
+        protected void AddVertex( float x, float y, float z, Vertex.TypeVertex type )
         {
-            mLocalVertex.Add( new Vector3f( x, y, z ) );
+            mLocalVertex.Add( new Vertex( x, y, z, type ) );
             mGlobalVertex.Add( new Vector3f( x, y, z ) );
         }
 
@@ -221,7 +851,7 @@ namespace lifeMap.src.brushes
 
         protected Color ColorBrush = new Color( 1, 0, 0 );
 
-        private List<Vector3f> mLocalVertex = new List<Vector3f>();
+        private List<Vertex> mLocalVertex = new List<Vertex>();
         private List<Vector3f> mGlobalVertex = new List<Vector3f>();
         private List<int> mIdVertex = new List<int>();
     }

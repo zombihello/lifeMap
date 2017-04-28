@@ -122,8 +122,7 @@ namespace lifeMap
                             break;
                     }
 
-                    Refresh();
-
+                    Refresh();             
                     Mouse.RemoveClick();
                 }
         }
@@ -146,17 +145,17 @@ namespace lifeMap
                         case Program.SelectTool.CursorTool:
                             if ( Mouse.IsSelectBrush )
                             {
+                                //Vector3f OffsetPosition = new Vector3f( Mouse.OldPosition.X - Mouse.Position.X, Mouse.OldPosition.Y - Mouse.Position.Y, 0 );
+                                Vector3f OffsetPosition = new Vector3f( Mouse.Position.X - Mouse.OldPosition.X, Mouse.Position.Y - Mouse.OldPosition.Y, 0 );
+
                                 switch ( Mouse.typeSelectBrush )
                                 {
                                     case Mouse.TypeSelectBrush.Move:
-                                        {
-                                            Vector3f OffsetPosition = new Vector3f( Mouse.Position.X - Mouse.OldPosition.X, Mouse.Position.Y - Mouse.OldPosition.Y, 0 );
-                                            Mouse.BrushSelect.Move( OffsetPosition, Viewport.type );
-                                        }
+                                        Mouse.BrushSelect.Move( OffsetPosition, Viewport.type );
                                         break;
 
                                     case Mouse.TypeSelectBrush.Scale:
-                                        Mouse.BrushSelect.SetSize( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
+                                        Mouse.BrushSelect.Resize( OffsetPosition, Viewport.type );
                                         break;
                                 }
                             }

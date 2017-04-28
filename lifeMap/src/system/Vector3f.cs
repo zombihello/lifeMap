@@ -8,7 +8,12 @@ namespace lifeMap.src.system
 {
     class Vector3f
     {
-        public Vector3f() { }
+        public Vector3f() 
+        {
+            X = 0;
+            Y = 0;
+            Z = 0;
+        }
 
         public Vector3f( float x, float y, float z )
         {
