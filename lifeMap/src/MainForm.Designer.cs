@@ -391,6 +391,7 @@
             this.view4.TabIndex = 23;
             this.view4.Paint += new System.Windows.Forms.PaintEventHandler(this.view4_Paint);
             this.view4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view4_KeyDown);
+            this.view4.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view4_MouseDoubleClick);
             this.view4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view4_MouseDown);
             this.view4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view4_MouseMove);
             this.view4.MouseUp += new System.Windows.Forms.MouseEventHandler(this.view4_MouseUp);
@@ -413,6 +414,7 @@
             this.view3.TabIndex = 23;
             this.view3.Paint += new System.Windows.Forms.PaintEventHandler(this.view3_Paint);
             this.view3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view3_KeyDown);
+            this.view3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view3_MouseDoubleClick);
             this.view3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view3_MouseDown);
             this.view3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view3_MouseMove);
             this.view3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.view3_MouseUp);
@@ -435,6 +437,7 @@
             this.view1.TabIndex = 23;
             this.view1.Paint += new System.Windows.Forms.PaintEventHandler(this.view1_Paint);
             this.view1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view1_KeyDown);
+            this.view1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view1_MouseDoubleClick);
             this.view1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view1_MouseDown);
             this.view1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view1_MouseMove);
             this.view1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.view1_MouseUp);
@@ -634,6 +637,7 @@
             this.view2.TabIndex = 23;
             this.view2.Paint += new System.Windows.Forms.PaintEventHandler(this.view2_Paint);
             this.view2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view2_KeyDown);
+            this.view2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view2_MouseDoubleClick);
             this.view2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view2_MouseDown);
             this.view2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view2_MouseMove);
             this.view2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.view2_MouseUp);

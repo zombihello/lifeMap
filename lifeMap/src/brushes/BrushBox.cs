@@ -21,6 +21,7 @@ namespace lifeMap.src.brushes
             ColorBrush = new Color( 0, 0.5f, 0.5f );
             DefaultColorBrush = ColorBrush;
 
+            // Front
             AddVertex( 0, 0, 0, Vertex.TypeVertex.LeftBottom ); // 0
             AddVertex( Size.X, 0, 0, Vertex.TypeVertex.RightBottom ); // 1
             AddVertex( Size.X, Size.Y, 0, Vertex.TypeVertex.RightTop ); // 2

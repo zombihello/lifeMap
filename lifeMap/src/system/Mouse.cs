@@ -23,7 +23,8 @@ namespace lifeMap.src
         {
             None,
             Move,
-            Scale
+            Resize,
+            Rotate
         };
 
         //-------------------------------------------------------------------------//
@@ -75,26 +76,26 @@ namespace lifeMap.src
                 switch ( TypeViewport )
                 {
                     case Viewport.TypeViewport.Top_2D_xy:
-                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( BrushSelect.Size.X ) / 2 ) + 5 ||
-                            PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( BrushSelect.Size.X ) / 2 ) - 5 ||
-                            PositionCursor.Y > ( BrushSelect.CenterBrush.Z + Math.Abs( BrushSelect.Size.Z ) / 2 ) + 5 ||
-                            PositionCursor.Y < ( BrushSelect.CenterBrush.Z - Math.Abs( BrushSelect.Size.Z ) / 2 ) - 5 )
+                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.Size.X ) ) + 5 ||
+                            PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.Size.X ) ) - 5 ||
+                            PositionCursor.Y > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.Size.Z ) ) + 5 ||
+                            PositionCursor.Y < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.Size.Z ) ) - 5 )
                             IsSelectBrush = false;
                         break;
 
                     case Viewport.TypeViewport.Front_2D_yz:
-                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.Z + Math.Abs( BrushSelect.Size.Z ) / 2 ) + 5 ||
-                             PositionCursor.X < ( BrushSelect.CenterBrush.Z - Math.Abs( BrushSelect.Size.Z ) / 2 ) - 5 ||
-                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( BrushSelect.Size.Y ) / 2 ) + 5 ||
-                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( BrushSelect.Size.Y ) / 2 ) - 5 )
+                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.Size.Z ) ) + 5 ||
+                             PositionCursor.X < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.Size.Z ) ) - 5 ||
+                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.Size.Y ) ) + 5 ||
+                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.Size.Y ) ) - 5 )
                             IsSelectBrush = false;
                         break;
 
                     case Viewport.TypeViewport.Side_2D_xz:
-                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( BrushSelect.Size.X ) / 2 ) + 5 ||
-                             PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( BrushSelect.Size.X ) / 2 ) - 5 ||
-                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( BrushSelect.Size.Y ) / 2 ) + 5 ||
-                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( BrushSelect.Size.Y ) / 2 ) - 5 )
+                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.Size.X ) ) + 5 ||
+                             PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.Size.X ) ) - 5 ||
+                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.Size.Y ) ) + 5 ||
+                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.Size.Y ) ) - 5 )
                             IsSelectBrush = false;
                         break;
                 }
@@ -102,16 +103,21 @@ namespace lifeMap.src
                 if ( !IsSelectBrush )
                 {
                     BrushSelect.SetColorBrush( BrushSelect.DefaultColorBrush );
+                    ManagerPoints.FactorSize = 0;
                     BrushSelect = null;
                 }
 
             }
             else
                 if ( IsSelectBrush && BrushSelect == null )
+                {
                     IsSelectBrush = false;
+                    ManagerPoints.FactorSize = 0;
+                }
 
             ClickPosition = Position;
             TypeViewportClicked = TypeViewport;
+            IsDoubleClick = false;
             IsClick = true;
         }
 
@@ -119,8 +125,11 @@ namespace lifeMap.src
 
         public static void RemoveClick()
         {
-            if ( IsSelectBrush && typeSelectBrush == TypeSelectBrush.Scale )
+            if ( IsSelectBrush && typeSelectBrush != TypeSelectBrush.Move )
+            {
+                BrushSelect.UpdateVertex();
                 typeSelectBrush = TypeSelectBrush.Move;
+            }
 
             ClickPosition = new Vector3f();
             TypeViewportClicked = Viewport.TypeViewport.None;
@@ -131,6 +140,7 @@ namespace lifeMap.src
 
         public static bool IsClick = false;
         public static bool IsSelectBrush = false;
+        public static bool IsDoubleClick = false;
 
         public static Viewport.TypeViewport TypeViewportClicked = Viewport.TypeViewport.None;
         public static TypeSelectBrush typeSelectBrush = TypeSelectBrush.None;

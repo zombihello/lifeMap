@@ -145,7 +145,6 @@ namespace lifeMap
                         case Program.SelectTool.CursorTool:
                             if ( Mouse.IsSelectBrush )
                             {
-                                //Vector3f OffsetPosition = new Vector3f( Mouse.OldPosition.X - Mouse.Position.X, Mouse.OldPosition.Y - Mouse.Position.Y, 0 );
                                 Vector3f OffsetPosition = new Vector3f( Mouse.Position.X - Mouse.OldPosition.X, Mouse.Position.Y - Mouse.OldPosition.Y, 0 );
 
                                 switch ( Mouse.typeSelectBrush )
@@ -154,8 +153,12 @@ namespace lifeMap
                                         Mouse.BrushSelect.Move( OffsetPosition, Viewport.type );
                                         break;
 
-                                    case Mouse.TypeSelectBrush.Scale:
+                                    case Mouse.TypeSelectBrush.Resize:
                                         Mouse.BrushSelect.Resize( OffsetPosition, Viewport.type );
+                                        break;
+
+                                    case Mouse.TypeSelectBrush.Rotate:
+                                        Mouse.BrushSelect.Rotate( Viewport, Viewport.type );
                                         break;
                                 }
                             }
@@ -244,6 +247,19 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        private void Viewport_MouseDoubleClick()
+        {
+            if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
+            {
+                if ( ManagerPoints.pointsType != ManagerPoints.PointsType.Rotate )
+                    ManagerPoints.SetPointsType( ManagerPoints.PointsType.Rotate );
+                else
+                    ManagerPoints.SetPointsType( ManagerPoints.PointsType.Resize );
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
         //-------------------------------------------------------------------------//
         //                             VIEWPORT 1                                  //
         //-------------------------------------------------------------------------//
@@ -321,6 +337,13 @@ namespace lifeMap
         private void view1_KeyDown( object sender, KeyEventArgs e )
         {
             Viewport_KeyDown( Viewport1, e.KeyCode );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view1_MouseDoubleClick( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseDoubleClick();
         }
 
         //-------------------------------------------------------------------------//
@@ -406,6 +429,13 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        private void view2_MouseDoubleClick( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseDoubleClick();
+        }
+
+        //-------------------------------------------------------------------------//
+
         //-------------------------------------------------------------------------//
         //                             VIEWPORT 3                                  //
         //-------------------------------------------------------------------------//
@@ -487,6 +517,13 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        private void view3_MouseDoubleClick( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseDoubleClick();
+        }
+
+        //-------------------------------------------------------------------------//
+
         //-------------------------------------------------------------------------//
         //                             VIEWPORT 4                                  //
         //-------------------------------------------------------------------------//
@@ -564,6 +601,13 @@ namespace lifeMap
         private void view4_KeyDown( object sender, KeyEventArgs e )
         {
             Viewport_KeyDown( Viewport4, e.KeyCode );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view4_MouseDoubleClick( object sender, MouseEventArgs e )
+        {
+            Viewport_MouseDoubleClick();
         }
 
         //-------------------------------------------------------------------------//

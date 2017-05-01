@@ -16,15 +16,6 @@ namespace lifeMap.src.brushes
     {
         //-------------------------------------------------------------------------//
 
-        public BasicBrush()
-        {
-            mPointsResize.Add( new PointsResize( this, Viewport.TypeViewport.Front_2D_yz ) );
-            mPointsResize.Add( new PointsResize( this, Viewport.TypeViewport.Side_2D_xz ) );
-            mPointsResize.Add( new PointsResize( this, Viewport.TypeViewport.Top_2D_xy ) );
-        }
-
-        //-------------------------------------------------------------------------//
-
         public virtual void Create( Vector3f StartPosition, Vector3f EndPosition ) { }
 
         //-------------------------------------------------------------------------//
@@ -32,13 +23,6 @@ namespace lifeMap.src.brushes
         public void Render( Viewport.TypeViewport typeViewport )
         {
             RenderCenterBrush( typeViewport );
-
-            if ( Mouse.BrushSelect == this && typeViewport != Viewport.TypeViewport.Textured_3D )
-            {
-                for ( int i = 0; i < mPointsResize.Count; i++ )
-                    if ( mPointsResize[i].typeViewport == typeViewport )
-                        mPointsResize[i].Render();
-            }
 
             Gl.glBegin( Gl.GL_LINES );
             Gl.glColor3f( ColorBrush.R, ColorBrush.G, ColorBrush.B );
@@ -97,11 +81,11 @@ namespace lifeMap.src.brushes
         {
             FactorSize = Program.Align( FactorSize, Viewport.fSize );
 
-            switch ( PointsResize.SelectPointType )
+            switch ( ManagerPoints.SelectPointType )
             {
                 //----------------------------------------------------------//
 
-                case PointsResize.PointType.BottomCenter:
+                case Points.PointType.BottomCenter:
                     if ( typeViewport == Viewport.TypeViewport.Front_2D_yz || typeViewport == Viewport.TypeViewport.Side_2D_xz )
                     {
                         Size.Y -= FactorSize.Y;
@@ -119,7 +103,7 @@ namespace lifeMap.src.brushes
 
                 //----------------------------------------------------------//
 
-                case PointsResize.PointType.LeftBottom:
+                case Points.PointType.LeftBottom:
                     if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                     {
                         Size.X -= FactorSize.X;
@@ -148,7 +132,7 @@ namespace lifeMap.src.brushes
 
                 //----------------------------------------------------------//
 
-                case PointsResize.PointType.LeftCenter:
+                case Points.PointType.LeftCenter:
                     if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                     {
                         Size.Z -= FactorSize.X;
@@ -165,7 +149,7 @@ namespace lifeMap.src.brushes
 
                 //----------------------------------------------------------//
 
-                case PointsResize.PointType.LeftTop:
+                case Points.PointType.LeftTop:
                     if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                     {
                         Size.X -= FactorSize.X;
@@ -191,7 +175,7 @@ namespace lifeMap.src.brushes
 
                 //----------------------------------------------------------//
 
-                case PointsResize.PointType.RightBottom:
+                case Points.PointType.RightBottom:
                     if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                     {
                         Size.X += FactorSize.X;
@@ -217,7 +201,7 @@ namespace lifeMap.src.brushes
 
                 //----------------------------------------------------------//
 
-                case PointsResize.PointType.RightCenter:
+                case Points.PointType.RightCenter:
                     if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                         Size.Z += FactorSize.X;
                     else if ( typeViewport == Viewport.TypeViewport.Top_2D_xy || typeViewport == Viewport.TypeViewport.Side_2D_xz )
@@ -228,7 +212,7 @@ namespace lifeMap.src.brushes
 
                 //----------------------------------------------------------//
 
-                case PointsResize.PointType.RightTop:
+                case Points.PointType.RightTop:
                     if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                     {
                         Size.X += FactorSize.X;
@@ -251,7 +235,7 @@ namespace lifeMap.src.brushes
 
                 //----------------------------------------------------------//
 
-                case PointsResize.PointType.TopCenter:
+                case Points.PointType.TopCenter:
                     if ( typeViewport == Viewport.TypeViewport.Front_2D_yz || typeViewport == Viewport.TypeViewport.Side_2D_xz )
                     {
                         Size.Y += FactorSize.Y;
@@ -267,6 +251,66 @@ namespace lifeMap.src.brushes
                 //----------------------------------------------------------//
             }
 
+
+            ToGloablCoords();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public void Rotate( Viewport viewport, Viewport.TypeViewport typeViewport )
+        {
+            Vector3f MousePosition = Program.ToNewCoords( viewport.Camera.Position, Mouse.Position );
+
+            float dX = 0;
+            float dY = 0;
+
+            switch ( typeViewport )
+            {
+                case Viewport.TypeViewport.Top_2D_xy:
+                    dX = MousePosition.X - CenterBrush.X;
+                    dY = MousePosition.Y - CenterBrush.Z;
+
+                    Angle = ( float )Math.Atan2( dY, dX );
+
+                    for ( int i = 0; i < mLocalVertex.Count; i++ )
+                    {
+                        Vector3f CenterRotate = new Vector3f( mLocalVertex[i].DefaultPosition.X - Size.X / 2, mLocalVertex[i].DefaultPosition.Z - Size.Z / 2, 0 );
+
+                        mLocalVertex[i].Position.X = CenterRotate.X * ( float )Math.Cos( Angle ) - CenterRotate.Y * ( float )Math.Sin( Angle ) + Size.X / 2;
+                        mLocalVertex[i].Position.Z = CenterRotate.X * ( float )Math.Sin( Angle ) + CenterRotate.Y * ( float )Math.Cos( Angle ) + Size.Z / 2;
+                    }
+                    break;
+
+                case Viewport.TypeViewport.Front_2D_yz:
+                    dX = MousePosition.X - CenterBrush.Z;
+                    dY = MousePosition.Y - CenterBrush.Y;
+
+                    Angle = ( float )Math.Atan2( dY, dX );
+
+                    for ( int i = 0; i < mLocalVertex.Count; i++ )
+                    {
+                        Vector3f CenterRotate = new Vector3f( mLocalVertex[i].DefaultPosition.Z - Size.Z / 2, mLocalVertex[i].DefaultPosition.Y - Size.Y / 2, 0 );
+
+                        mLocalVertex[i].Position.Z = CenterRotate.X * ( float )Math.Cos( Angle ) - CenterRotate.Y * ( float )Math.Sin( Angle ) + Size.Z / 2;
+                        mLocalVertex[i].Position.Y = CenterRotate.X * ( float )Math.Sin( Angle ) + CenterRotate.Y * ( float )Math.Cos( Angle ) + Size.Y / 2;
+                    }            
+                    break;
+
+                case Viewport.TypeViewport.Side_2D_xz:
+                    dX = MousePosition.X - CenterBrush.X;
+                    dY = MousePosition.Y - CenterBrush.Y;
+
+                    Angle = ( float )Math.Atan2( dY, dX );
+
+                    for ( int i = 0; i < mLocalVertex.Count; i++ )
+                    {
+                        Vector3f CenterRotate = new Vector3f( mLocalVertex[i].DefaultPosition.X - Size.X / 2, mLocalVertex[i].DefaultPosition.Y - Size.Y / 2, 0 );
+
+                        mLocalVertex[i].Position.X = CenterRotate.X * ( float )Math.Cos( Angle ) - CenterRotate.Y * ( float )Math.Sin( Angle ) + Size.X / 2;
+                        mLocalVertex[i].Position.Y = CenterRotate.X * ( float )Math.Sin( Angle ) + CenterRotate.Y * ( float )Math.Cos( Angle ) + Size.Y / 2;
+                    } 
+                    break;
+            }
 
             ToGloablCoords();
         }
@@ -351,9 +395,6 @@ namespace lifeMap.src.brushes
             CenterBrush.X = Position.X + Size.X / 2;
             CenterBrush.Y = Position.Y + Size.Y / 2;
             CenterBrush.Z = Position.Z + Size.Z / 2;
-
-            for ( int i = 0; i < mPointsResize.Count; i++ )
-                mPointsResize[i].InitPoints( this, mPointsResize[i].typeViewport );
         }
 
         //-------------------------------------------------------------------------//
@@ -361,21 +402,21 @@ namespace lifeMap.src.brushes
         private void ResizeLocalVertex( Vector3f FactorSize, Viewport.TypeViewport typeViewport )
         {
             bool IsUpdateVertexs =
-                PointsResize.SelectPointType == PointsResize.PointType.LeftCenter ||
-                PointsResize.SelectPointType == PointsResize.PointType.BottomCenter ||
-                PointsResize.SelectPointType == PointsResize.PointType.LeftTop ||
-                PointsResize.SelectPointType == PointsResize.PointType.LeftBottom ||
-                PointsResize.SelectPointType == PointsResize.PointType.RightBottom;
+                ManagerPoints.SelectPointType == Points.PointType.LeftCenter ||
+                ManagerPoints.SelectPointType == Points.PointType.BottomCenter ||
+                ManagerPoints.SelectPointType == Points.PointType.LeftTop ||
+                ManagerPoints.SelectPointType == Points.PointType.LeftBottom ||
+                ManagerPoints.SelectPointType == Points.PointType.RightBottom;
 
             for ( int i = 0; i < mLocalVertex.Count; i++ )
             {
                 Vertex vertex = mLocalVertex[i];
 
-                switch ( PointsResize.SelectPointType )
+                switch ( ManagerPoints.SelectPointType )
                 {
                     //----------------------------------------------------------//
 
-                    case PointsResize.PointType.LeftCenter:
+                    case Points.PointType.LeftCenter:
                         if ( typeViewport == Viewport.TypeViewport.Top_2D_xy ||
                              typeViewport == Viewport.TypeViewport.Side_2D_xz )
                         {
@@ -383,7 +424,7 @@ namespace lifeMap.src.brushes
                                 vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
-                                vertex.Position.X += FactorSize.X;
+                                vertex.Move( FactorSize.X, Program.PlaneType.X );//vertex.Position.X += FactorSize.X;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                         {
@@ -391,13 +432,13 @@ namespace lifeMap.src.brushes
                                 vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                 vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                 vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                vertex.Position.Z += FactorSize.X;
+                                vertex.Move( FactorSize.X, Program.PlaneType.Z );//vertex.Position.Z += FactorSize.X;
                         }
                         break;
 
                     //----------------------------------------------------------//
 
-                    case PointsResize.PointType.RightCenter:
+                    case Points.PointType.RightCenter:
                         if ( typeViewport == Viewport.TypeViewport.Top_2D_xy ||
                             typeViewport == Viewport.TypeViewport.Side_2D_xz )
                         {
@@ -405,7 +446,7 @@ namespace lifeMap.src.brushes
                             vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
-                                vertex.Position.X += FactorSize.X;
+                                vertex.Move( FactorSize.X, Program.PlaneType.X );
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                         {
@@ -413,51 +454,51 @@ namespace lifeMap.src.brushes
                                 vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
-                                vertex.Position.Z += FactorSize.X;
+                                vertex.Move( FactorSize.X, Program.PlaneType.Z );
                         }
                         break;
 
                     //----------------------------------------------------------//
 
-                    case PointsResize.PointType.TopCenter:
+                    case Points.PointType.TopCenter:
                         if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                         {
                             if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
-                                    vertex.Position.Z += FactorSize.Z;
+                                vertex.Move( FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z += FactorSize.Z;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz || typeViewport == Viewport.TypeViewport.Front_2D_yz )
-                            if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop || 
-                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop || 
-                                 vertex.typeVertex == Vertex.TypeVertex.RightTop || 
+                            if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
+                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
+                                 vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                  vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                    vertex.Position.Y += FactorSize.Y;
+                               vertex.Move( FactorSize.Y, Program.PlaneType.Y ); //vertex.Position.Y += FactorSize.Y;
                         break;
 
                     //----------------------------------------------------------//
 
-                    case PointsResize.PointType.BottomCenter:
+                    case Points.PointType.BottomCenter:
                         if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                         {
                             if ( vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                  vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                  vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                  vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                    vertex.Position.Z += FactorSize.Z;
+                                vertex.Move( FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z += FactorSize.Z;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz || typeViewport == Viewport.TypeViewport.Front_2D_yz )
-                            if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom || 
-                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom || 
-                                 vertex.typeVertex == Vertex.TypeVertex.RightBottom || 
+                            if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
+                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
+                                 vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                  vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
-                                    vertex.Position.Y += FactorSize.Y;
+                                vertex.Move( FactorSize.Y, Program.PlaneType.Y );//vertex.Position.Y += FactorSize.Y;
                         break;
 
                     //----------------------------------------------------------//
 
-                    case PointsResize.PointType.LeftTop:
+                    case Points.PointType.LeftTop:
                         if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                         {
                             if ( FactorSize.X != 0 )
@@ -465,14 +506,14 @@ namespace lifeMap.src.brushes
                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
-                                        vertex.Position.X += FactorSize.X;
+                                    vertex.Move( FactorSize.X, Program.PlaneType.X );//vertex.Position.X += FactorSize.X;
 
                             if ( FactorSize.Z != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
-                                        vertex.Position.Z += FactorSize.Z;
+                                    vertex.Move( FactorSize.Z, Program.PlaneType.Z );// vertex.Position.Z += FactorSize.Z;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                         {
@@ -481,14 +522,14 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                        vertex.Position.Z += FactorSize.Z;
+                                    vertex.Move( FactorSize.Z, Program.PlaneType.Z );// vertex.Position.Z += FactorSize.Z;
 
                             if ( FactorSize.Y != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                        vertex.Position.Y += FactorSize.Y;
+                                    vertex.Move( FactorSize.Y, Program.PlaneType.Y );//vertex.Position.Y += FactorSize.Y;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
                         {
@@ -497,20 +538,20 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
-                                        vertex.Position.X += FactorSize.X;
+                                    vertex.Move( FactorSize.X, Program.PlaneType.X );// vertex.Position.X += FactorSize.X;
 
                             if ( FactorSize.Y != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                        vertex.Position.Y += FactorSize.Y;
+                                    vertex.Move( FactorSize.Y, Program.PlaneType.Y );// vertex.Position.Y += FactorSize.Y;
                         }
                         break;
 
                     //----------------------------------------------------------//
 
-                    case PointsResize.PointType.LeftBottom:
+                    case Points.PointType.LeftBottom:
                         if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                         {
                             if ( FactorSize.X != 0 )
@@ -518,14 +559,14 @@ namespace lifeMap.src.brushes
                                     vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                     vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
-                                        vertex.Position.X += FactorSize.X;
+                                    vertex.Move( FactorSize.X, Program.PlaneType.X );//vertex.Position.X += FactorSize.X;
 
                             if ( FactorSize.Z != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                        vertex.Position.Z += FactorSize.Z;
+                                    vertex.Move( FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z += FactorSize.Z;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                         {
@@ -534,14 +575,14 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                        vertex.Position.Z += FactorSize.Z;
+                                    vertex.Move( FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z += FactorSize.Z;
 
                             if ( FactorSize.Y != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
-                                        vertex.Position.Y += FactorSize.Y;
+                                    vertex.Move( FactorSize.Y, Program.PlaneType.Y );//vertex.Position.Y += FactorSize.Y;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
                         {
@@ -550,20 +591,20 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
-                                    vertex.Position.X += FactorSize.X;
+                                    vertex.Move( FactorSize.X, Program.PlaneType.X );//vertex.Position.X += FactorSize.X;
 
                             if ( FactorSize.Y != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
-                                        vertex.Position.Y += FactorSize.Y;
+                                    vertex.Move( FactorSize.Y, Program.PlaneType.Y );//vertex.Position.Y += FactorSize.Y;
                         }
                         break;
 
                     //----------------------------------------------------------//
 
-                    case PointsResize.PointType.RightTop:
+                    case Points.PointType.RightTop:
                         if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                         {
                             if ( FactorSize.X != 0 )
@@ -571,14 +612,14 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
-                                        vertex.Position.X += FactorSize.X;
+                                    vertex.Move( FactorSize.X, Program.PlaneType.X );//vertex.Position.X += FactorSize.X;
 
                             if ( FactorSize.Z != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
-                                        vertex.Position.Z += FactorSize.Z;
+                                    vertex.Move( FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z += FactorSize.Z;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                         {
@@ -587,14 +628,14 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
-                                        vertex.Position.Z += FactorSize.Z;
+                                    vertex.Move( FactorSize.Z, Program.PlaneType.Z ); //vertex.Position.Z += FactorSize.Z;
 
                             if ( FactorSize.Y != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                        vertex.Position.Y += FactorSize.Y;
+                                    vertex.Move( FactorSize.Y, Program.PlaneType.Y ); //vertex.Position.Y += FactorSize.Y;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
                         {
@@ -603,20 +644,20 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
-                                        vertex.Position.X += FactorSize.X;
+                                    vertex.Move( FactorSize.X, Program.PlaneType.X );//vertex.Position.X += FactorSize.X;
 
                             if ( FactorSize.Y != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                        vertex.Position.Y += FactorSize.Y;
+                                    vertex.Move( FactorSize.Y, Program.PlaneType.Y );//vertex.Position.Y += FactorSize.Y;
                         }
                         break;
 
                     //----------------------------------------------------------//
 
-                    case PointsResize.PointType.RightBottom:
+                    case Points.PointType.RightBottom:
                         if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                         {
                             if ( FactorSize.X != 0 )
@@ -624,14 +665,14 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
-                                    vertex.Position.X += FactorSize.X;
+                                    vertex.Move( FactorSize.X, Program.PlaneType.X ); // vertex.Position.X += FactorSize.X;
 
                             if ( FactorSize.Z != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                        vertex.Position.Z += FactorSize.Z;
+                                    vertex.Move( FactorSize.Z, Program.PlaneType.Z );// vertex.Position.Z += FactorSize.Z;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                         {
@@ -640,14 +681,14 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop )
-                                    vertex.Position.Z += FactorSize.Z;
+                                    vertex.Move( FactorSize.Z, Program.PlaneType.Z ); //vertex.Position.Z += FactorSize.Z;
 
                             if ( FactorSize.Y != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
-                                        vertex.Position.Y += FactorSize.Y;
+                                    vertex.Move( FactorSize.Y, Program.PlaneType.Y );//vertex.Position.Y += FactorSize.Y;
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
                         {
@@ -656,14 +697,14 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightTop ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom )
-                                    vertex.Position.X += FactorSize.X;
+                                    vertex.Move( FactorSize.X, Program.PlaneType.X ); // vertex.Position.X += FactorSize.X;
 
                             if ( FactorSize.Y != 0 )
                                 if ( vertex.typeVertex == Vertex.TypeVertex.Back_RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex == Vertex.TypeVertex.LeftBottom )
-                                        vertex.Position.Y += FactorSize.Y;
+                                    vertex.Move( FactorSize.Y, Program.PlaneType.Y ); //vertex.Position.Y += FactorSize.Y;
                         }
                         break;
 
@@ -678,29 +719,29 @@ namespace lifeMap.src.brushes
                 {
                     Vertex vertex = mLocalVertex[i];
 
-                    switch ( PointsResize.SelectPointType )
+                    switch ( ManagerPoints.SelectPointType )
                     {
                         //----------------------------------------------------------//
 
-                        case PointsResize.PointType.LeftCenter:
+                        case Points.PointType.LeftCenter:
                             if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
                                  vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
                                 if ( typeViewport != Viewport.TypeViewport.Front_2D_yz )
-                                    vertex.Position.X -= FactorSize.X;
+                                    vertex.Move( -FactorSize.X, Program.PlaneType.X );//vertex.Position.X -= FactorSize.X;
                                 else
-                                    vertex.Position.Z -= FactorSize.X;
+                                   vertex.Move( -FactorSize.X, Program.PlaneType.Z ); //vertex.Position.Z -= FactorSize.X;
                             break;
 
                         //----------------------------------------------------------//
 
-                        case PointsResize.PointType.BottomCenter:
+                        case Points.PointType.BottomCenter:
                             if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                             {
                                 if ( vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftTop )
-                                    vertex.Position.Z -= FactorSize.Z;
+                                    vertex.Move( -FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z -= FactorSize.Z;
                             }
                             else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz || typeViewport == Viewport.TypeViewport.Front_2D_yz )
                             {
@@ -708,57 +749,57 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
-                                    vertex.Position.Y -= FactorSize.Y;
+                                    vertex.Move( -FactorSize.Y, Program.PlaneType.Y );//vertex.Position.Y -= FactorSize.Y;
                             }
                             break;
 
                         //----------------------------------------------------------//
 
-                        case PointsResize.PointType.LeftTop:
+                        case Points.PointType.LeftTop:
                             if ( typeViewport == Viewport.TypeViewport.Top_2D_xy || typeViewport == Viewport.TypeViewport.Side_2D_xz )
                             {
                                 if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom )
-                                        vertex.Position.X -= FactorSize.X;
+                                    vertex.Move( -FactorSize.X, Program.PlaneType.X );//Position.X -= FactorSize.X;
                             }
                             else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                             {
                                 if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
-                                        vertex.Position.Z -= FactorSize.Z;
+                                    vertex.Move( -FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z -= FactorSize.Z;
                             }
                             break;
 
                         //----------------------------------------------------------//
 
-                        case PointsResize.PointType.LeftBottom:
+                        case Points.PointType.LeftBottom:
                             if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                             {
                                 if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom )
-                                        vertex.Position.X -= FactorSize.X;
+                                    vertex.Move( -FactorSize.X, Program.PlaneType.X );//vertex.Position.X -= FactorSize.X;
 
                                 if ( vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftTop )
-                                    vertex.Position.Z -= FactorSize.Z;
+                                    vertex.Move( -FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z -= FactorSize.Z;
                             }
                             else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                             {
                                 if ( vertex.typeVertex != Vertex.TypeVertex.LeftTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
-                                        vertex.Position.Z -= FactorSize.Z;
+                                    vertex.Move( -FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z -= FactorSize.Z;
 
                                 if ( vertex.typeVertex != Vertex.TypeVertex.Back_RightBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
-                                        vertex.Position.Y -= FactorSize.Y;
+                                    vertex.Move( -FactorSize.Y, Program.PlaneType.Y );//vertex.Position.Y -= FactorSize.Y;
                             }
                             else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
                             {
@@ -766,26 +807,26 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom )
-                                        vertex.Position.X -= FactorSize.X;
+                                    vertex.Move( -FactorSize.X, Program.PlaneType.X );//vertex.Position.X -= FactorSize.X;
 
                                 if ( vertex.typeVertex != Vertex.TypeVertex.Back_RightBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
-                                        vertex.Position.Y -= FactorSize.Y;
+                                    vertex.Move( -FactorSize.Y, Program.PlaneType.Y ); //vertex.Position.Y -= FactorSize.Y;
                             }
                             break;
 
                         //----------------------------------------------------------//
 
-                        case PointsResize.PointType.RightBottom:
+                        case Points.PointType.RightBottom:
                             if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                             {
                                 if ( vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.RightTop ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftTop )
-                                    vertex.Position.Z -= FactorSize.Z;
+                                    vertex.Move( -FactorSize.Z, Program.PlaneType.Z );//vertex.Position.Z -= FactorSize.Z;
                             }
                             else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz || typeViewport == Viewport.TypeViewport.Front_2D_yz )
                             {
@@ -793,7 +834,7 @@ namespace lifeMap.src.brushes
                                      vertex.typeVertex != Vertex.TypeVertex.Back_LeftBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.RightBottom ||
                                      vertex.typeVertex != Vertex.TypeVertex.LeftBottom )
-                                    vertex.Position.Y -= FactorSize.Y;
+                                    vertex.Move( -FactorSize.Y, Program.PlaneType.Y );// vertex.Position.Y -= FactorSize.Y;
                             }
                             break;
 
@@ -802,6 +843,14 @@ namespace lifeMap.src.brushes
                 }
 
             //-----------------------------------------------------------------------------//
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public void UpdateVertex()
+        {
+            for ( int i = 0; i < mLocalVertex.Count; i++ )
+                mLocalVertex[i].DefaultPosition = new Vector3f( mLocalVertex[i].Position.X, mLocalVertex[i].Position.Y, mLocalVertex[i].Position.Z );
         }
 
         //-------------------------------------------------------------------------//
@@ -847,12 +896,12 @@ namespace lifeMap.src.brushes
         public Vector3f Size = new Vector3f();
         public Vector3f Position = new Vector3f();
         public Color DefaultColorBrush = new Color( 1, 0, 0 );
-        public List<PointsResize> mPointsResize = new List<PointsResize>();
+        public float Angle = 0;
 
         protected Color ColorBrush = new Color( 1, 0, 0 );
 
         private List<Vertex> mLocalVertex = new List<Vertex>();
         private List<Vector3f> mGlobalVertex = new List<Vector3f>();
-        private List<int> mIdVertex = new List<int>();
+        private List<int> mIdVertex = new List<int>();     
     }
 }

@@ -128,10 +128,13 @@ namespace lifeMap.src.system
                         if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
                             Mouse.BrushSelect.SetColorBrush( Mouse.BrushSelect.DefaultColorBrush );
 
-                        mBrush[i].SetColorBrush( new Color( 1, 1, 1 ) );
+                        mBrush[i].SetColorBrush( new Color( 1, 1, 1 ) );                      
+                        Mouse.BrushSelect = mBrush[i];
+
+                        ManagerPoints.SetSelectBrush( mBrush[i] );
+
                         Mouse.IsSelectBrush = true;
                         Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Move;
-                        Mouse.BrushSelect = mBrush[i];
                         return true;
                     }
             }
@@ -145,17 +148,15 @@ namespace lifeMap.src.system
         {
             if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
             {
-                List<PointsResize> mPoints = Mouse.BrushSelect.mPointsResize;
+                if ( ManagerPoints.IsPointsClick( PositionClick ) )
+                {
+                    if ( ManagerPoints.pointsType == ManagerPoints.PointsType.Resize )
+                        Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Resize;
+                    else
+                        Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Rotate;
 
-                for ( int i = 0; i < mPoints.Count; i++ )
-                    if ( mPoints[i].typeViewport == typeViewport )
-                    {
-                        if ( mPoints[i].IsPointsClick( PositionClick ) )
-                        {
-                            Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Scale;
-                            return true;
-                        }
-                    }
+                    return true;
+                }
             }
 
             return false;
@@ -191,6 +192,7 @@ namespace lifeMap.src.system
                 if ( mBrush[i] == SelectBrush )
                 {
                     mBrush.Remove( SelectBrush );
+                    ManagerPoints.PointsClear();
                     return;
                 }
         }

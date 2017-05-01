@@ -92,13 +92,19 @@ namespace lifeMap.src
             {
                 if ( type != TypeViewport.Textured_3D )
                 {
-                    Camera.Update( type );
+                    Camera.Update( type );                  
                     RenderGrid();
                     Camera.RenderCamera();
+
+                    if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
+                    {
+                        ManagerPoints.PointsUpdate();
+                        ManagerPoints.PointsRender( type );
+                    }
                 }
                 else
                     Scene.WorldCamera.Update( type );
-                
+
                 Scene.UpdateScene( type );
             }
         }
