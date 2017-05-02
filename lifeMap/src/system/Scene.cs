@@ -128,10 +128,11 @@ namespace lifeMap.src.system
                         if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
                             Mouse.BrushSelect.SetColorBrush( Mouse.BrushSelect.DefaultColorBrush );
 
-                        mBrush[i].SetColorBrush( new Color( 1, 1, 1 ) );                      
+                        mBrush[i].SetColorBrush( new Color( 1, 1, 1 ) );
                         Mouse.BrushSelect = mBrush[i];
 
                         ManagerPoints.SetSelectBrush( mBrush[i] );
+                        ManagerPoints.Size = new Vector3f( mBrush[i].SelectSize );
 
                         Mouse.IsSelectBrush = true;
                         Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Move;

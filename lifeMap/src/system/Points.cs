@@ -75,7 +75,7 @@ namespace lifeMap.src.system
             mPoints.Clear();
 
             Vector3f CenterBrush = SelectBrush.CenterBrush;
-            ManagerPoints.Size = new Vector3f( SelectBrush.Size.X / 2, SelectBrush.Size.Y / 2, SelectBrush.Size.Z / 2 );
+         //   ManagerPoints.Size = new Vector3f( SelectBrush.Size.X / 2, SelectBrush.Size.Y / 2, SelectBrush.Size.Z / 2 );
 
             switch ( typeViewport )
             {
