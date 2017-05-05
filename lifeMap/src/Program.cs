@@ -34,9 +34,9 @@ namespace lifeMap
 
         [STAThread]
         static void Main()
-        {
+        {       
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault( false );
+            Application.SetCompatibleTextRenderingDefault( false );        
             Application.Run( new MainForm() );
         }
 
@@ -73,6 +73,6 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        public static SelectTool selectTool = SelectTool.None;
+        public static SelectTool selectTool = SelectTool.None;        
     }
 }

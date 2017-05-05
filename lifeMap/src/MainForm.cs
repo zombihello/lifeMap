@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using Tao.OpenGl;
 using Tao.FreeGlut;
 using Tao.Platform.Windows;
+using Tao.DevIl;
 
 using lifeMap.src;
 using lifeMap.src.brushes;
@@ -27,6 +28,7 @@ namespace lifeMap
         public MainForm()
         {
             InitializeComponent();
+            MainContext.InitializeContexts();
 
             Viewport1 = new Viewport( view1, Viewport.TypeViewport.Textured_3D, label_viewport1, vScrollBar_viewport1, hScrollBar_viewport1 );
             Viewport1.bEnabled = false;
@@ -60,11 +62,11 @@ namespace lifeMap
             Glut.glutInit();
             Glut.glutInitDisplayMode( Glut.GLUT_RGB | Glut.GLUT_DOUBLE | Glut.GLUT_DEPTH );
 
-            Gl.glEnable( Gl.GL_TEXTURE_2D );
-            Gl.glEnable( Gl.GL_DEPTH_TEST );
+            Il.ilInit();
+            Il.ilEnable( Il.IL_ORIGIN_SET );
 
             Gl.glDepthMask( Gl.GL_TRUE );
-            Gl.glClearDepth( 1.0f );
+            Gl.glClearDepth( 1 );
         }
 
         //-------------------------------------------------------------------------//
@@ -99,7 +101,7 @@ namespace lifeMap
         }
 
         //-------------------------------------------------------------------------//
-
+        
         private void Viewport_MouseUp( Viewport Viewport )
         {
             if ( Viewport.bEnabled )
@@ -762,6 +764,8 @@ namespace lifeMap
         }
 
         //-------------------------------------------------------------------------//
+
+        public static SimpleOpenGlControl MainContext = new SimpleOpenGlControl();
 
         private Viewport TmpViewport;
         private Viewport Viewport1;

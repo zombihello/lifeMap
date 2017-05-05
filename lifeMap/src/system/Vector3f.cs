@@ -64,6 +64,45 @@ namespace lifeMap.src.system
         }
 
         //-------------------------------------------------------------------------//
+        public static Vector3f operator -( Vector3f Vector1, Vector3f Vector2 )
+        {
+            return new Vector3f( Vector2.X - Vector1.X, Vector2.Y - Vector1.Y, Vector2.Z - Vector1.Z );
+        }
+
+        //-------------------------------------------------------------------------//
+        public static Vector3f operator +( Vector3f Vector1, Vector3f Vector2 )
+        {
+            return new Vector3f( Vector1.X + Vector2.X, Vector1.Y + Vector2.Y, Vector1.Z + Vector2.Z );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public void Normalize()
+        {
+            float size = ( float )Math.Sqrt( Math.Pow( X, 2 ) + Math.Pow( Y, 2 ) + Math.Pow( Z, 2 ) );
+
+            X /= size;
+            Y /= size;
+            Z /= size;
+        }
+        //-------------------------------------------------------------------------//
+
+        public static float DotProduct( Vector3f Vector1, Vector3f Vector2 )
+        {
+            return ( float ) Vector1.X * Vector2.X + Vector1.Y * Vector2.Y + Vector1.Z * Vector2.Z;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static Vector3f CrossProduct( Vector3f Vector1, Vector3f Vector2 )
+        {
+            return new Vector3f(
+                Vector1.Y * Vector2.Z - Vector1.Z * Vector2.Y,
+                Vector1.Z * Vector2.X - Vector1.X * Vector2.Z,
+                Vector1.X * Vector2.Y - Vector1.Y * Vector2.X);
+        }
+
+        //-------------------------------------------------------------------------//
 
         public float X;
         public float Y;

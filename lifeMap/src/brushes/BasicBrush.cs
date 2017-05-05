@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Tao.OpenGl;
 using Tao.FreeGlut;
 using Tao.Platform.Windows;
+using Tao.DevIl;
 
 using lifeMap.src.system;
 
@@ -14,6 +15,15 @@ namespace lifeMap.src.brushes
 {
     class BasicBrush
     {
+        //-------------------------------------------------------------------------//
+
+        public enum PrimitivesType
+        {
+            Cube,
+            Sphere,
+            Plane
+        };
+
         //-------------------------------------------------------------------------//
 
         public virtual void Create( Vector3f StartPosition, Vector3f EndPosition ) { }
@@ -24,13 +34,28 @@ namespace lifeMap.src.brushes
         {
             RenderCenterBrush( typeViewport );
 
-            Gl.glBegin( Gl.GL_LINES );
-            Gl.glColor3f( ColorBrush.R, ColorBrush.G, ColorBrush.B );
-
-            for ( int i = 0; i < mIdVertex.Count; i++ )
+            if ( typeViewport != Viewport.TypeViewport.Textured_3D )
             {
-                int id = mIdVertex[i];
-                Gl.glVertex3f( mGlobalVertex[id].X, mGlobalVertex[id].Y, mGlobalVertex[id].Z );
+                Gl.glBegin( Gl.GL_LINES );
+                Gl.glColor3f( ColorBrush.R, ColorBrush.G, ColorBrush.B );
+
+                for ( int i = 0; i < mIdVertex_Lines.Count; i++ )
+                {
+                    int id = mIdVertex_Lines[ i ];
+                    Gl.glVertex3f( mGlobalVertex[ id ].X, mGlobalVertex[ id ].Y, mGlobalVertex[ id ].Z );
+                }
+            }
+            else
+            {
+                TextureBrush.SelectTexture( Gl.GL_TEXTURE_2D );
+                Gl.glBegin( Gl.GL_TRIANGLES );
+
+                for ( int i = 0; i < mIdVertex_Triangles.Count; i++ )
+                {
+                    int id = mIdVertex_Triangles[ i ];
+                    Gl.glTexCoord2f( mTextureCoord[ i ].X, mTextureCoord[ i ].Y );
+                    Gl.glVertex3f( mGlobalVertex[ id ].X, mGlobalVertex[ id ].Y, mGlobalVertex[ id ].Z );
+                }
             }
 
             Gl.glEnd();
@@ -308,34 +333,34 @@ namespace lifeMap.src.brushes
                     dX = MousePosition.X - CenterBrush.X;
                     dY = MousePosition.Y - CenterBrush.Z;
 
-                    Angle = ( float )Math.Atan2( dY, dX );
+                    Angle = ( float ) Math.Atan2( dY, dX );
 
                     for ( int i = 0; i < mLocalVertex.Count; i++ )
                     {
-                        Vector3f CenterRotate = new Vector3f( mLocalVertex[i].DefaultPosition.X - Size.X / 2, mLocalVertex[i].DefaultPosition.Z - Size.Z / 2, 0 );
+                        Vector3f CenterRotate = new Vector3f( mLocalVertex[ i ].DefaultPosition.X - Size.X / 2, mLocalVertex[ i ].DefaultPosition.Z - Size.Z / 2, 0 );
 
-                        mLocalVertex[i].Position.X = CenterRotate.X * ( float )Math.Cos( Angle ) - CenterRotate.Y * ( float )Math.Sin( Angle ) + Size.X / 2;
-                        mLocalVertex[i].Position.Z = CenterRotate.X * ( float )Math.Sin( Angle ) + CenterRotate.Y * ( float )Math.Cos( Angle ) + Size.Z / 2;
+                        mLocalVertex[ i ].Position.X = CenterRotate.X * ( float ) Math.Cos( Angle ) - CenterRotate.Y * ( float ) Math.Sin( Angle ) + Size.X / 2;
+                        mLocalVertex[ i ].Position.Z = CenterRotate.X * ( float ) Math.Sin( Angle ) + CenterRotate.Y * ( float ) Math.Cos( Angle ) + Size.Z / 2;
 
                         if ( i == 0 )
                         {
-                            MaxVertex = new Vector3f( mLocalVertex[i].Position );
-                            MinVertex = new Vector3f( mLocalVertex[i].Position );
+                            MaxVertex = new Vector3f( mLocalVertex[ i ].Position );
+                            MinVertex = new Vector3f( mLocalVertex[ i ].Position );
                         }
                         else
                         {
 
-                            if ( mLocalVertex[i].Position.Z > MaxVertex.Z )
-                                MaxVertex.Z = mLocalVertex[i].Position.Z;
+                            if ( mLocalVertex[ i ].Position.Z > MaxVertex.Z )
+                                MaxVertex.Z = mLocalVertex[ i ].Position.Z;
 
-                            if ( mLocalVertex[i].Position.X > MaxVertex.X )
-                                MaxVertex.X = mLocalVertex[i].Position.X;
+                            if ( mLocalVertex[ i ].Position.X > MaxVertex.X )
+                                MaxVertex.X = mLocalVertex[ i ].Position.X;
 
-                            if ( mLocalVertex[i].Position.Z < MinVertex.Z )
-                                MinVertex.Z = mLocalVertex[i].Position.Z;
+                            if ( mLocalVertex[ i ].Position.Z < MinVertex.Z )
+                                MinVertex.Z = mLocalVertex[ i ].Position.Z;
 
-                            if ( mLocalVertex[i].Position.X < MinVertex.X )
-                                MinVertex.X = mLocalVertex[i].Position.X;
+                            if ( mLocalVertex[ i ].Position.X < MinVertex.X )
+                                MinVertex.X = mLocalVertex[ i ].Position.X;
                         }
 
                     }
@@ -349,34 +374,34 @@ namespace lifeMap.src.brushes
                     dX = MousePosition.X - CenterBrush.Z;
                     dY = MousePosition.Y - CenterBrush.Y;
 
-                    Angle = ( float )Math.Atan2( dY, dX );
+                    Angle = ( float ) Math.Atan2( dY, dX );
 
                     for ( int i = 0; i < mLocalVertex.Count; i++ )
                     {
-                        Vector3f CenterRotate = new Vector3f( mLocalVertex[i].DefaultPosition.Z - Size.Z / 2, mLocalVertex[i].DefaultPosition.Y - Size.Y / 2, 0 );
+                        Vector3f CenterRotate = new Vector3f( mLocalVertex[ i ].DefaultPosition.Z - Size.Z / 2, mLocalVertex[ i ].DefaultPosition.Y - Size.Y / 2, 0 );
 
-                        mLocalVertex[i].Position.Z = CenterRotate.X * ( float )Math.Cos( Angle ) - CenterRotate.Y * ( float )Math.Sin( Angle ) + Size.Z / 2;
-                        mLocalVertex[i].Position.Y = CenterRotate.X * ( float )Math.Sin( Angle ) + CenterRotate.Y * ( float )Math.Cos( Angle ) + Size.Y / 2;
+                        mLocalVertex[ i ].Position.Z = CenterRotate.X * ( float ) Math.Cos( Angle ) - CenterRotate.Y * ( float ) Math.Sin( Angle ) + Size.Z / 2;
+                        mLocalVertex[ i ].Position.Y = CenterRotate.X * ( float ) Math.Sin( Angle ) + CenterRotate.Y * ( float ) Math.Cos( Angle ) + Size.Y / 2;
 
                         if ( i == 0 )
                         {
-                            MaxVertex = new Vector3f( mLocalVertex[i].Position );
-                            MinVertex = new Vector3f( mLocalVertex[i].Position );
+                            MaxVertex = new Vector3f( mLocalVertex[ i ].Position );
+                            MinVertex = new Vector3f( mLocalVertex[ i ].Position );
                         }
                         else
                         {
 
-                            if ( mLocalVertex[i].Position.Y > MaxVertex.Y )
-                                MaxVertex.Y = mLocalVertex[i].Position.Y;
+                            if ( mLocalVertex[ i ].Position.Y > MaxVertex.Y )
+                                MaxVertex.Y = mLocalVertex[ i ].Position.Y;
 
-                            if ( mLocalVertex[i].Position.Z > MaxVertex.Z )
-                                MaxVertex.Z = mLocalVertex[i].Position.Z;
+                            if ( mLocalVertex[ i ].Position.Z > MaxVertex.Z )
+                                MaxVertex.Z = mLocalVertex[ i ].Position.Z;
 
-                            if ( mLocalVertex[i].Position.Y < MinVertex.Y )
-                                MinVertex.Y = mLocalVertex[i].Position.Y;
+                            if ( mLocalVertex[ i ].Position.Y < MinVertex.Y )
+                                MinVertex.Y = mLocalVertex[ i ].Position.Y;
 
-                            if ( mLocalVertex[i].Position.Z < MinVertex.Z )
-                                MinVertex.Z = mLocalVertex[i].Position.Z;
+                            if ( mLocalVertex[ i ].Position.Z < MinVertex.Z )
+                                MinVertex.Z = mLocalVertex[ i ].Position.Z;
                         }
                     }
 
@@ -388,34 +413,34 @@ namespace lifeMap.src.brushes
                     dX = MousePosition.X - CenterBrush.X;
                     dY = MousePosition.Y - CenterBrush.Y;
 
-                    Angle = ( float )Math.Atan2( dY, dX );
+                    Angle = ( float ) Math.Atan2( dY, dX );
 
                     for ( int i = 0; i < mLocalVertex.Count; i++ )
                     {
-                        Vector3f CenterRotate = new Vector3f( mLocalVertex[i].DefaultPosition.X - Size.X / 2, mLocalVertex[i].DefaultPosition.Y - Size.Y / 2, 0 );
+                        Vector3f CenterRotate = new Vector3f( mLocalVertex[ i ].DefaultPosition.X - Size.X / 2, mLocalVertex[ i ].DefaultPosition.Y - Size.Y / 2, 0 );
 
-                        mLocalVertex[i].Position.X = CenterRotate.X * ( float )Math.Cos( Angle ) - CenterRotate.Y * ( float )Math.Sin( Angle ) + Size.X / 2;
-                        mLocalVertex[i].Position.Y = CenterRotate.X * ( float )Math.Sin( Angle ) + CenterRotate.Y * ( float )Math.Cos( Angle ) + Size.Y / 2;
+                        mLocalVertex[ i ].Position.X = CenterRotate.X * ( float ) Math.Cos( Angle ) - CenterRotate.Y * ( float ) Math.Sin( Angle ) + Size.X / 2;
+                        mLocalVertex[ i ].Position.Y = CenterRotate.X * ( float ) Math.Sin( Angle ) + CenterRotate.Y * ( float ) Math.Cos( Angle ) + Size.Y / 2;
 
                         if ( i == 0 )
                         {
-                            MaxVertex = new Vector3f( mLocalVertex[i].Position );
-                            MinVertex = new Vector3f( mLocalVertex[i].Position );
+                            MaxVertex = new Vector3f( mLocalVertex[ i ].Position );
+                            MinVertex = new Vector3f( mLocalVertex[ i ].Position );
                         }
                         else
                         {
 
-                            if ( mLocalVertex[i].Position.Y > MaxVertex.Y )
-                                MaxVertex.Y = mLocalVertex[i].Position.Y;
+                            if ( mLocalVertex[ i ].Position.Y > MaxVertex.Y )
+                                MaxVertex.Y = mLocalVertex[ i ].Position.Y;
 
-                            if ( mLocalVertex[i].Position.X > MaxVertex.X )
-                                MaxVertex.X = mLocalVertex[i].Position.X;
+                            if ( mLocalVertex[ i ].Position.X > MaxVertex.X )
+                                MaxVertex.X = mLocalVertex[ i ].Position.X;
 
-                            if ( mLocalVertex[i].Position.Y < MinVertex.Y )
-                                MinVertex.Y = mLocalVertex[i].Position.Y;
+                            if ( mLocalVertex[ i ].Position.Y < MinVertex.Y )
+                                MinVertex.Y = mLocalVertex[ i ].Position.Y;
 
-                            if ( mLocalVertex[i].Position.X < MinVertex.X )
-                                MinVertex.X = mLocalVertex[i].Position.X;
+                            if ( mLocalVertex[ i ].Position.X < MinVertex.X )
+                                MinVertex.X = mLocalVertex[ i ].Position.X;
                         }
                     }
 
@@ -501,14 +526,16 @@ namespace lifeMap.src.brushes
         {
             for ( int i = 0; i < mLocalVertex.Count; i++ )
             {
-                mGlobalVertex[i].X = mLocalVertex[i].Position.X + Position.X;
-                mGlobalVertex[i].Y = mLocalVertex[i].Position.Y + Position.Y;
-                mGlobalVertex[i].Z = mLocalVertex[i].Position.Z + Position.Z;
+                mGlobalVertex[ i ].X = mLocalVertex[ i ].Position.X + Position.X;
+                mGlobalVertex[ i ].Y = mLocalVertex[ i ].Position.Y + Position.Y;
+                mGlobalVertex[ i ].Z = mLocalVertex[ i ].Position.Z + Position.Z;
             }
 
             CenterBrush.X = Position.X + Size.X / 2;
             CenterBrush.Y = Position.Y + Size.Y / 2;
             CenterBrush.Z = Position.Z + Size.Z / 2;
+
+            GenerateTextureCoords();
         }
 
         //-------------------------------------------------------------------------//
@@ -524,7 +551,7 @@ namespace lifeMap.src.brushes
 
             for ( int i = 0; i < mLocalVertex.Count; i++ )
             {
-                Vertex vertex = mLocalVertex[i];
+                Vertex vertex = mLocalVertex[ i ];
 
                 switch ( ManagerPoints.SelectPointType )
                 {
@@ -588,7 +615,7 @@ namespace lifeMap.src.brushes
                                  vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                  vertex.typeVertex == Vertex.TypeVertex.RightTop ||
                                  vertex.typeVertex == Vertex.TypeVertex.LeftTop )
-                                vertex.Move( FactorSize.Y, Program.PlaneType.Y ); 
+                                vertex.Move( FactorSize.Y, Program.PlaneType.Y );
                         break;
 
                     //----------------------------------------------------------//
@@ -831,7 +858,7 @@ namespace lifeMap.src.brushes
             if ( IsUpdateVertexs )
                 for ( int i = 0; i < mLocalVertex.Count; i++ )
                 {
-                    Vertex vertex = mLocalVertex[i];
+                    Vertex vertex = mLocalVertex[ i ];
 
                     switch ( ManagerPoints.SelectPointType )
                     {
@@ -964,7 +991,7 @@ namespace lifeMap.src.brushes
         public void UpdateVertex()
         {
             for ( int i = 0; i < mLocalVertex.Count; i++ )
-                mLocalVertex[i].DefaultPosition = new Vector3f( mLocalVertex[i].Position );
+                mLocalVertex[ i ].DefaultPosition = new Vector3f( mLocalVertex[ i ].Position );
 
             SelectSize = new Vector3f( ManagerPoints.Size );
         }
@@ -987,9 +1014,10 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
-        protected void AddIdVertex( int id )
+        protected void InitIdVertex( List<int> Id_Lines, List<int> Id_Triangles )
         {
-            mIdVertex.Add( id );
+            mIdVertex_Lines = Id_Lines;
+            mIdVertex_Triangles = Id_Triangles;
         }
 
         //-------------------------------------------------------------------------//
@@ -1008,6 +1036,52 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
+        protected void GenerateTextureCoords()
+        {
+            mTextureCoord.Clear();
+
+            for ( int i = 0, j = 0; i < mIdVertex_Triangles.Count / 3; i++ )
+            {
+                Vertex A = mLocalVertex[ mIdVertex_Triangles[ j ] ];
+                Vertex B = mLocalVertex[ mIdVertex_Triangles[ j + 1 ] ];
+                Vertex C = mLocalVertex[ mIdVertex_Triangles[ j + 2 ] ];
+                j += 3;
+
+                Vector3f Normal = Vector3f.CrossProduct( B.Position - A.Position, C.Position - A.Position );
+                Normal.Normalize();
+
+                Vector3f planeTangent = Vector3f.CrossProduct( Normal, new Vector3f( 0.0f, 1.0f, 0.00001f ) );
+                Vector3f planeBinormal = Vector3f.CrossProduct( Normal, planeTangent );
+
+                planeTangent.Normalize();
+                planeBinormal.Normalize();
+
+                float U = Vector3f.DotProduct( A.Position, planeTangent );
+                float V = Vector3f.DotProduct( A.Position, planeBinormal );
+
+                /*
+                 * U += textureShiftX;
+                 * V += textureShiftY;
+                 * U /= textureScaleX;
+                 * V /= textureScaleY;
+                 */
+
+                mTextureCoord.Add( new Vector3f( U, V, 0 ) );
+
+                U = Vector3f.DotProduct( B.Position, planeTangent );
+                V = Vector3f.DotProduct( B.Position, planeBinormal );
+
+                mTextureCoord.Add( new Vector3f( U, V, 0 ) );
+
+                U = Vector3f.DotProduct( C.Position, planeTangent );
+                V = Vector3f.DotProduct( C.Position, planeBinormal );
+
+                mTextureCoord.Add( new Vector3f( U, V, 0 ) );
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
         public Vector3f CenterBrush = new Vector3f();
         public Vector3f Size = new Vector3f();
         public Vector3f SelectSize = new Vector3f();
@@ -1015,9 +1089,12 @@ namespace lifeMap.src.brushes
         public Color DefaultColorBrush = new Color( 1, 0, 0 );
 
         protected Color ColorBrush = new Color( 1, 0, 0 );
+        protected Texture TextureBrush = new Texture();
 
         private List<Vertex> mLocalVertex = new List<Vertex>();
         private List<Vector3f> mGlobalVertex = new List<Vector3f>();
-        private List<int> mIdVertex = new List<int>();
+        private List<Vector3f> mTextureCoord = new List<Vector3f>();
+        private List<int> mIdVertex_Lines = new List<int>();
+        private List<int> mIdVertex_Triangles = new List<int>();            
     }
 }

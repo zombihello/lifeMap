@@ -39,7 +39,7 @@ namespace lifeMap.src
             vScrollBar = scrollBarV;
             hScrollBar = scrollBarH;
 
-            this.View.InitializeContexts();
+            this.View.InitializeContexts(); 
         }
 
         //-------------------------------------------------------------------------//
@@ -55,6 +55,14 @@ namespace lifeMap.src
             hScrollBar = scrollBarH;
 
             this.View.InitializeContexts();
+
+            MainForm.MainContext.MakeCurrent();
+            IntPtr mainContext_RC = Wgl.wglGetCurrentContext();
+
+            this.View.MakeCurrent();
+            IntPtr View_RC = Wgl.wglGetCurrentContext();
+
+            Wgl.wglShareLists( mainContext_RC, View_RC );
 
             if ( type == TypeViewport.Textured_3D )
             {
@@ -78,21 +86,26 @@ namespace lifeMap.src
                 Gl.glOrtho( 0, View.Width, 0, View.Height, -View.Width, View.Width ); // TODO: Сделать зум вьюпорта
             else
             {
-                Glu.gluPerspective( 45f, ( float )View.Width / ( float )View.Height, 0.001f, 100000.0f );
+                Glu.gluPerspective( 45f, ( float )View.Width / ( float )View.Height, 0.001f, 1000.0f );
                 Scene.WorldCamera.SetPosition( Scene.WorldCamera.Position );
             }
 
             Gl.glMatrixMode( Gl.GL_MODELVIEW );
             Gl.glLoadIdentity();
 
+            Gl.glEnable( Gl.GL_TEXTURE_2D );
+            Gl.glEnable( Gl.GL_DEPTH_TEST );
+
             Gl.glClearColor( 0, 0, 0, 0 );
             Gl.glClear( Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT );
 
             if ( bEnabled )
             {
+                Texture.ClearSelectTexture();
+
                 if ( type != TypeViewport.Textured_3D )
-                {
-                    Camera.Update( type );                  
+                {     
+                    Camera.Update( type );
                     RenderGrid();
                     Camera.RenderCamera();
 
@@ -150,7 +163,7 @@ namespace lifeMap.src
         {
             type = TypeViewport;
             LabelViewport.Text = type.ToString();
-
+            
             if ( type == TypeViewport.Textured_3D )
             {
                 vScrollBar.Visible = false;

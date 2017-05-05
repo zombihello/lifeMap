@@ -382,7 +382,7 @@
             this.view4.AutoSwapBuffers = true;
             this.view4.BackColor = System.Drawing.Color.Black;
             this.view4.ColorBits = ((byte)(32));
-            this.view4.DepthBits = ((byte)(16));
+            this.view4.DepthBits = ((byte)(24));
             this.view4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.view4.Location = new System.Drawing.Point(0, 0);
             this.view4.Name = "view4";
@@ -405,7 +405,7 @@
             this.view3.AutoSwapBuffers = true;
             this.view3.BackColor = System.Drawing.Color.Black;
             this.view3.ColorBits = ((byte)(32));
-            this.view3.DepthBits = ((byte)(16));
+            this.view3.DepthBits = ((byte)(24));
             this.view3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.view3.Location = new System.Drawing.Point(0, 0);
             this.view3.Name = "view3";
@@ -428,7 +428,7 @@
             this.view1.AutoSwapBuffers = true;
             this.view1.BackColor = System.Drawing.Color.Black;
             this.view1.ColorBits = ((byte)(32));
-            this.view1.DepthBits = ((byte)(16));
+            this.view1.DepthBits = ((byte)(24));
             this.view1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.view1.Location = new System.Drawing.Point(0, 0);
             this.view1.Name = "view1";
@@ -628,7 +628,7 @@
             this.view2.AutoSwapBuffers = true;
             this.view2.BackColor = System.Drawing.Color.Black;
             this.view2.ColorBits = ((byte)(32));
-            this.view2.DepthBits = ((byte)(16));
+            this.view2.DepthBits = ((byte)(24));
             this.view2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.view2.Location = new System.Drawing.Point(0, 0);
             this.view2.Name = "view2";
@@ -836,7 +836,7 @@
         private System.Windows.Forms.ToolStripMenuItem dTexturedToolStripMenuItem;
         private System.Windows.Forms.VScrollBar vScrollBar_viewport1;
         private System.Windows.Forms.HScrollBar hScrollBar_viewport1;
-        private Tao.Platform.Windows.SimpleOpenGlControl view2;
+        private Tao.Platform.Windows.SimpleOpenGlControl view2;        
     }
 }
 
