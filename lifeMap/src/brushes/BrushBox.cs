@@ -87,7 +87,7 @@ namespace lifeMap.src.brushes
             InitIdVertex( vId_Lines, vId_Triangles );
             ToGloablCoords();
 
-            TextureBrush.LoadTexture( "1.jpg" );
+            TextureBrush = new Texture( ManagerTexture.SelectTexture);
         }
 
         //-------------------------------------------------------------------------//

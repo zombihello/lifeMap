@@ -110,6 +110,7 @@
     <Compile Include="src\brushes\BrushBox.cs" />
     <Compile Include="src\brushes\BrushSelect.cs" />
     <Compile Include="src\system\ManagerPoints.cs" />
+    <Compile Include="src\system\ManagerTexture.cs" />
     <Compile Include="src\system\Texture.cs" />
     <Compile Include="src\system\Vertex.cs" />
     <Compile Include="src\system\Camera.cs" />

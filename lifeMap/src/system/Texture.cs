@@ -12,6 +12,18 @@ namespace lifeMap.src.system
     {
         //-------------------------------------------------------------------------//
 
+        public Texture() { }
+
+        //-------------------------------------------------------------------------//
+
+        public Texture( Texture clone )
+        {
+            Size = new Vector3f( clone.Size );
+            TextureObject = clone.TextureObject;
+        }
+
+        //-------------------------------------------------------------------------//
+
         public bool LoadTexture( string Route )
         {
             Il.ilGenImages( 1, out TextureId );
@@ -56,20 +68,27 @@ namespace lifeMap.src.system
             Gl.glGenTextures( 1, out TextureGl );
             Gl.glBindTexture( Gl.GL_TEXTURE_2D, TextureGl );
 
+            int AnisotropyLevel = 0;
+            Gl.glGetIntegerv( Gl.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, out AnisotropyLevel );
+
+            Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT, AnisotropyLevel );
+            Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR );
+            Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR );
             Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_REPEAT );
             Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_REPEAT );
-            Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR );
-            Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR );
-            Gl.glTexEnvf( Gl.GL_TEXTURE_ENV, Gl.GL_TEXTURE_ENV_MODE, Gl.GL_REPLACE );
 
+            Gl.glTexEnvf( Gl.GL_TEXTURE_ENV, Gl.GL_TEXTURE_ENV_MODE, Gl.GL_COMBINE );
+            
             switch ( Format )
             {
                 case Gl.GL_RGB:
                     Gl.glTexImage2D( Gl.GL_TEXTURE_2D, 0, Gl.GL_RGB, ( int ) Size.X, ( int ) Size.Y, 0, Gl.GL_RGB, Gl.GL_UNSIGNED_BYTE, Pixels );
+                    Glu.gluBuild2DMipmaps( Gl.GL_TEXTURE_2D, Gl.GL_RGB, ( int ) Size.X, ( int ) Size.Y, Gl.GL_RGB, Gl.GL_UNSIGNED_BYTE, Pixels );
                     break;
 
                 case Gl.GL_RGBA:
                     Gl.glTexImage2D( Gl.GL_TEXTURE_2D, 0, Gl.GL_RGBA, ( int ) Size.X, ( int ) Size.Y, 0, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, Pixels );
+                    Glu.gluBuild2DMipmaps( Gl.GL_TEXTURE_2D, Gl.GL_RGBA, ( int ) Size.X, ( int ) Size.Y, Gl.GL_RGBA, Gl.GL_UNSIGNED_BYTE, Pixels );
                     break;
             }
 

@@ -48,6 +48,12 @@ namespace lifeMap.src.brushes
             else
             {
                 TextureBrush.SelectTexture( Gl.GL_TEXTURE_2D );
+
+                if ( Mouse.BrushSelect != this )
+                    Gl.glColor4f( 1, 1, 1, 1 );
+                else
+                    Gl.glColor4f( 1, 0, 0, 0.5f );
+
                 Gl.glBegin( Gl.GL_TRIANGLES );
 
                 for ( int i = 0; i < mIdVertex_Triangles.Count; i++ )

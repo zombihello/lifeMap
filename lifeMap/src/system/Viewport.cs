@@ -86,7 +86,7 @@ namespace lifeMap.src
                 Gl.glOrtho( 0, View.Width, 0, View.Height, -View.Width, View.Width ); // TODO: Сделать зум вьюпорта
             else
             {
-                Glu.gluPerspective( 45f, ( float )View.Width / ( float )View.Height, 0.001f, 1000.0f );
+                Glu.gluPerspective( 45f, ( float ) View.Width / ( float ) View.Height, 0.1f, 1000.0f );
                 Scene.WorldCamera.SetPosition( Scene.WorldCamera.Position );
             }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -92,8 +93,8 @@ namespace lifeMap
                         if ( !Mouse.IsSelectBrush )
                             Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
                         else
-                        {
-                            if ( !Scene.SelectPointResizeBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type ) )
+                        {                           
+                          if ( !Scene.SelectPointResizeBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type ) )
                                 Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
                         }
                     }
@@ -101,7 +102,7 @@ namespace lifeMap
         }
 
         //-------------------------------------------------------------------------//
-        
+
         private void Viewport_MouseUp( Viewport Viewport )
         {
             if ( Viewport.bEnabled )
@@ -124,7 +125,7 @@ namespace lifeMap
                             break;
                     }
 
-                    Refresh();             
+                    Refresh();
                     Mouse.RemoveClick();
                 }
         }
@@ -635,10 +636,10 @@ namespace lifeMap
 
         private void toolStripMenuItem2_Click( object sender, EventArgs e ) // NEW MAP
         {
-            menuBar_File.DropDownItems[3].Enabled = true; // Save Map
-            menuBar_File.DropDownItems[4].Enabled = true; // Save as...
-            menuBar_File.DropDownItems[6].Enabled = true; // Export
-            menuBar_File.DropDownItems[8].Enabled = true; // Close Map
+            menuBar_File.DropDownItems[ 3 ].Enabled = true; // Save Map
+            menuBar_File.DropDownItems[ 4 ].Enabled = true; // Save as...
+            menuBar_File.DropDownItems[ 6 ].Enabled = true; // Export
+            menuBar_File.DropDownItems[ 8 ].Enabled = true; // Close Map
 
             button_cursor.Enabled = true;
             button_camera.Enabled = true;
@@ -660,10 +661,10 @@ namespace lifeMap
 
         private void toolStripMenuItem7_Click( object sender, EventArgs e ) // CLOSE MAP
         {
-            menuBar_File.DropDownItems[3].Enabled = false; // Save Map
-            menuBar_File.DropDownItems[4].Enabled = false; // Save as...
-            menuBar_File.DropDownItems[6].Enabled = false; // Export
-            menuBar_File.DropDownItems[8].Enabled = false; // Close Map
+            menuBar_File.DropDownItems[ 3 ].Enabled = false; // Save Map
+            menuBar_File.DropDownItems[ 4 ].Enabled = false; // Save as...
+            menuBar_File.DropDownItems[ 6 ].Enabled = false; // Export
+            menuBar_File.DropDownItems[ 8 ].Enabled = false; // Close Map
 
             button_cursor.Enabled = false;
             button_camera.Enabled = false;
@@ -765,14 +766,45 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+
+
+        //-------------------------------------------------------------------------//
+        //                          MENU SELECT TEXTURE                            //
+        //-------------------------------------------------------------------------//
+
+        private void button_texturePreview_Click( object sender, EventArgs e )
+        {
+            if ( openFileDialog.ShowDialog() == DialogResult.OK && 
+                !ManagerTexture.IsTextureExist( Path.GetFileName( openFileDialog.FileName ) ) )
+            {
+                ManagerTexture.LoadTexture( openFileDialog.FileName );
+
+                comboBox_textureView.Items.Add( Path.GetFileName( openFileDialog.FileName ) );
+                comboBox_textureView.SelectedIndex = comboBox_textureView.Items.Count - 1;
+                image_previewTexture.Image = ( Image ) ManagerTexture.mPicTextures[ comboBox_textureView.Items.Count - 1 ];
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void comboBox_textureView_SelectionChangeCommitted( object sender, EventArgs e )
+        {
+            ManagerTexture.SetSelectTexture( comboBox_textureView.Items[ comboBox_textureView.SelectedIndex ].ToString() );
+            image_previewTexture.Image = ( Image ) ManagerTexture.mPicTextures[ comboBox_textureView.SelectedIndex ];
+        }
+
+        //-------------------------------------------------------------------------//
+
         public static SimpleOpenGlControl MainContext = new SimpleOpenGlControl();
+
+        private OpenFileDialog openFileDialog = new OpenFileDialog();
+        private Vector3f FactorMoveCamera = new Vector3f( 0, 0, 0 );
 
         private Viewport TmpViewport;
         private Viewport Viewport1;
         private Viewport Viewport2;
         private Viewport Viewport3;
-        private Viewport Viewport4;
-        private Vector3f FactorMoveCamera = new Vector3f( 0, 0, 0 );
+        private Viewport Viewport4;      
     }
 
     //-------------------------------------------------------------------------//

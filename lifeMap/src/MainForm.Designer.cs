@@ -86,6 +86,7 @@
             this.dTopZYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.dTexturedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.panel_textureView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).BeginInit();
             this.panel_entitytool.SuspendLayout();
@@ -101,11 +102,12 @@
             // comboBox_textureView
             // 
             this.comboBox_textureView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBox_textureView.FormattingEnabled = true;
+            this.comboBox_textureView.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_textureView.Location = new System.Drawing.Point(3, 21);
             this.comboBox_textureView.Name = "comboBox_textureView";
             this.comboBox_textureView.Size = new System.Drawing.Size(121, 21);
             this.comboBox_textureView.TabIndex = 11;
+            this.comboBox_textureView.SelectionChangeCommitted += new System.EventHandler(this.comboBox_textureView_SelectionChangeCommitted);
             // 
             // label_texturePreview
             // 
@@ -126,6 +128,7 @@
             this.button_texturePreview.TabIndex = 13;
             this.button_texturePreview.Text = "Browse..";
             this.button_texturePreview.UseVisualStyleBackColor = true;
+            this.button_texturePreview.Click += new System.EventHandler(this.button_texturePreview_Click);
             // 
             // panel_textureView
             // 
@@ -144,10 +147,13 @@
             // image_previewTexture
             // 
             this.image_previewTexture.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.image_previewTexture.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.image_previewTexture.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.image_previewTexture.InitialImage = null;
             this.image_previewTexture.Location = new System.Drawing.Point(7, 48);
             this.image_previewTexture.Name = "image_previewTexture";
             this.image_previewTexture.Size = new System.Drawing.Size(113, 103);
+            this.image_previewTexture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.image_previewTexture.TabIndex = 10;
             this.image_previewTexture.TabStop = false;
             // 
@@ -213,7 +219,8 @@
             // 
             this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuBar_File,
-            this.menuBar_Help});
+            this.menuBar_Help,
+            this.toolStripSeparator2});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
             this.menuBar.Name = "menuBar";
             this.menuBar.Size = new System.Drawing.Size(914, 25);
@@ -738,6 +745,11 @@
             this.dTexturedToolStripMenuItem.Text = "3D Textured";
             this.dTexturedToolStripMenuItem.Click += new System.EventHandler(this.dTexturedToolStripMenuItem_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -836,7 +848,8 @@
         private System.Windows.Forms.ToolStripMenuItem dTexturedToolStripMenuItem;
         private System.Windows.Forms.VScrollBar vScrollBar_viewport1;
         private System.Windows.Forms.HScrollBar hScrollBar_viewport1;
-        private Tao.Platform.Windows.SimpleOpenGlControl view2;        
+        private Tao.Platform.Windows.SimpleOpenGlControl view2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;        
     }
 }
 
