@@ -44,16 +44,16 @@ namespace lifeMap
 
         public static float Align( float value, float sizeGrid )
         {
-            return ( float )Math.Floor( value / sizeGrid ) * sizeGrid;
+            return ( float )Math.Floor( value / sizeGrid + 0.5f ) * sizeGrid;
         }
 
         //-------------------------------------------------------------------------//
 
         public static Vector3f Align( Vector3f value, float sizeGrid )
         {
-            return new Vector3f( ( float )Math.Floor( value.X / sizeGrid ) * sizeGrid,
-                                 ( float )Math.Floor( value.Y / sizeGrid ) * sizeGrid,
-                                 ( float )Math.Floor( value.Z / sizeGrid ) * sizeGrid );
+            return new Vector3f( ( float ) Math.Floor( value.X / sizeGrid + 0.5f ) * sizeGrid,
+                                 ( float ) Math.Floor( value.Y / sizeGrid + 0.5f ) * sizeGrid,
+                                 ( float ) Math.Floor( value.Z / sizeGrid + 0.5f ) * sizeGrid );
         }
 
         //-------------------------------------------------------------------------//
