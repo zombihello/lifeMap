@@ -44,7 +44,7 @@ namespace lifeMap
 
         public static float Align( float value, float sizeGrid )
         {
-            return ( float )Math.Floor( value / sizeGrid + 0.5f ) * sizeGrid;
+           return ( float )Math.Floor( value / sizeGrid + 0.5f ) * sizeGrid;
         }
 
         //-------------------------------------------------------------------------//

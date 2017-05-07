@@ -1071,18 +1071,26 @@ namespace lifeMap.src.brushes
                  * U /= textureScaleX;
                  * V /= textureScaleY;
                  */
+                U /= 20f; // ScaleX 
+                V /= 20f;  // ScaleY
 
-                mTextureCoord.Add( new Vector3f( U, V, 0 ) );
+                mTextureCoord.Add( new Vector3f( -U, -V, 0 ) );
 
                 U = Vector3f.DotProduct( B.Position, planeTangent );
                 V = Vector3f.DotProduct( B.Position, planeBinormal );
 
-                mTextureCoord.Add( new Vector3f( U, V, 0 ) );
+                U /= 20f;
+                V /= 20f;
+
+                mTextureCoord.Add( new Vector3f( -U, -V, 0 ) );
 
                 U = Vector3f.DotProduct( C.Position, planeTangent );
                 V = Vector3f.DotProduct( C.Position, planeBinormal );
 
-                mTextureCoord.Add( new Vector3f( U, V, 0 ) );
+                U /= 20f;
+                V /= 20f;
+
+                mTextureCoord.Add( new Vector3f( -U, -V, 0 ) );
             }
         }
 
@@ -1101,6 +1109,6 @@ namespace lifeMap.src.brushes
         private List<Vector3f> mGlobalVertex = new List<Vector3f>();
         private List<Vector3f> mTextureCoord = new List<Vector3f>();
         private List<int> mIdVertex_Lines = new List<int>();
-        private List<int> mIdVertex_Triangles = new List<int>();            
+        private List<int> mIdVertex_Triangles = new List<int>();
     }
 }

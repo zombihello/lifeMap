@@ -143,7 +143,7 @@ namespace lifeMap.src.system
 
         public Vector3f Position = new Vector3f();
         public Vector3f Angle = new Vector3f();
-        public float Speed = 5f;
+        public float Speed = 2f;
 
         private SimpleOpenGlControl View = null;
         private Vector3f CenterPosition = new Vector3f( 0, 0, 0 );

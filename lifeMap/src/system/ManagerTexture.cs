@@ -39,10 +39,13 @@ namespace lifeMap.src.system
 
         public static void ClearTextures()
         {
+            foreach ( string key in mTextures.Keys )
+                mTextures[ key ].DeleteTexture();
+
             mTextures.Clear();
             mPicTextures.Clear();
 
-            SelectTexture = new Texture();
+            SelectTexture.DeleteTexture();
         }
 
         //-------------------------------------------------------------------------//

@@ -53,6 +53,14 @@ namespace lifeMap.src.system
         }
 
         //-------------------------------------------------------------------------//
+    
+        public void DeleteTexture()
+        {
+            if ( TextureObject != 0 )
+                Gl.glDeleteTextures( 1, ref TextureObject );
+        }
+
+        //-------------------------------------------------------------------------//
 
         public void SelectTexture( int TypeTexture )
         {

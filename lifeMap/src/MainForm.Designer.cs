@@ -55,6 +55,7 @@
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBar_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.button_boxtool = new System.Windows.Forms.Button();
             this.button_entitytool = new System.Windows.Forms.Button();
             this.button_camera = new System.Windows.Forms.Button();
@@ -86,7 +87,6 @@
             this.dTopZYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.dTexturedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.panel_textureView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).BeginInit();
             this.panel_entitytool.SuspendLayout();
@@ -183,6 +183,7 @@
             // 
             // comboBox_ObjEntity
             // 
+            this.comboBox_ObjEntity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_ObjEntity.FormattingEnabled = true;
             this.comboBox_ObjEntity.Location = new System.Drawing.Point(4, 61);
             this.comboBox_ObjEntity.Name = "comboBox_ObjEntity";
@@ -200,6 +201,7 @@
             // 
             // comboBox_CategEntity
             // 
+            this.comboBox_CategEntity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_CategEntity.FormattingEnabled = true;
             this.comboBox_CategEntity.Location = new System.Drawing.Point(3, 20);
             this.comboBox_CategEntity.Name = "comboBox_CategEntity";
@@ -326,6 +328,11 @@
             this.toolStripMenuItem10.Size = new System.Drawing.Size(116, 22);
             this.toolStripMenuItem10.Text = "About...";
             this.toolStripMenuItem10.Click += new System.EventHandler(this.toolStripMenuItem10_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // button_boxtool
             // 
@@ -744,11 +751,6 @@
             this.dTexturedToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.dTexturedToolStripMenuItem.Text = "3D Textured";
             this.dTexturedToolStripMenuItem.Click += new System.EventHandler(this.dTexturedToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
             // MainForm
             // 

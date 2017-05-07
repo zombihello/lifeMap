@@ -243,7 +243,10 @@ namespace lifeMap
                 else
                     if ( KeyCode == Keys.Delete )
                         Scene.RemoveBrush( Mouse.BrushSelect );
-
+                    else if ( KeyCode == Keys.Q )
+                        Viewport.fSize += 10;
+                    else if ( KeyCode == Keys.E )
+                        Viewport.fSize -= 10;
                 Refresh();
             }
         }
@@ -680,6 +683,11 @@ namespace lifeMap
             panel_textureView.Enabled = false;
 
             Scene.Clear();
+            ManagerTexture.ClearTextures();
+            image_previewTexture.Image = null;
+            comboBox_textureView.SelectedIndex = -1;
+            comboBox_textureView.Items.Clear();
+
             Refresh();
         }
 

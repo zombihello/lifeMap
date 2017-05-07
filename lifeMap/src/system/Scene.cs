@@ -35,15 +35,15 @@ namespace lifeMap.src.system
             Gl.glBegin( Gl.GL_LINES );
             Gl.glColor3f( 1, 0, 0 );
             Gl.glVertex3f( 0, 0, 0 );
-            Gl.glVertex3f( 100, 0, 0 );
+            Gl.glVertex3f( 20, 0, 0 );
 
             Gl.glColor3f( 0, 0, 1 );
             Gl.glVertex3f( 0, 0, 0 );
-            Gl.glVertex3f( 0, 100, 0 );
+            Gl.glVertex3f( 0, 20, 0 );
 
             Gl.glColor3f( 0, 1, 0 );
             Gl.glVertex3f( 0, 0, 0 );
-            Gl.glVertex3f( 0, 0, 100 );
+            Gl.glVertex3f( 0, 0, 20 );
             Gl.glEnd();
         }
 

@@ -39,7 +39,7 @@ namespace lifeMap.src
             vScrollBar = scrollBarV;
             hScrollBar = scrollBarH;
 
-            this.View.InitializeContexts(); 
+            this.View.InitializeContexts();
         }
 
         //-------------------------------------------------------------------------//
@@ -83,7 +83,7 @@ namespace lifeMap.src
             Gl.glViewport( 0, 0, View.Width, View.Height );
 
             if ( type != TypeViewport.Textured_3D )
-                Gl.glOrtho( 0, View.Width, 0, View.Height, -View.Width, View.Width ); // TODO: Сделать зум вьюпорта
+                Gl.glOrtho( 0, View.Width * FactorZoom, 0, View.Height * FactorZoom, -View.Width, View.Width ); // TODO: Сделать зум вьюпорта   
             else
             {
                 Glu.gluPerspective( 45f, ( float ) View.Width / ( float ) View.Height, 0.1f, 1000.0f );
@@ -104,7 +104,7 @@ namespace lifeMap.src
                 Texture.ClearSelectTexture();
 
                 if ( type != TypeViewport.Textured_3D )
-                {     
+                {
                     Camera.Update( type );
                     RenderGrid();
                     Camera.RenderCamera();
@@ -133,19 +133,19 @@ namespace lifeMap.src
 
             Gl.glColor3f( colorGrid.R, colorGrid.G, colorGrid.B );
 
-            for ( int i = -1000; i < 1000; i++ )
+            for ( float x = -500; x < 500; x += fSize )
             {
-                Gl.glBegin( Gl.GL_LINES );
-                Gl.glVertex3f( i * fSize, -1000, 0 );
-                Gl.glVertex3f( i * fSize, 1000, 0 );
+                Gl.glBegin( Gl.GL_LINE_STRIP );
+                for ( float y = -500; y < 500; y += fSize )
+                    Gl.glVertex3f( x, y, 0 );
                 Gl.glEnd();
             }
 
-            for ( int i = -1000; i < 1000; i++ )
+            for ( float y = -500; y < 500; y += fSize )
             {
-                Gl.glBegin( Gl.GL_LINES );
-                Gl.glVertex3f( -1000, i * fSize, 0 );
-                Gl.glVertex3f( 1000, i * fSize, 0 );
+                Gl.glBegin( Gl.GL_LINE_STRIP );
+                for ( float x = -500; x < 500; x += fSize )
+                    Gl.glVertex3f( x, y, 0 );
                 Gl.glEnd();
             }
 
@@ -163,7 +163,7 @@ namespace lifeMap.src
         {
             type = TypeViewport;
             LabelViewport.Text = type.ToString();
-            
+
             if ( type == TypeViewport.Textured_3D )
             {
                 vScrollBar.Visible = false;
@@ -185,6 +185,7 @@ namespace lifeMap.src
         public static Color colorGrid = new Color( 0.2f, 0.2f, 0.2f );
 
         public bool bEnabled = true;
+        public float FactorZoom = 1;
         public SimpleOpenGlControl View;
         public TypeViewport type;
         public Label LabelViewport;
