@@ -53,13 +53,15 @@
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem8 = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuBar_Map = new System.Windows.Forms.ToolStripDropDownButton();
+            this.gridSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.smToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.biggerGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.mapPropiertesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBar_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.button_boxtool = new System.Windows.Forms.Button();
-            this.button_entitytool = new System.Windows.Forms.Button();
-            this.button_camera = new System.Windows.Forms.Button();
-            this.button_cursor = new System.Windows.Forms.Button();
             this.view4 = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.view3 = new Tao.Platform.Windows.SimpleOpenGlControl();
             this.view1 = new Tao.Platform.Windows.SimpleOpenGlControl();
@@ -87,6 +89,10 @@
             this.dTopZYToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.dTexturedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.button_boxtool = new System.Windows.Forms.Button();
+            this.button_entitytool = new System.Windows.Forms.Button();
+            this.button_camera = new System.Windows.Forms.Button();
+            this.button_cursor = new System.Windows.Forms.Button();
             this.panel_textureView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).BeginInit();
             this.panel_entitytool.SuspendLayout();
@@ -221,6 +227,7 @@
             // 
             this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuBar_File,
+            this.menuBar_Map,
             this.menuBar_Help,
             this.toolStripSeparator2});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
@@ -251,7 +258,7 @@
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
             this.toolStripMenuItem2.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
             this.toolStripMenuItem2.Size = new System.Drawing.Size(173, 22);
-            this.toolStripMenuItem2.Text = "&New Map";
+            this.toolStripMenuItem2.Text = "New Map";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
             // toolStripMenuItem3
@@ -259,7 +266,8 @@
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
             this.toolStripMenuItem3.Size = new System.Drawing.Size(173, 22);
-            this.toolStripMenuItem3.Text = "&Open Map";
+            this.toolStripMenuItem3.Text = "Open Map";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // toolStripSeparator3
             // 
@@ -272,7 +280,8 @@
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
             this.toolStripMenuItem4.Size = new System.Drawing.Size(173, 22);
-            this.toolStripMenuItem4.Text = "&Save Map";
+            this.toolStripMenuItem4.Text = "Save Map";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem5
             // 
@@ -280,6 +289,7 @@
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(173, 22);
             this.toolStripMenuItem5.Text = "Save As..";
+            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // toolStripSeparator4
             // 
@@ -292,7 +302,7 @@
             this.toolStripMenuItem6.Name = "toolStripMenuItem6";
             this.toolStripMenuItem6.ShortcutKeys = System.Windows.Forms.Keys.F9;
             this.toolStripMenuItem6.Size = new System.Drawing.Size(173, 22);
-            this.toolStripMenuItem6.Text = "&Export";
+            this.toolStripMenuItem6.Text = "Export";
             // 
             // toolStripSeparator5
             // 
@@ -314,6 +324,56 @@
             this.toolStripMenuItem8.Text = "Exit";
             this.toolStripMenuItem8.Click += new System.EventHandler(this.toolStripMenuItem8_Click);
             // 
+            // menuBar_Map
+            // 
+            this.menuBar_Map.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.menuBar_Map.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gridSettingsToolStripMenuItem,
+            this.toolStripSeparator6,
+            this.mapPropiertesToolStripMenuItem});
+            this.menuBar_Map.Image = ((System.Drawing.Image)(resources.GetObject("menuBar_Map.Image")));
+            this.menuBar_Map.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.menuBar_Map.Name = "menuBar_Map";
+            this.menuBar_Map.ShowDropDownArrow = false;
+            this.menuBar_Map.Size = new System.Drawing.Size(35, 22);
+            this.menuBar_Map.Text = "Map";
+            this.menuBar_Map.Visible = false;
+            // 
+            // gridSettingsToolStripMenuItem
+            // 
+            this.gridSettingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.smToolStripMenuItem,
+            this.biggerGridToolStripMenuItem});
+            this.gridSettingsToolStripMenuItem.Name = "gridSettingsToolStripMenuItem";
+            this.gridSettingsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.gridSettingsToolStripMenuItem.Text = "Grid Settings";
+            // 
+            // smToolStripMenuItem
+            // 
+            this.smToolStripMenuItem.Name = "smToolStripMenuItem";
+            this.smToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
+            this.smToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.smToolStripMenuItem.Text = "Smaller grid";
+            // 
+            // biggerGridToolStripMenuItem
+            // 
+            this.biggerGridToolStripMenuItem.Name = "biggerGridToolStripMenuItem";
+            this.biggerGridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
+            this.biggerGridToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.biggerGridToolStripMenuItem.Text = "Bigger grid";
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(151, 6);
+            // 
+            // mapPropiertesToolStripMenuItem
+            // 
+            this.mapPropiertesToolStripMenuItem.Name = "mapPropiertesToolStripMenuItem";
+            this.mapPropiertesToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.mapPropiertesToolStripMenuItem.Text = "Map Properties";
+            this.mapPropiertesToolStripMenuItem.Click += new System.EventHandler(this.mapPropiertesToolStripMenuItem_Click);
+            // 
             // menuBar_Help
             // 
             this.menuBar_Help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -333,59 +393,6 @@
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-            // 
-            // button_boxtool
-            // 
-            this.button_boxtool.Enabled = false;
-            this.button_boxtool.FlatAppearance.BorderSize = 0;
-            this.button_boxtool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_boxtool.Image = global::lifeMap.Properties.Resources.block;
-            this.button_boxtool.Location = new System.Drawing.Point(8, 163);
-            this.button_boxtool.Name = "button_boxtool";
-            this.button_boxtool.Size = new System.Drawing.Size(37, 36);
-            this.button_boxtool.TabIndex = 9;
-            this.button_boxtool.UseVisualStyleBackColor = true;
-            this.button_boxtool.Click += new System.EventHandler(this.button_boxtool_Click);
-            // 
-            // button_entitytool
-            // 
-            this.button_entitytool.Enabled = false;
-            this.button_entitytool.FlatAppearance.BorderSize = 0;
-            this.button_entitytool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_entitytool.Image = global::lifeMap.Properties.Resources.entity;
-            this.button_entitytool.Location = new System.Drawing.Point(8, 119);
-            this.button_entitytool.Name = "button_entitytool";
-            this.button_entitytool.Size = new System.Drawing.Size(37, 38);
-            this.button_entitytool.TabIndex = 8;
-            this.button_entitytool.UseVisualStyleBackColor = true;
-            this.button_entitytool.Click += new System.EventHandler(this.button_entitytool_Click);
-            // 
-            // button_camera
-            // 
-            this.button_camera.Enabled = false;
-            this.button_camera.FlatAppearance.BorderSize = 0;
-            this.button_camera.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_camera.Image = global::lifeMap.Properties.Resources.camera;
-            this.button_camera.Location = new System.Drawing.Point(8, 76);
-            this.button_camera.Name = "button_camera";
-            this.button_camera.Size = new System.Drawing.Size(37, 37);
-            this.button_camera.TabIndex = 7;
-            this.button_camera.UseVisualStyleBackColor = true;
-            this.button_camera.Click += new System.EventHandler(this.button_camera_Click);
-            // 
-            // button_cursor
-            // 
-            this.button_cursor.Enabled = false;
-            this.button_cursor.FlatAppearance.BorderSize = 0;
-            this.button_cursor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button_cursor.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.button_cursor.Image = global::lifeMap.Properties.Resources.cursor;
-            this.button_cursor.Location = new System.Drawing.Point(8, 33);
-            this.button_cursor.Name = "button_cursor";
-            this.button_cursor.Size = new System.Drawing.Size(37, 37);
-            this.button_cursor.TabIndex = 6;
-            this.button_cursor.UseVisualStyleBackColor = true;
-            this.button_cursor.Click += new System.EventHandler(this.button_cursor_Click);
             // 
             // view4
             // 
@@ -752,6 +759,59 @@
             this.dTexturedToolStripMenuItem.Text = "3D Textured";
             this.dTexturedToolStripMenuItem.Click += new System.EventHandler(this.dTexturedToolStripMenuItem_Click);
             // 
+            // button_boxtool
+            // 
+            this.button_boxtool.Enabled = false;
+            this.button_boxtool.FlatAppearance.BorderSize = 0;
+            this.button_boxtool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_boxtool.Image = global::lifeMap.Properties.Resources.block;
+            this.button_boxtool.Location = new System.Drawing.Point(8, 163);
+            this.button_boxtool.Name = "button_boxtool";
+            this.button_boxtool.Size = new System.Drawing.Size(37, 36);
+            this.button_boxtool.TabIndex = 9;
+            this.button_boxtool.UseVisualStyleBackColor = true;
+            this.button_boxtool.Click += new System.EventHandler(this.button_boxtool_Click);
+            // 
+            // button_entitytool
+            // 
+            this.button_entitytool.Enabled = false;
+            this.button_entitytool.FlatAppearance.BorderSize = 0;
+            this.button_entitytool.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_entitytool.Image = global::lifeMap.Properties.Resources.entity;
+            this.button_entitytool.Location = new System.Drawing.Point(8, 119);
+            this.button_entitytool.Name = "button_entitytool";
+            this.button_entitytool.Size = new System.Drawing.Size(37, 38);
+            this.button_entitytool.TabIndex = 8;
+            this.button_entitytool.UseVisualStyleBackColor = true;
+            this.button_entitytool.Click += new System.EventHandler(this.button_entitytool_Click);
+            // 
+            // button_camera
+            // 
+            this.button_camera.Enabled = false;
+            this.button_camera.FlatAppearance.BorderSize = 0;
+            this.button_camera.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_camera.Image = global::lifeMap.Properties.Resources.camera;
+            this.button_camera.Location = new System.Drawing.Point(8, 76);
+            this.button_camera.Name = "button_camera";
+            this.button_camera.Size = new System.Drawing.Size(37, 37);
+            this.button_camera.TabIndex = 7;
+            this.button_camera.UseVisualStyleBackColor = true;
+            this.button_camera.Click += new System.EventHandler(this.button_camera_Click);
+            // 
+            // button_cursor
+            // 
+            this.button_cursor.Enabled = false;
+            this.button_cursor.FlatAppearance.BorderSize = 0;
+            this.button_cursor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button_cursor.ForeColor = System.Drawing.SystemColors.ControlLightLight;
+            this.button_cursor.Image = global::lifeMap.Properties.Resources.cursor;
+            this.button_cursor.Location = new System.Drawing.Point(8, 33);
+            this.button_cursor.Name = "button_cursor";
+            this.button_cursor.Size = new System.Drawing.Size(37, 37);
+            this.button_cursor.TabIndex = 6;
+            this.button_cursor.UseVisualStyleBackColor = true;
+            this.button_cursor.Click += new System.EventHandler(this.button_cursor_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -851,7 +911,13 @@
         private System.Windows.Forms.VScrollBar vScrollBar_viewport1;
         private System.Windows.Forms.HScrollBar hScrollBar_viewport1;
         private Tao.Platform.Windows.SimpleOpenGlControl view2;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;        
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripDropDownButton menuBar_Map;
+        private System.Windows.Forms.ToolStripMenuItem gridSettingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem smToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem biggerGridToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem mapPropiertesToolStripMenuItem;        
     }
 }
 

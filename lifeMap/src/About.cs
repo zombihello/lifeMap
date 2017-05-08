@@ -11,14 +11,22 @@ namespace lifeMap.src
 {
     partial class About : Form
     {
+        //-------------------------------------------------------------------------//
+
         public About()
         {
             InitializeComponent();
+
+            label_lifemap.Text += Program.Version;
         }
+
+        //-------------------------------------------------------------------------//
 
         private void button_close_Click( object sender, EventArgs e )
         {
             this.Close();
         }
+
+        //-------------------------------------------------------------------------//
     }
 }

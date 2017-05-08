@@ -13,6 +13,7 @@ using Tao.OpenGl;
 using Tao.FreeGlut;
 using Tao.Platform.Windows;
 using Tao.DevIl;
+using Newtonsoft.Json;
 
 using lifeMap.src;
 using lifeMap.src.brushes;
@@ -30,6 +31,8 @@ namespace lifeMap
         {
             InitializeComponent();
             MainContext.InitializeContexts();
+
+            saveFileDialog.Filter = "lifeMap | *.map";
 
             Viewport1 = new Viewport( view1, Viewport.TypeViewport.Textured_3D, label_viewport1, vScrollBar_viewport1, hScrollBar_viewport1 );
             Viewport1.bEnabled = false;
@@ -93,8 +96,8 @@ namespace lifeMap
                         if ( !Mouse.IsSelectBrush )
                             Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
                         else
-                        {                           
-                          if ( !Scene.SelectPointResizeBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type ) )
+                        {
+                            if ( !Scene.SelectPointResizeBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type ) )
                                 Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
                         }
                     }
@@ -243,10 +246,7 @@ namespace lifeMap
                 else
                     if ( KeyCode == Keys.Delete )
                         Scene.RemoveBrush( Mouse.BrushSelect );
-                    else if ( KeyCode == Keys.Q )
-                        Viewport.fSize += 10;
-                    else if ( KeyCode == Keys.E )
-                        Viewport.fSize -= 10;
+
                 Refresh();
             }
         }
@@ -639,6 +639,8 @@ namespace lifeMap
 
         private void toolStripMenuItem2_Click( object sender, EventArgs e ) // NEW MAP
         {
+            menuBar.Items[ 1 ].Visible = true;
+
             menuBar_File.DropDownItems[ 3 ].Enabled = true; // Save Map
             menuBar_File.DropDownItems[ 4 ].Enabled = true; // Save as...
             menuBar_File.DropDownItems[ 6 ].Enabled = true; // Export
@@ -662,8 +664,93 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        private void toolStripMenuItem3_Click( object sender, EventArgs e ) // LOAD MAP
+        {
+            openFileDialog.Filter = "lifeMap | *.map";
+
+            if ( openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK )
+            {
+                Scene.Clear();
+                ManagerTexture.ClearTextures();
+                image_previewTexture.Image = null;
+                comboBox_textureView.SelectedIndex = -1;
+                comboBox_textureView.Items.Clear();
+
+                Serialization serialization = new Serialization();
+                serialization.LoadMap( openFileDialog.FileName );
+
+                serialization.GetMapSettings( mapProperties );
+                ManagerTexture.mTextures = serialization.GetLoadTextures();
+
+                for ( int i = 0; i < ManagerTexture.mTextures.Count; i++ )
+                {
+                    comboBox_textureView.Items.Add( ManagerTexture.mTextures[ i ].Name );
+                    ManagerTexture.mPicTextures.Add( new Bitmap( ManagerTexture.mTextures[ i ].Route ) );
+                }
+
+                Scene.SetAllBrushes( serialization.GetSolidBrushes() );
+
+                menuBar.Items[ 1 ].Visible = true;
+
+                menuBar_File.DropDownItems[ 3 ].Enabled = true; // Save Map
+                menuBar_File.DropDownItems[ 4 ].Enabled = true; // Save as...
+                menuBar_File.DropDownItems[ 6 ].Enabled = true; // Export
+                menuBar_File.DropDownItems[ 8 ].Enabled = true; // Close Map
+
+                button_cursor.Enabled = true;
+                button_camera.Enabled = true;
+                button_entitytool.Enabled = true;
+                button_boxtool.Enabled = true;
+
+                Viewport1.bEnabled = true;
+                Viewport2.bEnabled = true;
+                Viewport3.bEnabled = true;
+                Viewport4.bEnabled = true;
+
+                panel_entitytool.Enabled = true;
+                panel_textureView.Enabled = true;
+
+                Refresh();
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void toolStripMenuItem4_Click( object sender, EventArgs e ) // SAVE MAP
+        {
+            if ( saveFileDialog.FileName != "" || saveFileDialog.FileName == "" && saveFileDialog.ShowDialog() == DialogResult.OK )
+            {
+                Serialization serialization = new Serialization();
+                serialization.SetMapSettings( mapProperties );
+                serialization.SetLoadTextures( ManagerTexture.mTextures );
+                serialization.SetSolidBrushes( Scene.GetAllBrushes() );
+
+                serialization.SaveMap( saveFileDialog.FileName );
+            }
+
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void toolStripMenuItem5_Click( object sender, EventArgs e ) // SAVE AS..
+        {
+            if ( saveFileDialog.ShowDialog() == DialogResult.OK )
+            {
+                Serialization serialization = new Serialization();
+                serialization.SetMapSettings( mapProperties );
+                serialization.SetLoadTextures( ManagerTexture.mTextures );
+                serialization.SetSolidBrushes( Scene.GetAllBrushes() );
+
+                serialization.SaveMap( saveFileDialog.FileName );
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
         private void toolStripMenuItem7_Click( object sender, EventArgs e ) // CLOSE MAP
         {
+            menuBar.Items[ 1 ].Visible = false;
+
             menuBar_File.DropDownItems[ 3 ].Enabled = false; // Save Map
             menuBar_File.DropDownItems[ 4 ].Enabled = false; // Save as...
             menuBar_File.DropDownItems[ 6 ].Enabled = false; // Export
@@ -693,7 +780,12 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        private void mapPropiertesToolStripMenuItem_Click( object sender, EventArgs e ) // MAP PROPERTIES
+        {
+            mapProperties.ShowDialog();
+        }
 
+        //-------------------------------------------------------------------------//
 
         //-------------------------------------------------------------------------//
         //                          MENU TYPE VIEWPORT                             //
@@ -782,7 +874,9 @@ namespace lifeMap
 
         private void button_texturePreview_Click( object sender, EventArgs e )
         {
-            if ( openFileDialog.ShowDialog() == DialogResult.OK && 
+            openFileDialog.Filter = "";
+
+            if ( openFileDialog.ShowDialog() == DialogResult.OK &&
                 !ManagerTexture.IsTextureExist( Path.GetFileName( openFileDialog.FileName ) ) )
             {
                 ManagerTexture.LoadTexture( openFileDialog.FileName );
@@ -806,13 +900,15 @@ namespace lifeMap
         public static SimpleOpenGlControl MainContext = new SimpleOpenGlControl();
 
         private OpenFileDialog openFileDialog = new OpenFileDialog();
+        private SaveFileDialog saveFileDialog = new SaveFileDialog();
+        private MapProperties mapProperties = new MapProperties();
         private Vector3f FactorMoveCamera = new Vector3f( 0, 0, 0 );
 
         private Viewport TmpViewport;
         private Viewport Viewport1;
         private Viewport Viewport2;
         private Viewport Viewport3;
-        private Viewport Viewport4;      
+        private Viewport Viewport4;
     }
 
     //-------------------------------------------------------------------------//

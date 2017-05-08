@@ -14,8 +14,12 @@ namespace lifeMap.src.system
 
         public static void SetSelectTexture( string name )
         {
-            if ( mTextures.ContainsKey(name) )
-                SelectTexture = new Texture( mTextures[name] );
+            for ( int i = 0; i < mTextures.Count; i++ )
+                if ( mTextures[ i ].Name == name )
+                {
+                    SelectTexture = new Texture( mTextures[i] );
+                    return;
+                }
         }
 
         //-------------------------------------------------------------------------//
@@ -23,15 +27,15 @@ namespace lifeMap.src.system
         public static void LoadTexture( string route )
         {
             SelectTexture.LoadTexture( route );
-            mTextures[ Path.GetFileName( route ) ] = new Texture( SelectTexture );
+            mTextures.Add( new Texture( SelectTexture ) );
             mPicTextures.Add( new Bitmap( route ) );
         }
 
         //-------------------------------------------------------------------------//
 
-        public static void AddTexture( string name, Texture texture, Bitmap bitmap )
+        public static void AddTexture( Texture texture, Bitmap bitmap )
         {
-            mTextures.Add( name, texture );
+            mTextures.Add( texture );
             mPicTextures.Add( bitmap );
         }
 
@@ -39,10 +43,10 @@ namespace lifeMap.src.system
 
         public static void ClearTextures()
         {
-            foreach ( string key in mTextures.Keys )
-                mTextures[ key ].DeleteTexture();
+            for ( int i = 0; i < mTextures.Count; i++ )
+                mTextures[ i ].DeleteTexture();
 
-            mTextures.Clear();
+                mTextures.Clear();
             mPicTextures.Clear();
 
             SelectTexture.DeleteTexture();
@@ -52,13 +56,17 @@ namespace lifeMap.src.system
 
         public static bool IsTextureExist( string name )
         {
-            return mTextures.ContainsKey( name );
+            for ( int i = 0; i < mTextures.Count; i++ )
+                if ( mTextures[ i ].Name == name )
+                    return true;
+
+            return false;
         }
 
         //-------------------------------------------------------------------------//
 
-        public static Texture SelectTexture = new Texture(); 
-        public static Dictionary<string, Texture> mTextures = new Dictionary<string,Texture>();
+        public static Texture SelectTexture = new Texture();
+        public static List<Texture> mTextures = new List<Texture>();
         public static List<Bitmap> mPicTextures = new List<Bitmap>();
 
         //-------------------------------------------------------------------------//

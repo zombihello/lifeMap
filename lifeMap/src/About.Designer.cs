@@ -48,9 +48,9 @@
             this.label_lifemap.AutoSize = true;
             this.label_lifemap.Location = new System.Drawing.Point(57, 13);
             this.label_lifemap.Name = "label_lifemap";
-            this.label_lifemap.Size = new System.Drawing.Size(134, 13);
+            this.label_lifemap.Size = new System.Drawing.Size(81, 13);
             this.label_lifemap.TabIndex = 1;
-            this.label_lifemap.Text = "lifeMap version alpha 1.0.1";
+            this.label_lifemap.Text = "lifeMap version ";
             // 
             // label_copyright
             // 

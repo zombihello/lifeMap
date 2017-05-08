@@ -24,6 +24,10 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
+        public Vertex() { }
+
+        //-------------------------------------------------------------------------//
+
         public Vertex( Vector3f Position, TypeVertex type )
         {
             this.Position = Position;
@@ -76,8 +80,8 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public Vector3f Position = new Vector3f();
-        public Vector3f DefaultPosition = new Vector3f();
+        public Vector3f Position;
+        public Vector3f DefaultPosition;
         public TypeVertex typeVertex;
     }
 }

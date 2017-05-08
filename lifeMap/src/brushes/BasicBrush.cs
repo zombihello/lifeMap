@@ -326,8 +326,6 @@ namespace lifeMap.src.brushes
         public void Rotate( Viewport viewport, Viewport.TypeViewport typeViewport )
         {
             Vector3f MousePosition = Program.ToNewCoords( viewport.Camera.Position, Mouse.Position );
-            Vector3f MaxVertex = new Vector3f();
-            Vector3f MinVertex = new Vector3f();
 
             float dX = 0;
             float dY = 0;
@@ -347,33 +345,8 @@ namespace lifeMap.src.brushes
 
                         mLocalVertex[ i ].Position.X = CenterRotate.X * ( float ) Math.Cos( Angle ) - CenterRotate.Y * ( float ) Math.Sin( Angle ) + Size.X / 2;
                         mLocalVertex[ i ].Position.Z = CenterRotate.X * ( float ) Math.Sin( Angle ) + CenterRotate.Y * ( float ) Math.Cos( Angle ) + Size.Z / 2;
-
-                        if ( i == 0 )
-                        {
-                            MaxVertex = new Vector3f( mLocalVertex[ i ].Position );
-                            MinVertex = new Vector3f( mLocalVertex[ i ].Position );
-                        }
-                        else
-                        {
-
-                            if ( mLocalVertex[ i ].Position.Z > MaxVertex.Z )
-                                MaxVertex.Z = mLocalVertex[ i ].Position.Z;
-
-                            if ( mLocalVertex[ i ].Position.X > MaxVertex.X )
-                                MaxVertex.X = mLocalVertex[ i ].Position.X;
-
-                            if ( mLocalVertex[ i ].Position.Z < MinVertex.Z )
-                                MinVertex.Z = mLocalVertex[ i ].Position.Z;
-
-                            if ( mLocalVertex[ i ].Position.X < MinVertex.X )
-                                MinVertex.X = mLocalVertex[ i ].Position.X;
-                        }
-
                     }
 
-
-                    ManagerPoints.Size.X = ( MaxVertex.X - MinVertex.X ) / 2;
-                    ManagerPoints.Size.Z = ( MaxVertex.Z - MinVertex.Z ) / 2;
                     break;
 
                 case Viewport.TypeViewport.Front_2D_yz:
@@ -388,31 +361,8 @@ namespace lifeMap.src.brushes
 
                         mLocalVertex[ i ].Position.Z = CenterRotate.X * ( float ) Math.Cos( Angle ) - CenterRotate.Y * ( float ) Math.Sin( Angle ) + Size.Z / 2;
                         mLocalVertex[ i ].Position.Y = CenterRotate.X * ( float ) Math.Sin( Angle ) + CenterRotate.Y * ( float ) Math.Cos( Angle ) + Size.Y / 2;
-
-                        if ( i == 0 )
-                        {
-                            MaxVertex = new Vector3f( mLocalVertex[ i ].Position );
-                            MinVertex = new Vector3f( mLocalVertex[ i ].Position );
-                        }
-                        else
-                        {
-
-                            if ( mLocalVertex[ i ].Position.Y > MaxVertex.Y )
-                                MaxVertex.Y = mLocalVertex[ i ].Position.Y;
-
-                            if ( mLocalVertex[ i ].Position.Z > MaxVertex.Z )
-                                MaxVertex.Z = mLocalVertex[ i ].Position.Z;
-
-                            if ( mLocalVertex[ i ].Position.Y < MinVertex.Y )
-                                MinVertex.Y = mLocalVertex[ i ].Position.Y;
-
-                            if ( mLocalVertex[ i ].Position.Z < MinVertex.Z )
-                                MinVertex.Z = mLocalVertex[ i ].Position.Z;
-                        }
                     }
 
-                    ManagerPoints.Size.Z = ( MaxVertex.Z - MinVertex.Z ) / 2;
-                    ManagerPoints.Size.Y = ( MaxVertex.Y - MinVertex.Y ) / 2;
                     break;
 
                 case Viewport.TypeViewport.Side_2D_xz:
@@ -427,35 +377,54 @@ namespace lifeMap.src.brushes
 
                         mLocalVertex[ i ].Position.X = CenterRotate.X * ( float ) Math.Cos( Angle ) - CenterRotate.Y * ( float ) Math.Sin( Angle ) + Size.X / 2;
                         mLocalVertex[ i ].Position.Y = CenterRotate.X * ( float ) Math.Sin( Angle ) + CenterRotate.Y * ( float ) Math.Cos( Angle ) + Size.Y / 2;
-
-                        if ( i == 0 )
-                        {
-                            MaxVertex = new Vector3f( mLocalVertex[ i ].Position );
-                            MinVertex = new Vector3f( mLocalVertex[ i ].Position );
-                        }
-                        else
-                        {
-
-                            if ( mLocalVertex[ i ].Position.Y > MaxVertex.Y )
-                                MaxVertex.Y = mLocalVertex[ i ].Position.Y;
-
-                            if ( mLocalVertex[ i ].Position.X > MaxVertex.X )
-                                MaxVertex.X = mLocalVertex[ i ].Position.X;
-
-                            if ( mLocalVertex[ i ].Position.Y < MinVertex.Y )
-                                MinVertex.Y = mLocalVertex[ i ].Position.Y;
-
-                            if ( mLocalVertex[ i ].Position.X < MinVertex.X )
-                                MinVertex.X = mLocalVertex[ i ].Position.X;
-                        }
                     }
 
-                    ManagerPoints.Size.X = ( MaxVertex.X - MinVertex.X ) / 2;
-                    ManagerPoints.Size.Y = ( MaxVertex.Y - MinVertex.Y ) / 2;
                     break;
             }
 
+            UpdateSelectPoints();
             ToGloablCoords();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void UpdateSelectPoints()
+        {
+            Vector3f MaxVertex = new Vector3f();
+            Vector3f MinVertex = new Vector3f();
+
+            for ( int i = 0; i < mLocalVertex.Count; i++ )
+            {
+                if ( i == 0 )
+                {
+                    MaxVertex = new Vector3f( mLocalVertex[ i ].Position );
+                    MinVertex = new Vector3f( mLocalVertex[ i ].Position );
+                }
+                else
+                {
+
+                    if ( mLocalVertex[ i ].Position.Y > MaxVertex.Y )
+                        MaxVertex.Y = mLocalVertex[ i ].Position.Y;
+
+                    if ( mLocalVertex[ i ].Position.X > MaxVertex.X )
+                        MaxVertex.X = mLocalVertex[ i ].Position.X;
+
+                    if ( mLocalVertex[ i ].Position.Z > MaxVertex.Z )
+                        MaxVertex.Z = mLocalVertex[ i ].Position.Z;
+
+                    if ( mLocalVertex[ i ].Position.Y < MinVertex.Y )
+                        MinVertex.Y = mLocalVertex[ i ].Position.Y;
+
+                    if ( mLocalVertex[ i ].Position.X < MinVertex.X )
+                        MinVertex.X = mLocalVertex[ i ].Position.X;
+
+                    if ( mLocalVertex[ i ].Position.Z < MinVertex.Z )
+                        MinVertex.Z = mLocalVertex[ i ].Position.Z;
+                }
+            }
+
+            SelectSize = ( MaxVertex - MinVertex ) / 2;
+            ManagerPoints.Size = SelectSize;
         }
 
         //-------------------------------------------------------------------------//
@@ -487,8 +456,13 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
-        protected void InitBrush( Vector3f StartPosition, Vector3f EndPosition )
+        protected void InitBrush( Vector3f StartPosition, Vector3f EndPosition, PrimitivesType Type, Texture texture = null )
         {
+            this.Type = Type;
+
+            if ( texture != null )
+                TextureBrush = new Texture( texture );
+
             if ( StartPosition.X == 0 )
                 StartPosition.X = Viewport.fSize;
 
@@ -524,6 +498,33 @@ namespace lifeMap.src.brushes
             }
 
             SelectSize = new Vector3f( Size / 2 );
+            InitIdVertex( Type );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        protected void InitBrush( SaveBrush saveBrush, PrimitivesType Type )
+        {
+            InitIdVertex( Type );
+            Position = saveBrush.Position;
+            Size = saveBrush.Size;
+
+            for ( int i = 0; i < ManagerTexture.mTextures.Count; i++ )
+                if ( ManagerTexture.mTextures[ i ].Name == saveBrush.TextureName )
+                    TextureBrush = new Texture( ManagerTexture.mTextures[ i ] );
+
+            mLocalVertex = saveBrush.LocalVertex;
+            mTextureCoord = saveBrush.TextureCoords;
+
+            CenterBrush = Position + Size / 2;
+
+            for ( int i = 0; i < mLocalVertex.Count; i++ )
+            {
+                mGlobalVertex.Add( new Vector3f( mLocalVertex[ i ].Position ) );
+                mGlobalVertex[ i ] = mLocalVertex[ i ].Position + Position;
+            }
+
+            UpdateSelectPoints();
         }
 
         //-------------------------------------------------------------------------//
@@ -531,17 +532,9 @@ namespace lifeMap.src.brushes
         protected void ToGloablCoords()
         {
             for ( int i = 0; i < mLocalVertex.Count; i++ )
-            {
-                mGlobalVertex[ i ].X = mLocalVertex[ i ].Position.X + Position.X;
-                mGlobalVertex[ i ].Y = mLocalVertex[ i ].Position.Y + Position.Y;
-                mGlobalVertex[ i ].Z = mLocalVertex[ i ].Position.Z + Position.Z;
-            }
+                mGlobalVertex[ i ] = mLocalVertex[ i ].Position + Position;
 
-            CenterBrush.X = Position.X + Size.X / 2;
-            CenterBrush.Y = Position.Y + Size.Y / 2;
-            CenterBrush.Z = Position.Z + Size.Z / 2;
-
-            GenerateTextureCoords();
+            CenterBrush = Position + Size / 2;
         }
 
         //-------------------------------------------------------------------------//
@@ -1020,10 +1013,68 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
-        protected void InitIdVertex( List<int> Id_Lines, List<int> Id_Triangles )
+        protected void InitIdVertex( PrimitivesType type )
         {
-            mIdVertex_Lines = Id_Lines;
-            mIdVertex_Triangles = Id_Triangles;
+            switch ( type )
+            {
+                case PrimitivesType.Cube:
+                    //----------------------------------------------
+                    // Id Вершин / Тип рисовния - Линии (Для 2D)
+                    //---------------------------------------------
+
+                    mIdVertex_Lines = new List<int>
+                    {
+                        0, 1, 2, 3,
+                        0, 3, 1, 2,
+
+                        4, 5, 6, 7,
+                        4, 7, 5, 6,
+
+                        0, 4, 3, 7,
+                        0, 3, 4, 7,
+
+                        1, 5, 2, 6,
+                        1, 2, 5, 6,
+
+                        3, 2, 7, 6,
+                        3, 7, 2, 6,
+
+                        0, 1, 4, 5,
+                        0, 4, 1, 5
+                    };
+
+                    //-----------------------------------------------------
+                    // Id Вершин / Тип рисовния - Треугольники (Для 3D)
+                    //-----------------------------------------------------
+
+                    mIdVertex_Triangles = new List<int>
+                    {
+                        7, 3, 4,
+                        3, 0, 4,
+
+                        2, 6, 1,
+                        6, 5, 1,
+
+                        7, 6, 3,
+                        6, 2, 3,
+
+                        0, 1, 4,
+                        1, 5, 4,
+
+                        6, 4, 5,
+                        6, 7, 4,
+
+                        0, 2, 1,
+                        0, 3, 2
+                    };
+                    break;
+
+                case PrimitivesType.Sphere:
+                    break;
+
+                case PrimitivesType.Plane:
+                    break;
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -1096,6 +1147,30 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
+        public SaveBrush ToSave()
+        {
+            SaveBrush saveBrush = new SaveBrush();
+            saveBrush.TextureName = TextureBrush.Name;
+            saveBrush.Type = Type.ToString();
+            saveBrush.Position = Position;
+            saveBrush.Size = Size;
+            saveBrush.LocalVertex = mLocalVertex;
+            saveBrush.TextureCoords = mTextureCoord;
+
+            return saveBrush;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public SaveBrush ToExport()
+        {
+            SaveBrush saveBrush = new SaveBrush();
+            return saveBrush;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public PrimitivesType Type;
         public Vector3f CenterBrush = new Vector3f();
         public Vector3f Size = new Vector3f();
         public Vector3f SelectSize = new Vector3f();

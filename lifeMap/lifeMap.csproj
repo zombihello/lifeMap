@@ -72,6 +72,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>src\lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -84,19 +88,19 @@
     <Reference Include="System.Xml" />
     <Reference Include="Tao.DevIl, Version=1.6.8.3, Culture=neutral, PublicKeyToken=7ec4053013524957, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\TaoFramework\bin\Tao.DevIl.dll</HintPath>
+      <HintPath>src\lib\Tao.DevIl.dll</HintPath>
     </Reference>
     <Reference Include="Tao.FreeGlut, Version=2.4.0.2, Culture=neutral, PublicKeyToken=6e602a6ad6c0d06d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\TaoFramework\bin\Tao.FreeGlut.dll</HintPath>
+      <HintPath>src\lib\Tao.FreeGlut.dll</HintPath>
     </Reference>
     <Reference Include="Tao.OpenGl, Version=2.1.0.12, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\TaoFramework\bin\Tao.OpenGl.dll</HintPath>
+      <HintPath>src\lib\Tao.OpenGl.dll</HintPath>
     </Reference>
     <Reference Include="Tao.Platform.Windows, Version=1.0.0.5, Culture=neutral, PublicKeyToken=701104b2da67a104, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\TaoFramework\bin\Tao.Platform.Windows.dll</HintPath>
+      <HintPath>src\lib\Tao.Platform.Windows.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -109,8 +113,15 @@
     <Compile Include="src\brushes\BasicBrush.cs" />
     <Compile Include="src\brushes\BrushBox.cs" />
     <Compile Include="src\brushes\BrushSelect.cs" />
+    <Compile Include="src\MapProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\MapProperties.Designer.cs">
+      <DependentUpon>MapProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\system\ManagerPoints.cs" />
     <Compile Include="src\system\ManagerTexture.cs" />
+    <Compile Include="src\system\Serialization.cs" />
     <Compile Include="src\system\Texture.cs" />
     <Compile Include="src\system\Vertex.cs" />
     <Compile Include="src\system\Camera.cs" />
@@ -143,6 +154,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\MapProperties.resx">
+      <DependentUpon>MapProperties.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

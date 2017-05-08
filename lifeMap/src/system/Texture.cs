@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,17 +21,23 @@ namespace lifeMap.src.system
         {
             Size = new Vector3f( clone.Size );
             TextureObject = clone.TextureObject;
+
+            Route = clone.Route;
+            Name = clone.Name;            
         }
 
         //-------------------------------------------------------------------------//
 
-        public bool LoadTexture( string Route )
+        public bool LoadTexture( string route )
         {
             Il.ilGenImages( 1, out TextureId );
             Il.ilBindImage( TextureId );
 
-            if ( !Il.ilLoadImage( Route ) )
+            if ( !Il.ilLoadImage( route ) )
                 return false;
+
+            Route = route;
+            Name = Path.GetFileName( Route );
 
             Size.X = Il.ilGetInteger( Il.IL_IMAGE_WIDTH );
             Size.Y = Il.ilGetInteger( Il.IL_IMAGE_HEIGHT );
@@ -112,9 +119,18 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public Vector3f Size = new Vector3f();
-        public uint TextureObject = 0;
+        public Vector3f GetSize()
+        {
+            return Size;
+        }
 
+        //-------------------------------------------------------------------------//
+
+        public string Route;
+        public string Name;
+
+        private Vector3f Size = new Vector3f();
+        private uint TextureObject = 0;
         private int TextureId;
 
         //-------------------------------------------------------------------------//

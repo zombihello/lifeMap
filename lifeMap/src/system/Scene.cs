@@ -172,6 +172,13 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
+        public static void SetAllBrushes( List<BasicBrush> brushes )
+        {
+            mBrush = brushes;
+        }
+
+        //-------------------------------------------------------------------------//
+
         public static void Clear()
         {
             mBrush.Clear();
@@ -203,6 +210,13 @@ namespace lifeMap.src.system
         public static BrushSelect GetBrushSelect()
         {
             return BrushSelect;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static List<BasicBrush> GetAllBrushes()
+        {
+            return mBrush;
         }
 
         //-------------------------------------------------------------------------//
