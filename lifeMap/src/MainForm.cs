@@ -639,6 +639,12 @@ namespace lifeMap
 
         private void toolStripMenuItem2_Click( object sender, EventArgs e ) // NEW MAP
         {
+            Scene.Clear();
+            ManagerTexture.ClearTextures();
+            image_previewTexture.Image = null;
+            comboBox_textureView.SelectedIndex = -1;
+            comboBox_textureView.Items.Clear();
+
             menuBar.Items[ 1 ].Visible = true;
 
             menuBar_File.DropDownItems[ 3 ].Enabled = true; // Save Map
