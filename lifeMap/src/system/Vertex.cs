@@ -32,6 +32,7 @@ namespace lifeMap.src.system
         {
             this.Position = Position;
             DefaultPosition = new Vector3f( Position.X, Position.Y, Position.Z );
+            TexturePosition = new Vector3f( Position.X, Position.Y, Position.Z );
             typeVertex = type;
         }
 
@@ -41,6 +42,7 @@ namespace lifeMap.src.system
         {
             Position = new Vector3f( x, y, z );
             DefaultPosition = new Vector3f( Position.X, Position.Y, Position.Z );
+            TexturePosition = new Vector3f( Position.X, Position.Y, Position.Z );
             typeVertex = type;
         }
 
@@ -48,11 +50,9 @@ namespace lifeMap.src.system
 
         public void Move( Vector3f FactorMove )
         {
-            Position.X += FactorMove.X;
-            Position.Y += FactorMove.Y;
-            Position.Z += FactorMove.Z;
-
-            DefaultPosition = new Vector3f( Position.X, Position.Y, Position.Z );
+            Position += FactorMove;
+            TexturePosition += FactorMove;
+            DefaultPosition += FactorMove;
         }
 
         //-------------------------------------------------------------------------//
@@ -64,16 +64,19 @@ namespace lifeMap.src.system
                 case Program.PlaneType.X:
                     Position.X += FactorMove;
                     DefaultPosition.X += FactorMove;
+                    TexturePosition.X += FactorMove;
                     break;
 
                 case Program.PlaneType.Y:
                     Position.Y += FactorMove;
                     DefaultPosition.Y += FactorMove;
+                    TexturePosition.Y += FactorMove;
                     break;
 
                 case Program.PlaneType.Z:
                     Position.Z += FactorMove;
                     DefaultPosition.Z += FactorMove;
+                    TexturePosition.Z += FactorMove;
                     break;
             }
         }
@@ -82,6 +85,7 @@ namespace lifeMap.src.system
 
         public Vector3f Position;
         public Vector3f DefaultPosition;
+        public Vector3f TexturePosition;
         public TypeVertex typeVertex;
     }
 }

@@ -318,6 +318,7 @@ namespace lifeMap.src.brushes
                 //----------------------------------------------------------//
             }
 
+            GenerateTextureCoords();
             ToGloablCoords();
         }
 
@@ -346,6 +347,7 @@ namespace lifeMap.src.brushes
                         mLocalVertex[ i ].Position.X = CenterRotate.X * ( float ) Math.Cos( Angle ) - CenterRotate.Y * ( float ) Math.Sin( Angle ) + Size.X / 2;
                         mLocalVertex[ i ].Position.Z = CenterRotate.X * ( float ) Math.Sin( Angle ) + CenterRotate.Y * ( float ) Math.Cos( Angle ) + Size.Z / 2;
                     }
+
 
                     break;
 
@@ -379,9 +381,10 @@ namespace lifeMap.src.brushes
                         mLocalVertex[ i ].Position.Y = CenterRotate.X * ( float ) Math.Sin( Angle ) + CenterRotate.Y * ( float ) Math.Cos( Angle ) + Size.Y / 2;
                     }
 
+
                     break;
             }
-
+            
             UpdateSelectPoints();
             ToGloablCoords();
         }
@@ -564,7 +567,9 @@ namespace lifeMap.src.brushes
                                 vertex.typeVertex == Vertex.TypeVertex.LeftBottom ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftTop ||
                                 vertex.typeVertex == Vertex.TypeVertex.Back_LeftBottom )
+                            {
                                 vertex.Move( FactorSize.X, Program.PlaneType.X );
+                            }
                         }
                         else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                         {
@@ -989,7 +994,7 @@ namespace lifeMap.src.brushes
 
         public void UpdateVertex()
         {
-            for ( int i = 0; i < mLocalVertex.Count; i++ )
+           for ( int i = 0; i < mLocalVertex.Count; i++ )
                 mLocalVertex[ i ].DefaultPosition = new Vector3f( mLocalVertex[ i ].Position );
 
             SelectSize = new Vector3f( ManagerPoints.Size );
@@ -1099,12 +1104,12 @@ namespace lifeMap.src.brushes
 
             for ( int i = 0, j = 0; i < mIdVertex_Triangles.Count / 3; i++ )
             {
-                Vertex A = mLocalVertex[ mIdVertex_Triangles[ j ] ];
-                Vertex B = mLocalVertex[ mIdVertex_Triangles[ j + 1 ] ];
-                Vertex C = mLocalVertex[ mIdVertex_Triangles[ j + 2 ] ];
+                Vector3f A = mLocalVertex[ mIdVertex_Triangles[ j ] ].TexturePosition;
+                Vector3f B = mLocalVertex[ mIdVertex_Triangles[ j + 1 ] ].TexturePosition;
+                Vector3f C = mLocalVertex[ mIdVertex_Triangles[ j + 2 ] ].TexturePosition;
                 j += 3;
 
-                Vector3f Normal = Vector3f.CrossProduct( B.Position - A.Position, C.Position - A.Position );
+                Vector3f Normal = Vector3f.CrossProduct( B - A, C - A );
                 Normal.Normalize();
 
                 Vector3f planeTangent = Vector3f.CrossProduct( Normal, new Vector3f( 0.0f, 1.0f, 0.00001f ) );
@@ -1113,8 +1118,8 @@ namespace lifeMap.src.brushes
                 planeTangent.Normalize();
                 planeBinormal.Normalize();
 
-                float U = Vector3f.DotProduct( A.Position, planeTangent );
-                float V = Vector3f.DotProduct( A.Position, planeBinormal );
+                float U = Vector3f.DotProduct( A, planeTangent );
+                float V = Vector3f.DotProduct( A, planeBinormal );
 
                 /*
                  * U += textureShiftX;
@@ -1122,26 +1127,27 @@ namespace lifeMap.src.brushes
                  * U /= textureScaleX;
                  * V /= textureScaleY;
                  */
-                U /= 20f; // ScaleX 
-                V /= 20f;  // ScaleY
 
-                mTextureCoord.Add( new Vector3f( -U, -V, 0 ) );
+                U /= -20f; // ScaleX 
+                V /= -20f;  // ScaleY
 
-                U = Vector3f.DotProduct( B.Position, planeTangent );
-                V = Vector3f.DotProduct( B.Position, planeBinormal );
+                mTextureCoord.Add( new Vector3f( U, V, 0 ) );
 
-                U /= 20f;
-                V /= 20f;
+                U = Vector3f.DotProduct( B, planeTangent );
+                V = Vector3f.DotProduct( B, planeBinormal );
 
-                mTextureCoord.Add( new Vector3f( -U, -V, 0 ) );
+                U /= -20f;
+                V /= -20f;
 
-                U = Vector3f.DotProduct( C.Position, planeTangent );
-                V = Vector3f.DotProduct( C.Position, planeBinormal );
+                mTextureCoord.Add( new Vector3f( U, V, 0 ) );
 
-                U /= 20f;
-                V /= 20f;
+                U = Vector3f.DotProduct( C, planeTangent );
+                V = Vector3f.DotProduct( C, planeBinormal );
 
-                mTextureCoord.Add( new Vector3f( -U, -V, 0 ) );
+                U /= -20f;
+                V /= -20f;
+
+                mTextureCoord.Add( new Vector3f( U, V, 0 ) );
             }
         }
 
