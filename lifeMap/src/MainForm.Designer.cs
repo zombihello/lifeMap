@@ -303,6 +303,7 @@
             this.toolStripMenuItem6.ShortcutKeys = System.Windows.Forms.Keys.F9;
             this.toolStripMenuItem6.Size = new System.Drawing.Size(173, 22);
             this.toolStripMenuItem6.Text = "Export";
+            this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
             // 
             // toolStripSeparator5
             // 

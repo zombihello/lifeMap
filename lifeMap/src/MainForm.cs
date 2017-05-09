@@ -724,6 +724,8 @@ namespace lifeMap
 
         private void toolStripMenuItem4_Click( object sender, EventArgs e ) // SAVE MAP
         {
+            saveFileDialog.Filter = "lifeMap | *.map";
+
             if ( saveFileDialog.FileName != "" || saveFileDialog.FileName == "" && saveFileDialog.ShowDialog() == DialogResult.OK )
             {
                 Serialization serialization = new Serialization();
@@ -740,6 +742,8 @@ namespace lifeMap
 
         private void toolStripMenuItem5_Click( object sender, EventArgs e ) // SAVE AS..
         {
+            saveFileDialog.Filter = "lifeMap | *.map";
+
             if ( saveFileDialog.ShowDialog() == DialogResult.OK )
             {
                 Serialization serialization = new Serialization();
@@ -748,6 +752,23 @@ namespace lifeMap
                 serialization.SetSolidBrushes( Scene.GetAllBrushes() );
 
                 serialization.SaveMap( saveFileDialog.FileName );
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void toolStripMenuItem6_Click( object sender, EventArgs e ) // EXPORT
+        {
+            saveFileDialog.Filter = "lifeEngine Map | *.lmap";
+
+            if ( saveFileDialog.ShowDialog() == DialogResult.OK )
+            {
+                Serialization serialization = new Serialization();
+                serialization.SetMapSettings( mapProperties );
+                serialization.SetLoadTextures( ManagerTexture.mTextures );
+                serialization.SetSolidBrushes( Scene.GetAllBrushes(), true );
+
+                serialization.ExportMap( saveFileDialog.FileName );
             }
         }
 

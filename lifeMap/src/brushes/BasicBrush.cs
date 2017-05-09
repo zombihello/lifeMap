@@ -1165,6 +1165,10 @@ namespace lifeMap.src.brushes
         public SaveBrush ToExport()
         {
             SaveBrush saveBrush = new SaveBrush();
+            saveBrush.TextureName = TextureBrush.Name;
+            saveBrush.Type = Type.ToString();
+            saveBrush.Vertex = mGlobalVertex;
+            saveBrush.TextureCoords = mTextureCoord;
             return saveBrush;
         }
 
