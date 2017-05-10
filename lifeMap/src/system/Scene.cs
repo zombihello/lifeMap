@@ -22,7 +22,7 @@ namespace lifeMap.src.system
             RenderXYZ();
 
             for ( int i = 0; i < mBrush.Count; i++ )
-                mBrush[i].Render( typeViewport );
+                mBrush[ i ].Render( typeViewport );
 
             if ( BrushSelect != null )
                 BrushSelect.Render( typeViewport );
@@ -104,15 +104,15 @@ namespace lifeMap.src.system
                 switch ( typeViewport )
                 {
                     case Viewport.TypeViewport.Top_2D_xy:
-                        centerBrush = new Vector3f( mBrush[i].CenterBrush.X, mBrush[i].CenterBrush.Z, 0 );
+                        centerBrush = new Vector3f( mBrush[ i ].CenterBrush.X, mBrush[ i ].CenterBrush.Z, 0 );
                         break;
 
                     case Viewport.TypeViewport.Front_2D_yz:
-                        centerBrush = new Vector3f( mBrush[i].CenterBrush.Z, mBrush[i].CenterBrush.Y, 0 );
+                        centerBrush = new Vector3f( mBrush[ i ].CenterBrush.Z, mBrush[ i ].CenterBrush.Y, 0 );
                         break;
 
                     case Viewport.TypeViewport.Side_2D_xz:
-                        centerBrush = new Vector3f( mBrush[i].CenterBrush.X, mBrush[i].CenterBrush.Y, 0 );
+                        centerBrush = new Vector3f( mBrush[ i ].CenterBrush.X, mBrush[ i ].CenterBrush.Y, 0 );
                         break;
 
                     case Viewport.TypeViewport.Textured_3D:
@@ -120,19 +120,24 @@ namespace lifeMap.src.system
                         break;
                 }
 
-                if ( PositionClick.X >= centerBrush.X - 5 &&
-                     PositionClick.X <= centerBrush.X + 5 )
-                    if ( PositionClick.Y >= centerBrush.Y - 5 &&
-                         PositionClick.Y <= centerBrush.Y + 5 )
+                float factorSize = 4;
+
+                if ( Viewport.TmpViewport.FactorZoom > 0 )
+                    factorSize = Viewport.fSize / 2 * Viewport.TmpViewport.FactorZoom;
+
+                if ( PositionClick.X >= centerBrush.X - factorSize &&
+                     PositionClick.X <= centerBrush.X + factorSize )
+                    if ( PositionClick.Y >= centerBrush.Y - factorSize &&
+                         PositionClick.Y <= centerBrush.Y + factorSize )
                     {
                         if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
                             Mouse.BrushSelect.SetColorBrush( Mouse.BrushSelect.DefaultColorBrush );
 
-                        mBrush[i].SetColorBrush( new Color( 1, 1, 1 ) );
-                        Mouse.BrushSelect = mBrush[i];
+                        mBrush[ i ].SetColorBrush( new Color( 1, 1, 1 ) );
+                        Mouse.BrushSelect = mBrush[ i ];
 
-                        ManagerPoints.SetSelectBrush( mBrush[i] );
-                        ManagerPoints.Size = new Vector3f( mBrush[i].SelectSize );
+                        ManagerPoints.SetSelectBrush( mBrush[ i ] );
+                        ManagerPoints.Size = new Vector3f( mBrush[ i ].SelectSize );
 
                         Mouse.IsSelectBrush = true;
                         Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Move;
@@ -197,7 +202,7 @@ namespace lifeMap.src.system
         public static void RemoveBrush( BasicBrush SelectBrush )
         {
             for ( int i = 0; i < mBrush.Count; i++ )
-                if ( mBrush[i] == SelectBrush )
+                if ( mBrush[ i ] == SelectBrush )
                 {
                     mBrush.Remove( SelectBrush );
                     ManagerPoints.PointsClear();

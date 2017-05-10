@@ -88,7 +88,7 @@ namespace lifeMap
             if ( Viewport.bEnabled )
                 if ( !Mouse.IsClick )
                 {
-                    Mouse.UpdatePosition( new Vector3f( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), 0 ) );
+                    Mouse.UpdatePosition( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), Viewport.FactorZoom );
                     Mouse.SetClick( Viewport.type, Viewport.Camera );
 
                     if ( Program.selectTool == Program.SelectTool.CursorTool )
@@ -138,7 +138,7 @@ namespace lifeMap
         {
             if ( Viewport.bEnabled )
             {
-                Mouse.UpdatePosition( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), Viewport.fSize );
+                Mouse.UpdatePosition( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), Viewport.FactorZoom, Viewport.fSize );
 
                 if ( Mouse.IsClick )
                 {
@@ -186,9 +186,9 @@ namespace lifeMap
         private void Viewport_Scroll( float OldValue, float NewValue, int IdCoord )
         {
             if ( IdCoord == 1 )
-                FactorMoveCamera = new Vector3f( -( NewValue - OldValue ) * Viewport.fSize, 0, 0 );
+                FactorMoveCamera = new Vector3f( -( NewValue - OldValue ) * 4, 0, 0 );
             else if ( IdCoord == 2 )
-                FactorMoveCamera = new Vector3f( 0, ( NewValue - OldValue ) * Viewport.fSize, 0 );
+                FactorMoveCamera = new Vector3f( 0, ( NewValue - OldValue ) * 4, 0 );
         }
 
         //-------------------------------------------------------------------------//
@@ -214,24 +214,31 @@ namespace lifeMap
 
         private void Viewport_MouseWheel( Viewport Viewport, HScrollBar hScrollBar, VScrollBar vScrollBar, float Delta )
         {
+            //TODO: Доделать зум
             if ( Viewport.bEnabled && Viewport.type != Viewport.TypeViewport.Textured_3D )
             {
                 if ( Delta > 0 )
                 {
-                    if ( vScrollBar.Value < vScrollBar.Maximum )
-                        vScrollBar.Value += vScrollBar.SmallChange;
+                    if ( Viewport.FactorZoom > -5 )
+                    {
+                        Viewport.FactorZoom--;
 
-                    if ( hScrollBar.Value < hScrollBar.Maximum )
-                        hScrollBar.Value += hScrollBar.SmallChange;
+                        if ( Viewport.FactorZoom == 0 )
+                            Viewport.FactorZoom--;
+                    }
                 }
                 else
                 {
-                    if ( hScrollBar.Value > hScrollBar.Minimum )
-                        hScrollBar.Value -= hScrollBar.SmallChange;
+                    if ( Viewport.FactorZoom < 5 )
+                    {                        
+                        Viewport.FactorZoom++;
 
-                    if ( vScrollBar.Value > vScrollBar.Minimum )
-                        vScrollBar.Value -= vScrollBar.SmallChange;
-                }
+                        if ( Viewport.FactorZoom == 0 )
+                            Viewport.FactorZoom++;
+                    }
+                 }
+
+                Viewport.View.Refresh();
             }
         }
 
@@ -810,6 +817,28 @@ namespace lifeMap
         private void mapPropiertesToolStripMenuItem_Click( object sender, EventArgs e ) // MAP PROPERTIES
         {
             mapProperties.ShowDialog();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void smToolStripMenuItem_Click( object sender, EventArgs e ) // SMALLER GRID
+        {
+            if ( Viewport.fSize > 1 )
+            {
+                Viewport.fSize = Viewport.fSize / 2;
+                Refresh();
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void biggerGridToolStripMenuItem_Click( object sender, EventArgs e ) // BIGGER GRID
+        {
+            if ( Viewport.fSize < 256 )
+            {
+                Viewport.fSize = Viewport.fSize * 2;
+                Refresh();
+            }
         }
 
         //-------------------------------------------------------------------------//

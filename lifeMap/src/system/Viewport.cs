@@ -76,6 +76,7 @@ namespace lifeMap.src
         public void UpdateViewport()
         {
             View.MakeCurrent();
+            Viewport.TmpViewport = this;
 
             //Инициализация OpenGL
             Gl.glMatrixMode( Gl.GL_PROJECTION );
@@ -83,7 +84,12 @@ namespace lifeMap.src
             Gl.glViewport( 0, 0, View.Width, View.Height );
 
             if ( type != TypeViewport.Textured_3D )
-                Gl.glOrtho( 0, View.Width * FactorZoom, 0, View.Height * FactorZoom, -View.Width, View.Width ); // TODO: Сделать зум вьюпорта   
+            {
+                if ( FactorZoom < 0 )
+                    Gl.glOrtho( 0, View.Width / FactorZoom, 0, View.Height / FactorZoom, -View.Width / FactorZoom, View.Width / FactorZoom );
+                else
+                    Gl.glOrtho( 0, View.Width * FactorZoom, 0, View.Height * FactorZoom, -View.Width * FactorZoom, View.Width * FactorZoom );
+            }
             else
             {
                 Glu.gluPerspective( 45f, ( float ) View.Width / ( float ) View.Height, 0.1f, 1000.0f );
@@ -131,23 +137,33 @@ namespace lifeMap.src
             else if ( type == TypeViewport.Front_2D_yz )
                 Gl.glRotatef( -90, 0, 1, 0 );
 
+            Gl.glColor3f( 0.5f, 0, 0 );
+            Gl.glBegin( Gl.GL_LINES );
+
+            for ( int i = -1024; i <= 1024; i += 512 )
+            {
+                Gl.glVertex3f( i, -1024, 0 );
+                Gl.glVertex3f( i, 1024, 0 );
+
+                Gl.glVertex3f( 1024, i, 0 );
+                Gl.glVertex3f( -1024, i, 0 );
+            }
+
+            Gl.glEnd();
+
             Gl.glColor3f( colorGrid.R, colorGrid.G, colorGrid.B );
+            Gl.glBegin( Gl.GL_LINES );
 
-            for ( float x = -500; x < 500; x += fSize )
+            for ( float i = -1024; i <= 1024; i += fSize )
             {
-                Gl.glBegin( Gl.GL_LINE_STRIP );
-                for ( float y = -500; y < 500; y += fSize )
-                    Gl.glVertex3f( x, y, 0 );
-                Gl.glEnd();
+                Gl.glVertex3f( i, -1024, 0 );
+                Gl.glVertex3f( i, 1024, 0 );
+
+                Gl.glVertex3f( 1024, i, 0 );
+                Gl.glVertex3f( -1024, i, 0 );
             }
 
-            for ( float y = -500; y < 500; y += fSize )
-            {
-                Gl.glBegin( Gl.GL_LINE_STRIP );
-                for ( float x = -500; x < 500; x += fSize )
-                    Gl.glVertex3f( x, y, 0 );
-                Gl.glEnd();
-            }
+            Gl.glEnd();
 
             Gl.glClear( Gl.GL_DEPTH_BUFFER_BIT );
 
@@ -181,11 +197,12 @@ namespace lifeMap.src
 
         //-------------------------------------------------------------------------//
 
-        public static float fSize = 20f;
+        public static float fSize = 16f;
         public static Color colorGrid = new Color( 0.2f, 0.2f, 0.2f );
 
         public bool bEnabled = true;
         public float FactorZoom = 1;
+        public static Viewport TmpViewport = null;
         public SimpleOpenGlControl View;
         public TypeViewport type;
         public Label LabelViewport;

@@ -29,9 +29,13 @@ namespace lifeMap.src
 
         //-------------------------------------------------------------------------//
 
-        public static void UpdatePosition( Vector3f position, float AlignValue = 0 )
+        public static void UpdatePosition( Vector3f position, float FactorZoom = 0, float AlignValue = 0 )
         {
             OldPosition = Position;
+
+            if ( FactorZoom != 1 )
+                if ( FactorZoom > 0 ) position *= FactorZoom;
+                else if ( FactorZoom < 0 ) position /= FactorZoom;
 
             if ( AlignValue != 0 )
                 Position = new Vector3f( Program.Align( position.X, AlignValue ), Program.Align( position.Y, AlignValue ), 0 );
@@ -44,9 +48,21 @@ namespace lifeMap.src
 
         //-------------------------------------------------------------------------//
 
-        public static void UpdatePosition( float x, float y, float AlignValue = 0 )
+        public static void UpdatePosition( float x, float y, float FactorZoom = 0, float AlignValue = 0 )
         {
             OldPosition = Position;
+
+            if ( FactorZoom != 1 )
+                if ( FactorZoom > 0 )
+                {
+                    x *= FactorZoom;
+                    y *= FactorZoom;
+                }
+                else if ( FactorZoom < 0 )
+                {
+                    x /= FactorZoom;
+                    y /= FactorZoom;
+                }
 
             if ( AlignValue != 0 )
                 Position = new Vector3f( Program.Align( x, AlignValue ), Program.Align( y, AlignValue ), 0 );
@@ -73,29 +89,36 @@ namespace lifeMap.src
             {
                 Vector3f PositionCursor = Program.ToNewCoords( camera.Position, Position );
 
+                float factorSize = Viewport.fSize / 2;
+
+                if ( Viewport.TmpViewport.FactorZoom > 0 )
+                    factorSize *= Viewport.TmpViewport.FactorZoom;
+                else
+                    factorSize /= Viewport.TmpViewport.FactorZoom;
+
                 switch ( TypeViewport )
                 {
                     case Viewport.TypeViewport.Top_2D_xy:
-                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.Size.X ) ) + 5 ||
-                            PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.Size.X ) ) - 5 ||
-                            PositionCursor.Y > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.Size.Z ) ) + 5 ||
-                            PositionCursor.Y < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.Size.Z ) ) - 5 )
+                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.Size.X ) ) + factorSize ||
+                            PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.Size.X ) ) - factorSize ||
+                            PositionCursor.Y > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.Size.Z ) ) + factorSize ||
+                            PositionCursor.Y < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.Size.Z ) ) - factorSize )
                             IsSelectBrush = false;
                         break;
 
                     case Viewport.TypeViewport.Front_2D_yz:
-                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.Size.Z ) ) + 5 ||
-                             PositionCursor.X < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.Size.Z ) ) - 5 ||
-                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.Size.Y ) ) + 5 ||
-                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.Size.Y ) ) - 5 )
+                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.Size.Z ) ) + factorSize ||
+                             PositionCursor.X < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.Size.Z ) ) - factorSize ||
+                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.Size.Y ) ) + factorSize ||
+                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.Size.Y ) ) - factorSize )
                             IsSelectBrush = false;
                         break;
 
                     case Viewport.TypeViewport.Side_2D_xz:
-                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.Size.X ) ) + 5 ||
-                             PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.Size.X ) ) - 5 ||
-                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.Size.Y ) ) + 5 ||
-                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.Size.Y ) ) - 5 )
+                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.Size.X ) ) + factorSize ||
+                             PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.Size.X ) ) - factorSize ||
+                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.Size.Y ) ) + factorSize ||
+                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.Size.Y ) ) - factorSize )
                             IsSelectBrush = false;
                         break;
                 }

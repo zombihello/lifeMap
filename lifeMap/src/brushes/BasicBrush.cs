@@ -436,21 +436,28 @@ namespace lifeMap.src.brushes
         {
             if ( typeViewport != Viewport.TypeViewport.Textured_3D )
             {
+                float factorSize = 4;
+
                 Gl.glBegin( Gl.GL_LINES );
                 Gl.glColor3f( ColorBrush.R, ColorBrush.G, ColorBrush.B );
 
-                Gl.glVertex3f( CenterBrush.X - 4, CenterBrush.Y - 4, CenterBrush.Z - 4 );
-                Gl.glVertex3f( CenterBrush.X + 4, CenterBrush.Y + 4, CenterBrush.Z + 4 );
+                if ( Viewport.TmpViewport.FactorZoom > 0 )
+                    factorSize *= Viewport.TmpViewport.FactorZoom;
+                else
+                    factorSize /= Viewport.TmpViewport.FactorZoom;
+
+                Gl.glVertex3f( CenterBrush.X - factorSize, CenterBrush.Y - factorSize, CenterBrush.Z - factorSize );
+                Gl.glVertex3f( CenterBrush.X + factorSize, CenterBrush.Y + factorSize, CenterBrush.Z + factorSize );
 
                 if ( typeViewport != Viewport.TypeViewport.Front_2D_yz )
                 {
-                    Gl.glVertex3f( CenterBrush.X + 4, CenterBrush.Y - 4, CenterBrush.Z - 4 );
-                    Gl.glVertex3f( CenterBrush.X - 4, CenterBrush.Y + 4, CenterBrush.Z + 4 );
+                    Gl.glVertex3f( CenterBrush.X + factorSize, CenterBrush.Y - factorSize, CenterBrush.Z - factorSize );
+                    Gl.glVertex3f( CenterBrush.X - factorSize, CenterBrush.Y + factorSize, CenterBrush.Z + factorSize );
                 }
                 else
                 {
-                    Gl.glVertex3f( CenterBrush.X + 4, CenterBrush.Y - 4, CenterBrush.Z + 4 );
-                    Gl.glVertex3f( CenterBrush.X - 4, CenterBrush.Y + 4, CenterBrush.Z - 4 );
+                    Gl.glVertex3f( CenterBrush.X + factorSize, CenterBrush.Y - factorSize, CenterBrush.Z + factorSize );
+                    Gl.glVertex3f( CenterBrush.X - factorSize, CenterBrush.Y + factorSize, CenterBrush.Z - factorSize );
                 }
 
                 Gl.glEnd();

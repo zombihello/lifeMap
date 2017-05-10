@@ -355,6 +355,7 @@
             this.smToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Q)));
             this.smToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.smToolStripMenuItem.Text = "Smaller grid";
+            this.smToolStripMenuItem.Click += new System.EventHandler(this.smToolStripMenuItem_Click);
             // 
             // biggerGridToolStripMenuItem
             // 
@@ -362,6 +363,7 @@
             this.biggerGridToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.E)));
             this.biggerGridToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.biggerGridToolStripMenuItem.Text = "Bigger grid";
+            this.biggerGridToolStripMenuItem.Click += new System.EventHandler(this.biggerGridToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 

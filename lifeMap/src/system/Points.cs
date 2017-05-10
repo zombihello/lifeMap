@@ -135,13 +135,20 @@ namespace lifeMap.src.system
             {
                 Vector3f PositionPoint = mPoints[i];
 
+                float factorSize = Viewport.fSize / 2;
+
+                if ( Viewport.TmpViewport.FactorZoom > 0 )
+                    factorSize *= Viewport.TmpViewport.FactorZoom;
+                else
+                    factorSize /= Viewport.TmpViewport.FactorZoom;
+
                 switch ( typeViewport )
                 {
                     case Viewport.TypeViewport.Front_2D_yz:
-                        if ( PositionClick.X <= PositionPoint.Z + 5 &&
-                             PositionClick.X >= PositionPoint.Z - 5 &&
-                             PositionClick.Y <= PositionPoint.Y + 5 &&
-                             PositionClick.Y >= PositionPoint.Y - 5 )
+                        if ( PositionClick.X <= PositionPoint.Z + factorSize &&
+                             PositionClick.X >= PositionPoint.Z - factorSize &&
+                             PositionClick.Y <= PositionPoint.Y + factorSize &&
+                             PositionClick.Y >= PositionPoint.Y - factorSize )
                         {
                             ManagerPoints.SelectPointType = mTypePoint[i];
                             return true;
@@ -149,10 +156,10 @@ namespace lifeMap.src.system
                         break;
 
                     case Viewport.TypeViewport.Side_2D_xz:
-                        if ( PositionClick.X <= PositionPoint.X + 5 &&
-                             PositionClick.X >= PositionPoint.X - 5 &&
-                             PositionClick.Y <= PositionPoint.Y + 5 &&
-                             PositionClick.Y >= PositionPoint.Y - 5 )
+                        if ( PositionClick.X <= PositionPoint.X + factorSize &&
+                             PositionClick.X >= PositionPoint.X - factorSize &&
+                             PositionClick.Y <= PositionPoint.Y + factorSize &&
+                             PositionClick.Y >= PositionPoint.Y - factorSize )
                         {
                             ManagerPoints.SelectPointType = mTypePoint[i];
                             return true;
@@ -160,10 +167,10 @@ namespace lifeMap.src.system
                         break;
 
                     case Viewport.TypeViewport.Top_2D_xy:
-                        if ( PositionClick.X <= PositionPoint.X + 5 &&
-                             PositionClick.X >= PositionPoint.X - 5 &&
-                             PositionClick.Y <= PositionPoint.Z + 5 &&
-                             PositionClick.Y >= PositionPoint.Z - 5 )
+                        if ( PositionClick.X <= PositionPoint.X + factorSize &&
+                             PositionClick.X >= PositionPoint.X - factorSize &&
+                             PositionClick.Y <= PositionPoint.Z + factorSize &&
+                             PositionClick.Y >= PositionPoint.Z - factorSize )
                         {
                             ManagerPoints.SelectPointType = mTypePoint[i];
                             return true;
