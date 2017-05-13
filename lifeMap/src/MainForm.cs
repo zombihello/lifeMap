@@ -145,7 +145,7 @@ namespace lifeMap
                     switch ( Program.selectTool )
                     {
                         case Program.SelectTool.BoxTool:
-                            Scene.CreateBrushSelect( Viewport.type, Viewport.Camera );
+                            Scene.CreateBrushSelect( Viewport.type, Viewport );
                             break;
 
                         case Program.SelectTool.CursorTool:
@@ -212,19 +212,21 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        private void Viewport_MouseWheel( Viewport Viewport, HScrollBar hScrollBar, VScrollBar vScrollBar, float Delta )
+        private void Viewport_MouseWheel( Viewport Viewport, HScrollBar hScrollBar, VScrollBar vScrollBar, MouseEventArgs e )
         {
-            //TODO: Доделать зум
             if ( Viewport.bEnabled && Viewport.type != Viewport.TypeViewport.Textured_3D )
             {
-                if ( Delta > 0 )
+                if ( e.Delta > 0 )
                 {
                     if ( Viewport.FactorZoom > -5 )
                     {
                         Viewport.FactorZoom--;
 
                         if ( Viewport.FactorZoom == 0 )
+                        {
                             Viewport.FactorZoom--;
+                        }
+                      
                     }
                 }
                 else
@@ -234,7 +236,9 @@ namespace lifeMap
                         Viewport.FactorZoom++;
 
                         if ( Viewport.FactorZoom == 0 )
+                        {
                             Viewport.FactorZoom++;
+                        }
                     }
                  }
 
@@ -314,7 +318,7 @@ namespace lifeMap
 
         private void view1_MouseWheel( object sender, MouseEventArgs e )
         {
-            Viewport_MouseWheel( Viewport1, hScrollBar_viewport1, vScrollBar_viewport1, e.Delta );
+            Viewport_MouseWheel( Viewport1, hScrollBar_viewport1, vScrollBar_viewport1, e );           
         }
 
         //-------------------------------------------------------------------------//
@@ -402,7 +406,7 @@ namespace lifeMap
 
         private void view2_MouseWheel( object sender, MouseEventArgs e )
         {
-            Viewport_MouseWheel( Viewport2, hScrollBar_viewport2, vScrollBar__viewport2, e.Delta );
+            Viewport_MouseWheel( Viewport2, hScrollBar_viewport2, vScrollBar__viewport2, e );
         }
 
         //-------------------------------------------------------------------------//
@@ -490,7 +494,7 @@ namespace lifeMap
 
         private void view3_MouseWheel( object sender, MouseEventArgs e )
         {
-            Viewport_MouseWheel( Viewport3, hScrollBar_viewport3, vScrollBar_viewport3, e.Delta );
+            Viewport_MouseWheel( Viewport3, hScrollBar_viewport3, vScrollBar_viewport3, e );
         }
 
         //-------------------------------------------------------------------------//
@@ -578,7 +582,7 @@ namespace lifeMap
 
         private void view4_MouseWheel( object sender, MouseEventArgs e )
         {
-            Viewport_MouseWheel( Viewport4, hScrollBar_viewport4, vScrollBar_viewport4, e.Delta );
+            Viewport_MouseWheel( Viewport4, hScrollBar_viewport4, vScrollBar_viewport4, e );
         }
 
         //-------------------------------------------------------------------------//

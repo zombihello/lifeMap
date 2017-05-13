@@ -49,10 +49,10 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public static void CreateBrushSelect( Viewport.TypeViewport typeViewport, Camera Camera )
+        public static void CreateBrushSelect( Viewport.TypeViewport typeViewport, Viewport viewport )
         {
-            Vector3f StartPosition = Program.ToNewCoords( Camera.Position, Mouse.ClickPosition );
-            Vector3f EndPosition = Program.ToNewCoords( Camera.Position, Mouse.Position );
+            Vector3f StartPosition = Program.ToNewCoords( viewport.Camera.Position, Mouse.ClickPosition );
+            Vector3f EndPosition = Program.ToNewCoords( viewport.Camera.Position, Mouse.Position );
 
             switch ( typeViewport )
             {
@@ -120,10 +120,12 @@ namespace lifeMap.src.system
                         break;
                 }
 
-                float factorSize = 4;
+                float factorSize = 15;
 
                 if ( Viewport.TmpViewport.FactorZoom > 0 )
-                    factorSize = Viewport.fSize / 2 * Viewport.TmpViewport.FactorZoom;
+                    factorSize *= Viewport.TmpViewport.FactorZoom;
+                else
+                    factorSize /= Viewport.TmpViewport.FactorZoom;
 
                 if ( PositionClick.X >= centerBrush.X - factorSize &&
                      PositionClick.X <= centerBrush.X + factorSize )

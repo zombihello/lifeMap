@@ -69,6 +69,7 @@ namespace lifeMap.src
                 vScrollBar.Visible = false;
                 hScrollBar.Visible = false;
             }
+
         }
 
         //-------------------------------------------------------------------------//
@@ -85,10 +86,8 @@ namespace lifeMap.src
 
             if ( type != TypeViewport.Textured_3D )
             {
-                if ( FactorZoom < 0 )
-                    Gl.glOrtho( 0, View.Width / FactorZoom, 0, View.Height / FactorZoom, -View.Width / FactorZoom, View.Width / FactorZoom );
-                else
-                    Gl.glOrtho( 0, View.Width * FactorZoom, 0, View.Height * FactorZoom, -View.Width * FactorZoom, View.Width * FactorZoom );
+                Gl.glOrtho( 0, View.Width, 0, View.Height, -View.Width, View.Width );
+                Camera.Zoom( FactorZoom );
             }
             else
             {
@@ -207,7 +206,6 @@ namespace lifeMap.src
         public TypeViewport type;
         public Label LabelViewport;
         public Camera Camera = null;
-
         private VScrollBar vScrollBar;
         private HScrollBar hScrollBar;
     }

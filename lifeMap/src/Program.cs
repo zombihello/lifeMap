@@ -58,10 +58,10 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        public static Vector3f ToNewCoords( Vector3f NewCenterCoord, Vector3f PositionPoint )
+        public static Vector3f ToNewCoords( Vector3f NewCenterCoord, Vector3f PositionPoint)
         {
             Vector3f NewPosition = new Vector3f( PositionPoint.X - NewCenterCoord.X, PositionPoint.Y - NewCenterCoord.Y, PositionPoint.Z - NewCenterCoord.Z );
-            return NewPosition;
+           return NewPosition;
         }
 
         //-------------------------------------------------------------------------//
@@ -73,7 +73,7 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        public static string Version = "Alpha 1.3.0";
+        public static string Version = "Alpha 1.3.1";
         public static SelectTool selectTool = SelectTool.None;        
     }
 }

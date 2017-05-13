@@ -73,9 +73,7 @@ namespace lifeMap.src.system
         public void InitPoints( BasicBrush SelectBrush, Viewport.TypeViewport typeViewport )
         {
             mPoints.Clear();
-
             Vector3f CenterBrush = SelectBrush.CenterBrush;
-         //   ManagerPoints.Size = new Vector3f( SelectBrush.Size.X / 2, SelectBrush.Size.Y / 2, SelectBrush.Size.Z / 2 );
 
             switch ( typeViewport )
             {
@@ -135,7 +133,7 @@ namespace lifeMap.src.system
             {
                 Vector3f PositionPoint = mPoints[i];
 
-                float factorSize = Viewport.fSize / 2;
+                float factorSize = 15;
 
                 if ( Viewport.TmpViewport.FactorZoom > 0 )
                     factorSize *= Viewport.TmpViewport.FactorZoom;

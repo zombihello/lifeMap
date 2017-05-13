@@ -623,7 +623,10 @@
             this.vScrollBar__viewport2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.vScrollBar__viewport2.Cursor = System.Windows.Forms.Cursors.Default;
+            this.vScrollBar__viewport2.LargeChange = 1;
             this.vScrollBar__viewport2.Location = new System.Drawing.Point(336, -2);
+            this.vScrollBar__viewport2.Maximum = 1024;
+            this.vScrollBar__viewport2.Minimum = -1024;
             this.vScrollBar__viewport2.Name = "vScrollBar__viewport2";
             this.vScrollBar__viewport2.Size = new System.Drawing.Size(17, 281);
             this.vScrollBar__viewport2.TabIndex = 1;
@@ -636,7 +639,8 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.hScrollBar_viewport2.LargeChange = 1;
             this.hScrollBar_viewport2.Location = new System.Drawing.Point(0, 262);
-            this.hScrollBar_viewport2.Minimum = -100;
+            this.hScrollBar_viewport2.Maximum = 1024;
+            this.hScrollBar_viewport2.Minimum = -1024;
             this.hScrollBar_viewport2.Name = "hScrollBar_viewport2";
             this.hScrollBar_viewport2.Size = new System.Drawing.Size(336, 17);
             this.hScrollBar_viewport2.TabIndex = 0;

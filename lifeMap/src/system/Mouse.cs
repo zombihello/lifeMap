@@ -33,9 +33,11 @@ namespace lifeMap.src
         {
             OldPosition = Position;
 
-            if ( FactorZoom != 1 )
-                if ( FactorZoom > 0 ) position *= FactorZoom;
-                else if ( FactorZoom < 0 ) position /= FactorZoom;
+            if ( FactorZoom > 0 )
+                position *= FactorZoom;
+            else if ( FactorZoom < 0 )
+                position /= Math.Abs( FactorZoom );
+
 
             if ( AlignValue != 0 )
                 Position = new Vector3f( Program.Align( position.X, AlignValue ), Program.Align( position.Y, AlignValue ), 0 );
@@ -52,17 +54,16 @@ namespace lifeMap.src
         {
             OldPosition = Position;
 
-            if ( FactorZoom != 1 )
-                if ( FactorZoom > 0 )
-                {
-                    x *= FactorZoom;
-                    y *= FactorZoom;
-                }
-                else if ( FactorZoom < 0 )
-                {
-                    x /= FactorZoom;
-                    y /= FactorZoom;
-                }
+            if ( FactorZoom > 0 )
+            {
+                x *= FactorZoom;
+                y *= FactorZoom;
+            }
+            else if ( FactorZoom < 0 )
+            {
+                x /= Math.Abs( FactorZoom );
+                y /= Math.Abs( FactorZoom );
+            }
 
             if ( AlignValue != 0 )
                 Position = new Vector3f( Program.Align( x, AlignValue ), Program.Align( y, AlignValue ), 0 );
@@ -89,7 +90,7 @@ namespace lifeMap.src
             {
                 Vector3f PositionCursor = Program.ToNewCoords( camera.Position, Position );
 
-                float factorSize = Viewport.fSize / 2;
+                float factorSize = 15;
 
                 if ( Viewport.TmpViewport.FactorZoom > 0 )
                     factorSize *= Viewport.TmpViewport.FactorZoom;

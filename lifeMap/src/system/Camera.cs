@@ -30,7 +30,7 @@ namespace lifeMap.src.system
         public void Update( Viewport.TypeViewport typeViewport )
         {
             if ( typeViewport != Viewport.TypeViewport.Textured_3D )
-                Gl.glTranslatef( Position.X, Position.Y, Position.Z );
+                Gl.glTranslatef( DefoultPosition.X, DefoultPosition.Y, DefoultPosition.Z );
 
             switch ( typeViewport )
             {
@@ -51,9 +51,9 @@ namespace lifeMap.src.system
 
                         CenterPosition = new Vector3f
                             (
-                            Position.X - ( float )Math.Sin( Angle.X / 180 * Math.PI ),
-                            Position.Y + ( float )Math.Tan( Angle.Y / 180 * Math.PI ),
-                            Position.Z - ( float )Math.Cos( Angle.X / 180 * Math.PI )
+                            Position.X - ( float ) Math.Sin( Angle.X / 180 * Math.PI ),
+                            Position.Y + ( float ) Math.Tan( Angle.Y / 180 * Math.PI ),
+                            Position.Z - ( float ) Math.Cos( Angle.X / 180 * Math.PI )
                             );
                     }
 
@@ -91,6 +91,7 @@ namespace lifeMap.src.system
         public void SetPosition( Vector3f Position )
         {
             this.Position = Position;
+            DefoultPosition = new Vector3f( Position );
         }
 
         //-------------------------------------------------------------------------//
@@ -107,25 +108,25 @@ namespace lifeMap.src.system
             switch ( KeyPress )
             {
                 case Keys.W:
-                    Position.X -= ( float )Math.Sin( Angle.X / 180 * Math.PI ) * Speed;
-                    Position.Y += ( float )Math.Tan( Angle.Y / 180 * Math.PI ) * Speed;
-                    Position.Z -= ( float )Math.Cos( Angle.X / 180 * Math.PI ) * Speed;
+                    Position.X -= ( float ) Math.Sin( Angle.X / 180 * Math.PI ) * Speed;
+                    Position.Y += ( float ) Math.Tan( Angle.Y / 180 * Math.PI ) * Speed;
+                    Position.Z -= ( float ) Math.Cos( Angle.X / 180 * Math.PI ) * Speed;
                     break;
 
                 case Keys.S:
-                    Position.X += ( float )Math.Sin( Angle.X / 180 * Math.PI ) * Speed;
-                    Position.Y -= ( float )Math.Tan( Angle.Y / 180 * Math.PI ) * Speed;
-                    Position.Z += ( float )Math.Cos( Angle.X / 180 * Math.PI ) * Speed;
+                    Position.X += ( float ) Math.Sin( Angle.X / 180 * Math.PI ) * Speed;
+                    Position.Y -= ( float ) Math.Tan( Angle.Y / 180 * Math.PI ) * Speed;
+                    Position.Z += ( float ) Math.Cos( Angle.X / 180 * Math.PI ) * Speed;
                     break;
 
                 case Keys.A:
-                    Position.X += ( float )Math.Sin( ( Angle.X - 90 ) / 180 * Math.PI ) * Speed;
-                    Position.Z += ( float )Math.Cos( ( Angle.X - 90 ) / 180 * Math.PI ) * Speed;
+                    Position.X += ( float ) Math.Sin( ( Angle.X - 90 ) / 180 * Math.PI ) * Speed;
+                    Position.Z += ( float ) Math.Cos( ( Angle.X - 90 ) / 180 * Math.PI ) * Speed;
                     break;
 
                 case Keys.D:
-                    Position.X += ( float )Math.Sin( ( Angle.X + 90 ) / 180 * Math.PI ) * Speed;
-                    Position.Z += ( float )Math.Cos( ( Angle.X + 90 ) / 180 * Math.PI ) * Speed;
+                    Position.X += ( float ) Math.Sin( ( Angle.X + 90 ) / 180 * Math.PI ) * Speed;
+                    Position.Z += ( float ) Math.Cos( ( Angle.X + 90 ) / 180 * Math.PI ) * Speed;
                     break;
             }
         }
@@ -134,18 +135,43 @@ namespace lifeMap.src.system
 
         public void Move( Vector3f FactorMove )
         {
-            Position.X += FactorMove.X;
-            Position.Y += FactorMove.Y;
-            Position.Z += FactorMove.Z;
+            DefoultPosition += FactorMove;
         }
 
         //-------------------------------------------------------------------------//
 
-        public Vector3f Position = new Vector3f();
+        public void Zoom( float FactorZoom )
+        {
+            Position = new Vector3f( DefoultPosition );
+
+            Gl.glTranslatef( View.Width / 2, View.Height / 2, 0 );
+
+            if ( FactorZoom > 0 )
+            {
+                Gl.glScalef( 1 / FactorZoom, 1 / FactorZoom, 0 );
+
+                Position.X += ( View.Width / 2 ) / ( 1 / ( FactorZoom - 1 ) );
+                Position.Y += ( View.Height / 2 ) / ( 1 / ( FactorZoom - 1 ) );
+            }
+            else
+            {
+                Gl.glScalef( Math.Abs( FactorZoom ), Math.Abs( FactorZoom ), 0 );
+
+                Position.X += ( View.Width / 2 ) * ( 1 / Math.Abs( FactorZoom ) - 1 );
+                Position.Y += ( View.Height / 2 ) * ( 1 / Math.Abs( FactorZoom ) - 1 );
+            }
+
+            Gl.glTranslatef( -( View.Width / 2 ), -( View.Height / 2 ), 0 );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public Vector3f Position = new Vector3f();      
         public Vector3f Angle = new Vector3f();
         public float Speed = 2f;
 
         private SimpleOpenGlControl View = null;
-        private Vector3f CenterPosition = new Vector3f( 0, 0, 0 );
+        private Vector3f DefoultPosition = new Vector3f();
+        private Vector3f CenterPosition = new Vector3f();
     }
 }

@@ -64,15 +64,31 @@ namespace lifeMap.src.system
         }
 
         //-------------------------------------------------------------------------//
+
         public static Vector3f operator -( Vector3f Vector1, Vector3f Vector2 )
         {
             return new Vector3f( Vector2.X - Vector1.X, Vector2.Y - Vector1.Y, Vector2.Z - Vector1.Z );
         }
 
         //-------------------------------------------------------------------------//
+
+        public static Vector3f operator -( Vector3f Vector1, float value )
+        {
+            return new Vector3f( Vector1.X - value, Vector1.Y - value, Vector1.Z - value );
+        }
+
+        //-------------------------------------------------------------------------//
+
         public static Vector3f operator +( Vector3f Vector1, Vector3f Vector2 )
         {
             return new Vector3f( Vector1.X + Vector2.X, Vector1.Y + Vector2.Y, Vector1.Z + Vector2.Z );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static Vector3f operator +( Vector3f Vector1, float value )
+        {
+            return new Vector3f( Vector1.X + value, Vector1.Y + value, Vector1.Z + value );
         }
 
         //-------------------------------------------------------------------------//
