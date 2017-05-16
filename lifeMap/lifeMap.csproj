@@ -104,20 +104,38 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\About.cs">
+    <Compile Include="src\forms\About.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\About.Designer.cs">
+    <Compile Include="src\forms\About.Designer.cs">
       <DependentUpon>About.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\forms\AddConfiguration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\forms\AddConfiguration.Designer.cs">
+      <DependentUpon>AddConfiguration.cs</DependentUpon>
     </Compile>
     <Compile Include="src\brushes\BasicBrush.cs" />
     <Compile Include="src\brushes\BrushBox.cs" />
     <Compile Include="src\brushes\BrushSelect.cs" />
-    <Compile Include="src\MapProperties.cs">
+    <Compile Include="src\forms\EditConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\MapProperties.Designer.cs">
+    <Compile Include="src\forms\EditConfiguration.Designer.cs">
+      <DependentUpon>EditConfiguration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\forms\MapProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\forms\MapProperties.Designer.cs">
       <DependentUpon>MapProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\forms\Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\forms\Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
     </Compile>
     <Compile Include="src\system\ManagerPoints.cs" />
     <Compile Include="src\system\ManagerTexture.cs" />
@@ -126,10 +144,10 @@
     <Compile Include="src\system\Vertex.cs" />
     <Compile Include="src\system\Camera.cs" />
     <Compile Include="src\system\Mouse.cs" />
-    <Compile Include="src\MainForm.cs">
+    <Compile Include="src\forms\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="src\MainForm.Designer.cs">
+    <Compile Include="src\forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Program.cs" />
@@ -149,14 +167,23 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="src\About.resx">
+    <EmbeddedResource Include="src\forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\MainForm.resx">
+    <EmbeddedResource Include="src\forms\AddConfiguration.resx">
+      <DependentUpon>AddConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\forms\EditConfiguration.resx">
+      <DependentUpon>EditConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\MapProperties.resx">
+    <EmbeddedResource Include="src\forms\MapProperties.resx">
       <DependentUpon>MapProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\forms\Options.resx">
+      <DependentUpon>Options.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

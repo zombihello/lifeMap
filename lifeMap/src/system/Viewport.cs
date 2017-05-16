@@ -91,7 +91,7 @@ namespace lifeMap.src
             }
             else
             {
-                Glu.gluPerspective( 45f, ( float ) View.Width / ( float ) View.Height, 0.1f, 1000.0f );
+                Glu.gluPerspective( cameraFOV, ( float ) View.Width / ( float ) View.Height, 0.1f, zFar );
                 Scene.WorldCamera.SetPosition( Scene.WorldCamera.Position );
             }
 
@@ -197,6 +197,8 @@ namespace lifeMap.src
         //-------------------------------------------------------------------------//
 
         public static float fSize = 16f;
+        public static float cameraFOV = 45f;
+        public static float zFar = 1000f;
         public static Color colorGrid = new Color( 0.2f, 0.2f, 0.2f );
 
         public bool bEnabled = true;

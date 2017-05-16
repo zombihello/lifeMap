@@ -827,7 +827,7 @@ namespace lifeMap
 
         private void smToolStripMenuItem_Click( object sender, EventArgs e ) // SMALLER GRID
         {
-            if ( Viewport.fSize > 1 )
+            if ( Viewport.fSize > 4 )
             {
                 Viewport.fSize = Viewport.fSize / 2;
                 Refresh();
@@ -843,6 +843,23 @@ namespace lifeMap
                 Viewport.fSize = Viewport.fSize * 2;
                 Refresh();
             }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void optionsToolStripMenuItem_Click( object sender, EventArgs e ) // OPTIONS
+        {
+            options.ShowDialog();
+
+            int Intensity = options.GetIntensity();
+
+            Viewport.fSize = options.GetSizeGrid();        
+            Viewport.colorGrid = new lifeMap.src.Color( Intensity/100f,Intensity/100f,Intensity/100f );
+            Viewport.cameraFOV = options.GetCameraFOV();
+            Viewport.zFar = options.GetRenderDistance();
+            Texture.IsFilterTexture = options.GetFilterTexture();
+
+            Refresh();
         }
 
         //-------------------------------------------------------------------------//
@@ -957,6 +974,7 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        public static Options options = new Options();
         public static SimpleOpenGlControl MainContext = new SimpleOpenGlControl();
 
         private OpenFileDialog openFileDialog = new OpenFileDialog();

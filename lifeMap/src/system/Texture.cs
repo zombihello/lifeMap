@@ -86,9 +86,18 @@ namespace lifeMap.src.system
             int AnisotropyLevel = 0;
             Gl.glGetIntegerv( Gl.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, out AnisotropyLevel );
 
-            Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT, AnisotropyLevel );
-            Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR );
-            Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR );
+            if ( IsFilterTexture ) // TODO: ДОДЕЛАТЬ
+            {
+                Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT, AnisotropyLevel );
+                Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR );
+                Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_LINEAR_MIPMAP_LINEAR );
+            }
+            else
+            {
+                Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_NEAREST );
+                Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MIN_FILTER, Gl.GL_NEAREST_MIPMAP_NEAREST );
+            }
+
             Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_S, Gl.GL_REPEAT );
             Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_REPEAT );
 
@@ -125,6 +134,8 @@ namespace lifeMap.src.system
         }
 
         //-------------------------------------------------------------------------//
+
+        public static bool IsFilterTexture = true;
 
         public string Route;
         public string Name;

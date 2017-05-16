@@ -93,6 +93,8 @@
             this.button_entitytool = new System.Windows.Forms.Button();
             this.button_camera = new System.Windows.Forms.Button();
             this.button_cursor = new System.Windows.Forms.Button();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_textureView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).BeginInit();
             this.panel_entitytool.SuspendLayout();
@@ -228,6 +230,7 @@
             this.menuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuBar_File,
             this.menuBar_Map,
+            this.toolStripDropDownButton1,
             this.menuBar_Help,
             this.toolStripSeparator2});
             this.menuBar.Location = new System.Drawing.Point(0, 0);
@@ -819,6 +822,25 @@
             this.button_cursor.UseVisualStyleBackColor = true;
             this.button_cursor.Click += new System.EventHandler(this.button_cursor_Click);
             // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.ShowDropDownArrow = false;
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(40, 22);
+            this.toolStripDropDownButton1.Text = "Tools";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -924,7 +946,9 @@
         private System.Windows.Forms.ToolStripMenuItem smToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem biggerGridToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-        private System.Windows.Forms.ToolStripMenuItem mapPropiertesToolStripMenuItem;        
+        private System.Windows.Forms.ToolStripMenuItem mapPropiertesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;        
     }
 }
 

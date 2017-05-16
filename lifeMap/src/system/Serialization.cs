@@ -129,7 +129,7 @@ namespace lifeMap.src.system
                     for ( int j = 0; j < mTextureCoords.Count; j++ )
                     {
                         string textureX = string.Format( "{0:0}", mTextureCoords[ j ].X );
-                        string textureY = string.Format( "{0:0}", mTextureCoords[ j ].Y );
+                        string textureY = string.Format( "{0:0}", mTextureCoords[ j ].Y ); // TODO: некоректно сохраняються координаты, исправить
                         CodeMap += "<Point X=\"" + textureX + "\" Y=\"" + textureY + "\"/>\n";
                     }
 
