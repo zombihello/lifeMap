@@ -183,12 +183,12 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public void SetLoadTextures( List<Texture> textures )
+        public void SetLoadTextures( List<Texture> textures, string DirectoryTextures )
         {
             for ( int i = 0; i < textures.Count; i++ )
             {
                 SaveTexture saveTexture = new SaveTexture();
-                saveTexture.Route = textures[ i ].Route;
+                saveTexture.Route = DirectoryTextures + "\\" + Path.GetFileName( textures[ i ].Route );
                 saveTexture.Name = textures[ i ].Name;
                 Textures.Add( saveTexture );
             }

@@ -33,11 +33,11 @@ namespace lifeMap.src.system
             Il.ilGenImages( 1, out TextureId );
             Il.ilBindImage( TextureId );
 
-            if ( !Il.ilLoadImage( route ) )
-                return false;
-
             Route = route;
             Name = Path.GetFileName( Route );
+
+            if ( !Il.ilLoadImage( route ) )
+                return false;
 
             Size.X = Il.ilGetInteger( Il.IL_IMAGE_WIDTH );
             Size.Y = Il.ilGetInteger( Il.IL_IMAGE_HEIGHT );
@@ -86,7 +86,7 @@ namespace lifeMap.src.system
             int AnisotropyLevel = 0;
             Gl.glGetIntegerv( Gl.GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, out AnisotropyLevel );
 
-            if ( IsFilterTexture ) // TODO: ДОДЕЛАТЬ
+            if ( IsFilterTexture )
             {
                 Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAX_ANISOTROPY_EXT, AnisotropyLevel );
                 Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_MAG_FILTER, Gl.GL_LINEAR );

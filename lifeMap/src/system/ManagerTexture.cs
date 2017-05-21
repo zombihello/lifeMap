@@ -26,9 +26,11 @@ namespace lifeMap.src.system
 
         public static void LoadTexture( string route )
         {
-            SelectTexture.LoadTexture( route );
-            mTextures.Add( new Texture( SelectTexture ) );
-            mPicTextures.Add( new Bitmap( route ) );
+            if ( SelectTexture.LoadTexture( route ) )
+            {
+                mTextures.Add( new Texture( SelectTexture ) );
+                mPicTextures.Add( new Bitmap( route ) );
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -61,6 +63,20 @@ namespace lifeMap.src.system
                     return true;
 
             return false;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static void SetFilterTexture( bool isFilterTexture )
+        {
+            Texture.IsFilterTexture = isFilterTexture;
+
+            for ( int i = 0; i < mTextures.Count; i++ )
+            {
+                Texture texture = mTextures[ i ];
+                texture.DeleteTexture();
+                texture.LoadTexture( texture.Route );
+            }
         }
 
         //-------------------------------------------------------------------------//

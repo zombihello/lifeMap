@@ -66,6 +66,9 @@
             this.comboBox_sizeGrid = new System.Windows.Forms.ComboBox();
             this.label_sizeGrid = new System.Windows.Forms.Label();
             this.button_ok = new System.Windows.Forms.Button();
+            this.label_gameDirectory = new System.Windows.Forms.Label();
+            this.textBox_gameDirectory = new System.Windows.Forms.TextBox();
+            this.button_gameDirectory = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage_general.SuspendLayout();
             this.tabPage_views.SuspendLayout();
@@ -85,7 +88,7 @@
             this.tabControl1.Location = new System.Drawing.Point(12, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(450, 381);
+            this.tabControl1.Size = new System.Drawing.Size(450, 428);
             this.tabControl1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.tabControl1.TabIndex = 0;
             // 
@@ -101,7 +104,10 @@
             this.tabPage_general.Controls.Add(this.button_browseTextureDirectory);
             this.tabPage_general.Controls.Add(this.textBox_texturesDirectory);
             this.tabPage_general.Controls.Add(this.label_texturesDirectory);
+            this.tabPage_general.Controls.Add(this.button_gameDirectory);
             this.tabPage_general.Controls.Add(this.button_browse);
+            this.tabPage_general.Controls.Add(this.textBox_gameDirectory);
+            this.tabPage_general.Controls.Add(this.label_gameDirectory);
             this.tabPage_general.Controls.Add(this.textBox_gameExecutable);
             this.tabPage_general.Controls.Add(this.label_gameExecutableDirectory);
             this.tabPage_general.Controls.Add(this.button_editConfiguration);
@@ -115,13 +121,14 @@
             this.tabPage_general.Location = new System.Drawing.Point(4, 22);
             this.tabPage_general.Name = "tabPage_general";
             this.tabPage_general.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_general.Size = new System.Drawing.Size(442, 355);
+            this.tabPage_general.Size = new System.Drawing.Size(442, 402);
             this.tabPage_general.TabIndex = 0;
             this.tabPage_general.Text = "General";
             // 
             // button_exportMapDirectory
             // 
-            this.button_exportMapDirectory.Location = new System.Drawing.Point(353, 269);
+            this.button_exportMapDirectory.Enabled = false;
+            this.button_exportMapDirectory.Location = new System.Drawing.Point(353, 317);
             this.button_exportMapDirectory.Name = "button_exportMapDirectory";
             this.button_exportMapDirectory.Size = new System.Drawing.Size(81, 23);
             this.button_exportMapDirectory.TabIndex = 19;
@@ -131,7 +138,8 @@
             // 
             // textBox_exportMapDirectory
             // 
-            this.textBox_exportMapDirectory.Location = new System.Drawing.Point(9, 269);
+            this.textBox_exportMapDirectory.Enabled = false;
+            this.textBox_exportMapDirectory.Location = new System.Drawing.Point(9, 317);
             this.textBox_exportMapDirectory.Name = "textBox_exportMapDirectory";
             this.textBox_exportMapDirectory.Size = new System.Drawing.Size(338, 20);
             this.textBox_exportMapDirectory.TabIndex = 18;
@@ -139,7 +147,7 @@
             // label_exportMapDirectory
             // 
             this.label_exportMapDirectory.AutoSize = true;
-            this.label_exportMapDirectory.Location = new System.Drawing.Point(6, 253);
+            this.label_exportMapDirectory.Location = new System.Drawing.Point(6, 301);
             this.label_exportMapDirectory.Name = "label_exportMapDirectory";
             this.label_exportMapDirectory.Size = new System.Drawing.Size(206, 13);
             this.label_exportMapDirectory.TabIndex = 17;
@@ -147,7 +155,8 @@
             // 
             // button_browseSrcMapDirectory
             // 
-            this.button_browseSrcMapDirectory.Location = new System.Drawing.Point(353, 318);
+            this.button_browseSrcMapDirectory.Enabled = false;
+            this.button_browseSrcMapDirectory.Location = new System.Drawing.Point(353, 366);
             this.button_browseSrcMapDirectory.Name = "button_browseSrcMapDirectory";
             this.button_browseSrcMapDirectory.Size = new System.Drawing.Size(81, 23);
             this.button_browseSrcMapDirectory.TabIndex = 16;
@@ -157,7 +166,8 @@
             // 
             // textBox_srcMapDirectory
             // 
-            this.textBox_srcMapDirectory.Location = new System.Drawing.Point(9, 321);
+            this.textBox_srcMapDirectory.Enabled = false;
+            this.textBox_srcMapDirectory.Location = new System.Drawing.Point(9, 369);
             this.textBox_srcMapDirectory.Name = "textBox_srcMapDirectory";
             this.textBox_srcMapDirectory.Size = new System.Drawing.Size(338, 20);
             this.textBox_srcMapDirectory.TabIndex = 15;
@@ -165,7 +175,7 @@
             // label_srcMapDirectory
             // 
             this.label_srcMapDirectory.AutoSize = true;
-            this.label_srcMapDirectory.Location = new System.Drawing.Point(6, 305);
+            this.label_srcMapDirectory.Location = new System.Drawing.Point(6, 353);
             this.label_srcMapDirectory.Name = "label_srcMapDirectory";
             this.label_srcMapDirectory.Size = new System.Drawing.Size(239, 13);
             this.label_srcMapDirectory.TabIndex = 14;
@@ -173,7 +183,8 @@
             // 
             // button_browseTextureDirectory
             // 
-            this.button_browseTextureDirectory.Location = new System.Drawing.Point(353, 222);
+            this.button_browseTextureDirectory.Enabled = false;
+            this.button_browseTextureDirectory.Location = new System.Drawing.Point(353, 270);
             this.button_browseTextureDirectory.Name = "button_browseTextureDirectory";
             this.button_browseTextureDirectory.Size = new System.Drawing.Size(81, 23);
             this.button_browseTextureDirectory.TabIndex = 13;
@@ -183,7 +194,8 @@
             // 
             // textBox_texturesDirectory
             // 
-            this.textBox_texturesDirectory.Location = new System.Drawing.Point(9, 222);
+            this.textBox_texturesDirectory.Enabled = false;
+            this.textBox_texturesDirectory.Location = new System.Drawing.Point(9, 270);
             this.textBox_texturesDirectory.Name = "textBox_texturesDirectory";
             this.textBox_texturesDirectory.Size = new System.Drawing.Size(338, 20);
             this.textBox_texturesDirectory.TabIndex = 12;
@@ -191,7 +203,7 @@
             // label_texturesDirectory
             // 
             this.label_texturesDirectory.AutoSize = true;
-            this.label_texturesDirectory.Location = new System.Drawing.Point(6, 206);
+            this.label_texturesDirectory.Location = new System.Drawing.Point(6, 254);
             this.label_texturesDirectory.Name = "label_texturesDirectory";
             this.label_texturesDirectory.Size = new System.Drawing.Size(208, 13);
             this.label_texturesDirectory.TabIndex = 11;
@@ -199,7 +211,8 @@
             // 
             // button_browse
             // 
-            this.button_browse.Location = new System.Drawing.Point(353, 166);
+            this.button_browse.Enabled = false;
+            this.button_browse.Location = new System.Drawing.Point(353, 214);
             this.button_browse.Name = "button_browse";
             this.button_browse.Size = new System.Drawing.Size(81, 23);
             this.button_browse.TabIndex = 10;
@@ -209,7 +222,8 @@
             // 
             // textBox_gameExecutable
             // 
-            this.textBox_gameExecutable.Location = new System.Drawing.Point(9, 169);
+            this.textBox_gameExecutable.Enabled = false;
+            this.textBox_gameExecutable.Location = new System.Drawing.Point(9, 217);
             this.textBox_gameExecutable.Name = "textBox_gameExecutable";
             this.textBox_gameExecutable.Size = new System.Drawing.Size(338, 20);
             this.textBox_gameExecutable.TabIndex = 9;
@@ -217,11 +231,11 @@
             // label_gameExecutableDirectory
             // 
             this.label_gameExecutableDirectory.AutoSize = true;
-            this.label_gameExecutableDirectory.Location = new System.Drawing.Point(6, 153);
+            this.label_gameExecutableDirectory.Location = new System.Drawing.Point(6, 201);
             this.label_gameExecutableDirectory.Name = "label_gameExecutableDirectory";
-            this.label_gameExecutableDirectory.Size = new System.Drawing.Size(205, 13);
+            this.label_gameExecutableDirectory.Size = new System.Drawing.Size(256, 13);
             this.label_gameExecutableDirectory.TabIndex = 8;
-            this.label_gameExecutableDirectory.Text = "Game Executable Directory (ex C:\\Game):";
+            this.label_gameExecutableDirectory.Text = "Game Executable Directory (ex C:\\Game\\game.exe):";
             // 
             // button_editConfiguration
             // 
@@ -255,6 +269,7 @@
             // button_remove
             // 
             this.button_remove.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_remove.Enabled = false;
             this.button_remove.Location = new System.Drawing.Point(353, 112);
             this.button_remove.Name = "button_remove";
             this.button_remove.Size = new System.Drawing.Size(81, 23);
@@ -266,6 +281,7 @@
             // button_edit
             // 
             this.button_edit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_edit.Enabled = false;
             this.button_edit.Location = new System.Drawing.Point(397, 83);
             this.button_edit.Name = "button_edit";
             this.button_edit.Size = new System.Drawing.Size(37, 23);
@@ -277,6 +293,7 @@
             // button_add
             // 
             this.button_add.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button_add.Enabled = false;
             this.button_add.Location = new System.Drawing.Point(353, 83);
             this.button_add.Name = "button_add";
             this.button_add.Size = new System.Drawing.Size(38, 23);
@@ -300,6 +317,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBox_gameDataFiles.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.listBox_gameDataFiles.Enabled = false;
             this.listBox_gameDataFiles.FormattingEnabled = true;
             this.listBox_gameDataFiles.Location = new System.Drawing.Point(6, 83);
             this.listBox_gameDataFiles.Name = "listBox_gameDataFiles";
@@ -474,7 +492,7 @@
             // button_ok
             // 
             this.button_ok.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_ok.Location = new System.Drawing.Point(383, 399);
+            this.button_ok.Location = new System.Drawing.Point(383, 446);
             this.button_ok.Name = "button_ok";
             this.button_ok.Size = new System.Drawing.Size(75, 23);
             this.button_ok.TabIndex = 1;
@@ -482,11 +500,39 @@
             this.button_ok.UseVisualStyleBackColor = true;
             this.button_ok.Click += new System.EventHandler(this.button_ok_Click);
             // 
+            // label_gameDirectory
+            // 
+            this.label_gameDirectory.AutoSize = true;
+            this.label_gameDirectory.Location = new System.Drawing.Point(6, 148);
+            this.label_gameDirectory.Name = "label_gameDirectory";
+            this.label_gameDirectory.Size = new System.Drawing.Size(149, 13);
+            this.label_gameDirectory.TabIndex = 8;
+            this.label_gameDirectory.Text = "Game Directory (ex C:\\Game):";
+            // 
+            // textBox_gameDirectory
+            // 
+            this.textBox_gameDirectory.Enabled = false;
+            this.textBox_gameDirectory.Location = new System.Drawing.Point(9, 164);
+            this.textBox_gameDirectory.Name = "textBox_gameDirectory";
+            this.textBox_gameDirectory.Size = new System.Drawing.Size(338, 20);
+            this.textBox_gameDirectory.TabIndex = 9;
+            // 
+            // button_gameDirectory
+            // 
+            this.button_gameDirectory.Enabled = false;
+            this.button_gameDirectory.Location = new System.Drawing.Point(353, 161);
+            this.button_gameDirectory.Name = "button_gameDirectory";
+            this.button_gameDirectory.Size = new System.Drawing.Size(81, 23);
+            this.button_gameDirectory.TabIndex = 10;
+            this.button_gameDirectory.Text = "Browse";
+            this.button_gameDirectory.UseVisualStyleBackColor = true;
+            this.button_gameDirectory.Click += new System.EventHandler(this.button_browse_gameDir);
+            // 
             // Options
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 434);
+            this.ClientSize = new System.Drawing.Size(464, 481);
             this.Controls.Add(this.button_ok);
             this.Controls.Add(this.tabControl1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -551,5 +597,8 @@
         private System.Windows.Forms.Label label_maxRenderDistance;
         private System.Windows.Forms.TrackBar trackBar_renderDistance;
         private System.Windows.Forms.Button button_editConfiguration;
+        private System.Windows.Forms.Button button_gameDirectory;
+        private System.Windows.Forms.TextBox textBox_gameDirectory;
+        private System.Windows.Forms.Label label_gameDirectory;
     }
 }

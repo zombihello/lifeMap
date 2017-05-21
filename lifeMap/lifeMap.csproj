@@ -137,9 +137,16 @@
     <Compile Include="src\forms\Options.Designer.cs">
       <DependentUpon>Options.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\forms\RunMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\forms\RunMap.Designer.cs">
+      <DependentUpon>RunMap.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\system\ManagerPoints.cs" />
     <Compile Include="src\system\ManagerTexture.cs" />
     <Compile Include="src\system\Serialization.cs" />
+    <Compile Include="src\system\SerializationSettings.cs" />
     <Compile Include="src\system\Texture.cs" />
     <Compile Include="src\system\Vertex.cs" />
     <Compile Include="src\system\Camera.cs" />
@@ -184,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\forms\Options.resx">
       <DependentUpon>Options.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\forms\RunMap.resx">
+      <DependentUpon>RunMap.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

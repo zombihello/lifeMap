@@ -18,6 +18,7 @@ using Newtonsoft.Json;
 using lifeMap.src;
 using lifeMap.src.brushes;
 using lifeMap.src.system;
+using lifeMap.src.forms;
 
 namespace lifeMap
 {
@@ -57,6 +58,9 @@ namespace lifeMap
             Viewport2.Camera.SetPosition( new Vector3f( view2.Width / 2, view2.Height / 2, 0 ) );
             Viewport3.Camera.SetPosition( new Vector3f( view3.Width / 2, view3.Height / 2, 0 ) );
             Viewport4.Camera.SetPosition( new Vector3f( view4.Width / 2, view4.Height / 2, 0 ) );
+
+            SerializationSettings ss = new SerializationSettings();
+            ss.Load( "settings.cfg", options );
         }
 
         //-------------------------------------------------------------------------//
@@ -698,11 +702,18 @@ namespace lifeMap
 
                 serialization.GetMapSettings( mapProperties );
                 ManagerTexture.mTextures = serialization.GetLoadTextures();
-
+          
                 for ( int i = 0; i < ManagerTexture.mTextures.Count; i++ )
                 {
-                    comboBox_textureView.Items.Add( ManagerTexture.mTextures[ i ].Name );
-                    ManagerTexture.mPicTextures.Add( new Bitmap( ManagerTexture.mTextures[ i ].Route ) );
+                    ManagerTexture.mTextures[ i ].Route = options.GetTexturesDirecoty() + "\\" + ManagerTexture.mTextures[ i ].Name;
+
+                    if ( File.Exists( ManagerTexture.mTextures[ i ].Route ) )
+                    {
+                        comboBox_textureView.Items.Add( ManagerTexture.mTextures[ i ].Name );
+                        ManagerTexture.mPicTextures.Add( new Bitmap( ManagerTexture.mTextures[ i ].Route ) );
+                    }
+                    else
+                        ManagerTexture.mTextures.RemoveAt( i );
                 }
 
                 Scene.SetAllBrushes( serialization.GetSolidBrushes() );
@@ -741,7 +752,7 @@ namespace lifeMap
             {
                 Serialization serialization = new Serialization();
                 serialization.SetMapSettings( mapProperties );
-                serialization.SetLoadTextures( ManagerTexture.mTextures );
+                serialization.SetLoadTextures( ManagerTexture.mTextures, options.GetTexturesDirecoty() );
                 serialization.SetSolidBrushes( Scene.GetAllBrushes() );
 
                 serialization.SaveMap( saveFileDialog.FileName );
@@ -754,12 +765,13 @@ namespace lifeMap
         private void toolStripMenuItem5_Click( object sender, EventArgs e ) // SAVE AS..
         {
             saveFileDialog.Filter = "lifeMap | *.map";
+            saveFileDialog.InitialDirectory = options.GetSrcMapDirectory();
 
             if ( saveFileDialog.ShowDialog() == DialogResult.OK )
             {
                 Serialization serialization = new Serialization();
                 serialization.SetMapSettings( mapProperties );
-                serialization.SetLoadTextures( ManagerTexture.mTextures );
+                serialization.SetLoadTextures( ManagerTexture.mTextures, options.GetTexturesDirecoty() );
                 serialization.SetSolidBrushes( Scene.GetAllBrushes() );
 
                 serialization.SaveMap( saveFileDialog.FileName );
@@ -770,16 +782,45 @@ namespace lifeMap
 
         private void toolStripMenuItem6_Click( object sender, EventArgs e ) // EXPORT
         {
-            saveFileDialog.Filter = "lifeEngine Map | *.lmap";
-
-            if ( saveFileDialog.ShowDialog() == DialogResult.OK )
+            if ( runMap.ShowDialog() == System.Windows.Forms.DialogResult.OK )
             {
-                Serialization serialization = new Serialization();
-                serialization.SetMapSettings( mapProperties );
-                serialization.SetLoadTextures( ManagerTexture.mTextures );
-                serialization.SetSolidBrushes( Scene.GetAllBrushes(), true );
+                saveFileDialog.Filter = "lifeEngine Map | *.lmap";
+                saveFileDialog.InitialDirectory = options.GetExportMapDirectory();
 
-                serialization.ExportMap( saveFileDialog.FileName );
+                if ( saveFileDialog.ShowDialog() == DialogResult.OK )
+                {
+                    Serialization serialization = new Serialization();
+                    serialization.SetMapSettings( mapProperties );
+                
+                    string GameRootDir = options.GetGameDirectory();
+                    string GamaExeDir = options.GetGameExecutable();
+                    string TextureRoute = "";
+
+                    int idChar = GamaExeDir.LastIndexOf( "\\" );
+                    GamaExeDir = GamaExeDir.Remove( idChar );
+
+                    while ( GameRootDir != GamaExeDir )
+                    {
+                        idChar = GamaExeDir.LastIndexOf( "\\" );
+                        GamaExeDir = GamaExeDir.Remove( idChar );
+                        TextureRoute += "..\\";
+                    }
+
+                    TextureRoute += options.GetTexturesDirecoty().Remove( 0, GameRootDir.Length+1);
+                    serialization.SetLoadTextures( ManagerTexture.mTextures, TextureRoute );
+                    serialization.SetSolidBrushes( Scene.GetAllBrushes(), true );
+
+                    serialization.ExportMap( saveFileDialog.FileName );
+                }
+
+                if ( runMap.IsStartGame() )
+                {
+                    System.Diagnostics.Process StartGame = new System.Diagnostics.Process();
+                    StartGame.StartInfo.FileName = options.GetGameExecutable();
+                    StartGame.StartInfo.WorkingDirectory = Path.GetDirectoryName( options.GetGameExecutable() );
+                    StartGame.StartInfo.Arguments = runMap.GetParametesGame();
+                    StartGame.Start();
+                }
             }
         }
 
@@ -857,7 +898,10 @@ namespace lifeMap
             Viewport.colorGrid = new lifeMap.src.Color( Intensity/100f,Intensity/100f,Intensity/100f );
             Viewport.cameraFOV = options.GetCameraFOV();
             Viewport.zFar = options.GetRenderDistance();
-            Texture.IsFilterTexture = options.GetFilterTexture();
+            ManagerTexture.SetFilterTexture( options.GetFilterTexture() );
+
+            SerializationSettings saveSettings = new SerializationSettings();           
+            saveSettings.Save( "settings.cfg", options );
 
             Refresh();
         }
@@ -980,6 +1024,7 @@ namespace lifeMap
         private OpenFileDialog openFileDialog = new OpenFileDialog();
         private SaveFileDialog saveFileDialog = new SaveFileDialog();
         private MapProperties mapProperties = new MapProperties();
+        private RunMap runMap = new RunMap();
         private Vector3f FactorMoveCamera = new Vector3f( 0, 0, 0 );
 
         private Viewport TmpViewport;

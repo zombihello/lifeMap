@@ -13,3 +13,4 @@ E:\Egor\projects\GameEngine\lifeMap\lifeMap\bin\x86\Release\Newtonsoft.Json.dll
 E:\Egor\projects\GameEngine\lifeMap\lifeMap\obj\x86\Release\lifeMap.src.Options.resources
 E:\Egor\projects\GameEngine\lifeMap\lifeMap\obj\x86\Release\lifeMap.src.AddConfiguration.resources
 E:\Egor\projects\GameEngine\lifeMap\lifeMap\obj\x86\Release\lifeMap.src.EditConfiguration.resources
+E:\Egor\projects\GameEngine\lifeMap\lifeMap\obj\x86\Release\lifeMap.src.forms.RunMap.resources

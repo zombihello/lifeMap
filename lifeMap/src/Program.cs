@@ -73,7 +73,7 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        public static string Version = "Alpha 1.3.1";
+        public static string Version = "Alpha 1.3.2";
         public static SelectTool selectTool = SelectTool.None;        
     }
 }

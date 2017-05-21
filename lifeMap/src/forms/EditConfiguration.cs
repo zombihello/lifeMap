@@ -20,6 +20,16 @@ namespace lifeMap.src
 
         //-------------------------------------------------------------------------//
 
+        public void SetListConfigurations( ComboBox.ObjectCollection Configurations )
+        {
+            listBox_configuration.Items.Clear();
+
+            for ( int i = 0; i < Configurations.Count; i++ )
+                listBox_configuration.Items.Add( Configurations[ i ].ToString() );
+        }
+
+        //-------------------------------------------------------------------------//
+
         private void button_add_Click( object sender, EventArgs e ) // ADD
         {
             AddConfiguration addConfiguration = new AddConfiguration();
@@ -41,7 +51,7 @@ namespace lifeMap.src
         private void button_copy_Click( object sender, EventArgs e ) // COPY
         {
             if ( listBox_configuration.SelectedIndex > -1 )
-                listBox_configuration.Items.Add( listBox_configuration.Items[listBox_configuration.SelectedIndex] );
+                listBox_configuration.Items.Add( listBox_configuration.Items[ listBox_configuration.SelectedIndex ] );
         }
 
         //-------------------------------------------------------------------------//
