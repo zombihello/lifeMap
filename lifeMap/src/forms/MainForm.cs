@@ -59,8 +59,37 @@ namespace lifeMap
             Viewport3.Camera.SetPosition( new Vector3f( view3.Width / 2, view3.Height / 2, 0 ) );
             Viewport4.Camera.SetPosition( new Vector3f( view4.Width / 2, view4.Height / 2, 0 ) );
 
-            SerializationSettings ss = new SerializationSettings();
-            ss.Load( "settings.cfg", options );
+            SerializationSettings settings = new SerializationSettings();
+            settings.Load( "settings.cfg", options );
+
+            LoadListEntity();
+
+            for ( int i = 0; i < comboBox_CategEntity.Items.Count; i++ )
+                Program.SelectEntity.Add( comboBox_CategEntity.Items[ i ].ToString(), "" );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public void LoadListEntity()
+        {
+            listEntity.Entity.Clear();
+
+            SerializationEntity entity = new SerializationEntity();
+            List<string> RouteToDEG = options.GetRouteToDEG();
+
+            for ( int i = 0; i < RouteToDEG.Count; i++ )
+            {
+                Dictionary<string, Dictionary<string, string>> tmpEntity = new Dictionary<string, Dictionary<string, string>>();
+
+                if ( entity.LoadEntity( RouteToDEG[ i ] ) )
+                {
+                    tmpEntity = entity.listEntity.Entity;
+
+                    for ( int j = 0; j < tmpEntity.Keys.Count; j++ )
+                        if ( !listEntity.Entity.ContainsKey( tmpEntity.Keys.ToList()[ j ] ) )
+                            listEntity.Entity.Add( tmpEntity.Keys.ToList()[ j ], tmpEntity[ tmpEntity.Keys.ToList()[ j ] ] );
+                }
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -125,7 +154,9 @@ namespace lifeMap
                         case Program.SelectTool.CameraTool:
                             break;
 
-                        case Program.SelectTool.EntityTool: break;
+                        case Program.SelectTool.EntityTool:
+                            Scene.CreateEntity( Viewport.type, Viewport );
+                            break;
 
                         case Program.SelectTool.BoxTool:
                             Scene.CreateBrush();
@@ -177,7 +208,8 @@ namespace lifeMap
                         case Program.SelectTool.CameraTool:
                             break;
 
-                        case Program.SelectTool.EntityTool: break;
+                        case Program.SelectTool.EntityTool:                           
+                            break;
                     }
 
                     Refresh();
@@ -230,13 +262,13 @@ namespace lifeMap
                         {
                             Viewport.FactorZoom--;
                         }
-                      
+
                     }
                 }
                 else
                 {
                     if ( Viewport.FactorZoom < 5 )
-                    {                        
+                    {
                         Viewport.FactorZoom++;
 
                         if ( Viewport.FactorZoom == 0 )
@@ -244,7 +276,7 @@ namespace lifeMap
                             Viewport.FactorZoom++;
                         }
                     }
-                 }
+                }
 
                 Viewport.View.Refresh();
             }
@@ -322,7 +354,7 @@ namespace lifeMap
 
         private void view1_MouseWheel( object sender, MouseEventArgs e )
         {
-            Viewport_MouseWheel( Viewport1, hScrollBar_viewport1, vScrollBar_viewport1, e );           
+            Viewport_MouseWheel( Viewport1, hScrollBar_viewport1, vScrollBar_viewport1, e );
         }
 
         //-------------------------------------------------------------------------//
@@ -702,7 +734,7 @@ namespace lifeMap
 
                 serialization.GetMapSettings( mapProperties );
                 ManagerTexture.mTextures = serialization.GetLoadTextures();
-          
+
                 for ( int i = 0; i < ManagerTexture.mTextures.Count; i++ )
                 {
                     ManagerTexture.mTextures[ i ].Route = options.GetTexturesDirecoty() + "\\" + ManagerTexture.mTextures[ i ].Name;
@@ -791,7 +823,7 @@ namespace lifeMap
                 {
                     Serialization serialization = new Serialization();
                     serialization.SetMapSettings( mapProperties );
-                
+
                     string GameRootDir = options.GetGameDirectory();
                     string GamaExeDir = options.GetGameExecutable();
                     string TextureRoute = "";
@@ -806,7 +838,7 @@ namespace lifeMap
                         TextureRoute += "..\\";
                     }
 
-                    TextureRoute += options.GetTexturesDirecoty().Remove( 0, GameRootDir.Length+1);
+                    TextureRoute += options.GetTexturesDirecoty().Remove( 0, GameRootDir.Length + 1 );
                     serialization.SetLoadTextures( ManagerTexture.mTextures, TextureRoute );
                     serialization.SetSolidBrushes( Scene.GetAllBrushes(), true );
 
@@ -894,13 +926,30 @@ namespace lifeMap
 
             int Intensity = options.GetIntensity();
 
-            Viewport.fSize = options.GetSizeGrid();        
-            Viewport.colorGrid = new lifeMap.src.Color( Intensity/100f,Intensity/100f,Intensity/100f );
+            Viewport.fSize = options.GetSizeGrid();
+            Viewport.colorGrid = new lifeMap.src.Color( Intensity / 100f, Intensity / 100f, Intensity / 100f );
             Viewport.cameraFOV = options.GetCameraFOV();
             Viewport.zFar = options.GetRenderDistance();
             ManagerTexture.SetFilterTexture( options.GetFilterTexture() );
+            LoadListEntity();
 
-            SerializationSettings saveSettings = new SerializationSettings();           
+            if ( string.Equals( comboBox_CategEntity.SelectedItem, "Entity" ) )
+            {
+                comboBox_ObjEntity.Items.Clear();
+                comboBox_ObjEntity.Items.Add( "" );
+                comboBox_ObjEntity.Items.Clear();
+
+                Dictionary<string, Dictionary<string, string>> tmpEntity = new Dictionary<string, Dictionary<string, string>>();
+                tmpEntity = listEntity.Entity;
+
+                for ( int i = 0; i < tmpEntity.Keys.Count; i++ )
+                    comboBox_ObjEntity.Items.Add( tmpEntity.Keys.ToList()[ i ] );
+
+                if ( comboBox_ObjEntity.Items.Count > 0 )
+                    comboBox_ObjEntity.SelectedIndex = 0;
+            }
+
+            SerializationSettings saveSettings = new SerializationSettings();
             saveSettings.Save( "settings.cfg", options );
 
             Refresh();
@@ -972,6 +1021,11 @@ namespace lifeMap
             Program.selectTool = Program.SelectTool.EntityTool;
             Scene.ClearBrushSelect();
             Mouse.RemoveClick();
+            comboBox_CategEntity.SelectedItem = "Entity";
+
+            if ( comboBox_ObjEntity.Items.Count > 1 )
+                Program.SelectEntity[ "Entity" ] = comboBox_ObjEntity.SelectedItem.ToString();
+
             Refresh();
         }
 
@@ -982,6 +1036,9 @@ namespace lifeMap
             Program.selectTool = Program.SelectTool.BoxTool;
             Scene.ClearBrushSelect();
             Mouse.RemoveClick();
+            comboBox_CategEntity.SelectedItem = "Primitives";
+            Program.SelectEntity[ "Primitives" ] = comboBox_ObjEntity.SelectedItem.ToString();
+
             Refresh();
         }
 
@@ -1017,6 +1074,52 @@ namespace lifeMap
         }
 
         //-------------------------------------------------------------------------//
+        //                          MENU SELECT ENTITY                             //
+        //-------------------------------------------------------------------------//
+
+        private void comboBox_CategEntity_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            int IndexSelect = comboBox_CategEntity.SelectedIndex;
+            string selectCategory = comboBox_CategEntity.Items[ IndexSelect ].ToString();
+
+            comboBox_ObjEntity.Items.Clear();
+            comboBox_ObjEntity.Items.Add( "" );
+            comboBox_ObjEntity.Items.Clear();
+
+            if ( string.Equals( selectCategory, "Entity" ) )
+            {
+                Program.SelectCategoryEntity = "Entity";
+
+                for ( int i = 0; i < listEntity.Entity.Keys.Count; i++ )
+                {
+                    string key = listEntity.Entity.Keys.ToList()[ i ];
+                    comboBox_ObjEntity.Items.Add( key );
+                }
+            }
+            else if ( string.Equals( selectCategory, "Primitives" ) )
+            {
+                Program.SelectCategoryEntity = "Primitives";
+
+                comboBox_ObjEntity.Items.Add( "Cube" );
+                comboBox_ObjEntity.Items.Add( "Sphere" );
+                comboBox_ObjEntity.Items.Add( "Plane" );
+            }
+
+            if ( comboBox_ObjEntity.Items.Count > 0 )
+                comboBox_ObjEntity.SelectedIndex = 0;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void comboBox_ObjEntity_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            int IndexSelect = comboBox_ObjEntity.SelectedIndex;
+            string selectEntity = comboBox_ObjEntity.Items[ IndexSelect ].ToString();
+
+            Program.SelectEntity[ comboBox_CategEntity.SelectedItem.ToString() ] = selectEntity;
+        }
+
+        //-------------------------------------------------------------------------//
 
         public static Options options = new Options();
         public static SimpleOpenGlControl MainContext = new SimpleOpenGlControl();
@@ -1026,6 +1129,7 @@ namespace lifeMap
         private MapProperties mapProperties = new MapProperties();
         private RunMap runMap = new RunMap();
         private Vector3f FactorMoveCamera = new Vector3f( 0, 0, 0 );
+        private ListEntity listEntity = new ListEntity();
 
         private Viewport TmpViewport;
         private Viewport Viewport1;

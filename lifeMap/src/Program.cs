@@ -74,6 +74,8 @@ namespace lifeMap
         //-------------------------------------------------------------------------//
 
         public static string Version = "Alpha 1.3.2";
-        public static SelectTool selectTool = SelectTool.None;        
+        public static SelectTool selectTool = SelectTool.None;
+        public static string SelectCategoryEntity;
+        public static Dictionary<string, string> SelectEntity = new Dictionary<string, string>();
     }
 }

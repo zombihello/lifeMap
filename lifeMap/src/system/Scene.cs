@@ -21,6 +21,9 @@ namespace lifeMap.src.system
         {
             RenderXYZ();
 
+            for ( int i = 0; i < mEntity.Count; i++ )
+                mEntity[ i ].Render( typeViewport );
+
             for ( int i = 0; i < mBrush.Count; i++ )
                 mBrush[ i ].Render( typeViewport );
 
@@ -91,6 +94,37 @@ namespace lifeMap.src.system
                 mBrush.Add( BrushBox );
                 ClearBrushSelect();
             }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public static void CreateEntity( Viewport.TypeViewport typeViewport, Viewport viewport )
+        {
+            Entity entity = new Entity();
+
+            Vector3f Position = Program.ToNewCoords( viewport.Camera.Position, Mouse.ClickPosition );
+
+            switch ( typeViewport )
+            {
+                case Viewport.TypeViewport.Top_2D_xy:
+                    Position.Z = Position.Y;
+                    Position.Y = Position.Y = 0;
+                    entity.Create( Position );
+                    break;
+
+                case Viewport.TypeViewport.Front_2D_yz:
+                    Position.Z = Position.X;
+                    Position.X = 0;
+                    entity.Create( Position );
+                    break;
+
+                case Viewport.TypeViewport.Side_2D_xz:
+                    Position.Z = 0;
+                    entity.Create( Position );
+                    break;
+            }
+
+            mEntity.Add( entity );
         }
 
         //-------------------------------------------------------------------------//
@@ -232,6 +266,7 @@ namespace lifeMap.src.system
 
         private static BrushSelect BrushSelect = null;
         private static List<BasicBrush> mBrush = new List<BasicBrush>();
+        private static List<Entity> mEntity = new List<Entity>();
 
         //-------------------------------------------------------------------------//
     }

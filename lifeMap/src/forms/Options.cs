@@ -320,6 +320,21 @@ namespace lifeMap.src
 
         //-------------------------------------------------------------------------//
 
+        public List<string> GetRouteToDEG( string NameConfiguration = "" )
+        {
+            if ( NameConfiguration == "" )
+                NameConfiguration = TempConfiguration;
+
+            List<string> RoutesToDEG = new List<string>();
+
+            for ( int i = 0; i < mListBox[ NameConfiguration ].Items.Count; i++ )
+                RoutesToDEG.Add( mListBox[ NameConfiguration ].Items[i].ToString() );
+
+            return RoutesToDEG;
+        }
+
+        //-------------------------------------------------------------------------//
+
         public SaveGeneral ToSaveGeneral()
         {
             SaveGeneral saveGeneral = new SaveGeneral();
