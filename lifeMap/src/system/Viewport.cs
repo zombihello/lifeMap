@@ -114,7 +114,7 @@ namespace lifeMap.src
                     RenderGrid();
                     Camera.RenderCamera();
 
-                    if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
+                    if ( Mouse.IsSelect && Mouse.BrushSelect != null )
                     {
                         ManagerPoints.PointsUpdate();
                         ManagerPoints.PointsRender( type );

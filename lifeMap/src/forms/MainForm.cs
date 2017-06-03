@@ -126,7 +126,7 @@ namespace lifeMap
 
                     if ( Program.selectTool == Program.SelectTool.CursorTool )
                     {
-                        if ( !Mouse.IsSelectBrush )
+                        if ( !Mouse.IsSelect )
                             Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
                         else
                         {
@@ -184,11 +184,11 @@ namespace lifeMap
                             break;
 
                         case Program.SelectTool.CursorTool:
-                            if ( Mouse.IsSelectBrush )
+                            if ( Mouse.IsSelect )
                             {
                                 Vector3f OffsetPosition = new Vector3f( Mouse.Position.X - Mouse.OldPosition.X, Mouse.Position.Y - Mouse.OldPosition.Y, 0 );
 
-                                switch ( Mouse.typeSelectBrush )
+                                switch ( Mouse.typeSelect )
                                 {
                                     case Mouse.TypeSelectBrush.Move:
                                         Mouse.BrushSelect.Move( OffsetPosition, Viewport.type );
@@ -302,7 +302,7 @@ namespace lifeMap
 
         private void Viewport_MouseDoubleClick()
         {
-            if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
+            if ( Mouse.IsSelect && Mouse.BrushSelect != null && Mouse.BrushSelect.brushType != BasicBrush.BrushType.Entity )
             {
                 if ( ManagerPoints.pointsType != ManagerPoints.PointsType.Rotate )
                     ManagerPoints.SetPointsType( ManagerPoints.PointsType.Rotate );

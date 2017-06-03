@@ -23,7 +23,7 @@ namespace lifeMap.src.system
             TextureObject = clone.TextureObject;
 
             Route = clone.Route;
-            Name = clone.Name;            
+            Name = clone.Name;
         }
 
         //-------------------------------------------------------------------------//
@@ -36,8 +36,8 @@ namespace lifeMap.src.system
             Route = route;
             Name = Path.GetFileName( Route );
 
-            if ( !Il.ilLoadImage( route ) )
-                return false;
+            if ( !Il.ilLoadImage( route ) ) // TODO: Не все текстуры коректно грузит 
+               return false;
 
             Size.X = Il.ilGetInteger( Il.IL_IMAGE_WIDTH );
             Size.Y = Il.ilGetInteger( Il.IL_IMAGE_HEIGHT );
@@ -60,7 +60,7 @@ namespace lifeMap.src.system
         }
 
         //-------------------------------------------------------------------------//
-    
+
         public void DeleteTexture()
         {
             if ( TextureObject != 0 )
@@ -102,7 +102,7 @@ namespace lifeMap.src.system
             Gl.glTexParameteri( Gl.GL_TEXTURE_2D, Gl.GL_TEXTURE_WRAP_T, Gl.GL_REPEAT );
 
             Gl.glTexEnvf( Gl.GL_TEXTURE_ENV, Gl.GL_TEXTURE_ENV_MODE, Gl.GL_COMBINE );
-            
+
             switch ( Format )
             {
                 case Gl.GL_RGB:
@@ -131,6 +131,16 @@ namespace lifeMap.src.system
         public Vector3f GetSize()
         {
             return Size;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public bool IsEmpty()
+        {
+            if ( TextureObject == 0 )
+                return true;
+            else
+                return false;
         }
 
         //-------------------------------------------------------------------------//

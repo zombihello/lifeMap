@@ -86,11 +86,11 @@ namespace lifeMap.src
 
         public static void SetClick( Viewport.TypeViewport TypeViewport, Camera camera )
         {
-            if ( IsSelectBrush && BrushSelect != null )
+            if ( IsSelect && BrushSelect != null )
             {
                 Vector3f PositionCursor = Program.ToNewCoords( camera.Position, Position );
 
-                float factorSize = 15;
+                float factorSize = 4;
 
                 if ( Viewport.TmpViewport.FactorZoom > 0 )
                     factorSize *= Viewport.TmpViewport.FactorZoom;
@@ -100,44 +100,40 @@ namespace lifeMap.src
                 switch ( TypeViewport )
                 {
                     case Viewport.TypeViewport.Top_2D_xy:
-                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.Size.X ) ) + factorSize ||
-                            PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.Size.X ) ) - factorSize ||
-                            PositionCursor.Y > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.Size.Z ) ) + factorSize ||
-                            PositionCursor.Y < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.Size.Z ) ) - factorSize )
-                            IsSelectBrush = false;
+                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.FactorShift.X ) ) + factorSize ||
+                            PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.FactorShift.X ) ) - factorSize ||
+                            PositionCursor.Y > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.FactorShift.Z ) ) + factorSize ||
+                            PositionCursor.Y < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.FactorShift.Z ) ) - factorSize )
+                            IsSelect = false;
                         break;
 
                     case Viewport.TypeViewport.Front_2D_yz:
-                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.Size.Z ) ) + factorSize ||
-                             PositionCursor.X < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.Size.Z ) ) - factorSize ||
-                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.Size.Y ) ) + factorSize ||
-                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.Size.Y ) ) - factorSize )
-                            IsSelectBrush = false;
+                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.Z + Math.Abs( ManagerPoints.FactorShift.Z ) ) + factorSize ||
+                             PositionCursor.X < ( BrushSelect.CenterBrush.Z - Math.Abs( ManagerPoints.FactorShift.Z ) ) - factorSize ||
+                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.FactorShift.Y ) ) + factorSize ||
+                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.FactorShift.Y ) ) - factorSize )
+                            IsSelect = false;
                         break;
 
                     case Viewport.TypeViewport.Side_2D_xz:
-                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.Size.X ) ) + factorSize ||
-                             PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.Size.X ) ) - factorSize ||
-                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.Size.Y ) ) + factorSize ||
-                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.Size.Y ) ) - factorSize )
-                            IsSelectBrush = false;
+                        if ( PositionCursor.X > ( BrushSelect.CenterBrush.X + Math.Abs( ManagerPoints.FactorShift.X ) ) + factorSize ||
+                             PositionCursor.X < ( BrushSelect.CenterBrush.X - Math.Abs( ManagerPoints.FactorShift.X ) ) - factorSize ||
+                             PositionCursor.Y > ( BrushSelect.CenterBrush.Y + Math.Abs( ManagerPoints.FactorShift.Y ) ) + factorSize ||
+                             PositionCursor.Y < ( BrushSelect.CenterBrush.Y - Math.Abs( ManagerPoints.FactorShift.Y ) ) - factorSize )
+                            IsSelect = false;
                         break;
                 }
 
-                if ( !IsSelectBrush )
+                if ( !IsSelect )
                 {
                     BrushSelect.SetColorBrush( BrushSelect.DefaultColorBrush );
-                    ManagerPoints.FactorSize = 0;
                     BrushSelect = null;
                 }
 
             }
             else
-                if ( IsSelectBrush && BrushSelect == null )
-                {
-                    IsSelectBrush = false;
-                    ManagerPoints.FactorSize = 0;
-                }
+                if ( IsSelect && BrushSelect == null )
+                    IsSelect = false;
 
             ClickPosition = Position;
             TypeViewportClicked = TypeViewport;
@@ -149,10 +145,10 @@ namespace lifeMap.src
 
         public static void RemoveClick()
         {
-            if ( IsSelectBrush && typeSelectBrush != TypeSelectBrush.Move )
+            if ( IsSelect && typeSelect != TypeSelectBrush.Move )
             {
                 BrushSelect.UpdateVertex();
-                typeSelectBrush = TypeSelectBrush.Move;
+                typeSelect = TypeSelectBrush.Move;
             }
 
             ClickPosition = new Vector3f();
@@ -163,12 +159,13 @@ namespace lifeMap.src
         //-------------------------------------------------------------------------//
 
         public static bool IsClick = false;
-        public static bool IsSelectBrush = false;
+        public static bool IsSelect = false;
         public static bool IsDoubleClick = false;
 
         public static Viewport.TypeViewport TypeViewportClicked = Viewport.TypeViewport.None;
-        public static TypeSelectBrush typeSelectBrush = TypeSelectBrush.None;
+        public static TypeSelectBrush typeSelect = TypeSelectBrush.None;
         public static BasicBrush BrushSelect = null;
+        public static Entity EntitySelect = null;
         public static Vector3f OldPosition = new Vector3f();
         public static Vector3f Position = new Vector3f( 0, 0, 0 );
         public static Vector3f ClickPosition = new Vector3f();

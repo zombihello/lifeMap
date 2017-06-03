@@ -101,7 +101,6 @@ namespace lifeMap.src.system
         public static void CreateEntity( Viewport.TypeViewport typeViewport, Viewport viewport )
         {
             Entity entity = new Entity();
-
             Vector3f Position = Program.ToNewCoords( viewport.Camera.Position, Mouse.ClickPosition );
 
             switch ( typeViewport )
@@ -131,10 +130,19 @@ namespace lifeMap.src.system
 
         public static bool SelectBrush( Vector3f PositionClick, Viewport.TypeViewport typeViewport )
         {
+            Vector3f centerBrush = new Vector3f();
+
+            float factorSize = 4;
+
+            if ( Viewport.TmpViewport.FactorZoom > 0 )
+                factorSize *= Viewport.TmpViewport.FactorZoom;
+            else
+                factorSize /= Viewport.TmpViewport.FactorZoom;
+
+            //--------------ПРОВЕРКА-ВЫБОРА-БРАШЕЙ----------------------//
+
             for ( int i = 0; i < mBrush.Count; i++ )
             {
-                Vector3f centerBrush = new Vector3f();
-
                 switch ( typeViewport )
                 {
                     case Viewport.TypeViewport.Top_2D_xy:
@@ -154,29 +162,65 @@ namespace lifeMap.src.system
                         break;
                 }
 
-                float factorSize = 15;
+                if ( PositionClick.X >= centerBrush.X - factorSize &&
+                     PositionClick.X <= centerBrush.X + factorSize )
+                    if ( PositionClick.Y >= centerBrush.Y - factorSize &&
+                         PositionClick.Y <= centerBrush.Y + factorSize )
+                    {
+                        if ( Mouse.IsSelect && Mouse.BrushSelect != null )
+                            Mouse.BrushSelect.SetColorBrush( Mouse.BrushSelect.DefaultColorBrush );
 
-                if ( Viewport.TmpViewport.FactorZoom > 0 )
-                    factorSize *= Viewport.TmpViewport.FactorZoom;
-                else
-                    factorSize /= Viewport.TmpViewport.FactorZoom;
+                        mBrush[ i ].SetColorBrush( new Color( 1, 1, 1 ) );
+                        Mouse.BrushSelect = mBrush[ i ];
+
+                        ManagerPoints.SetSelect( mBrush[ i ] );
+                        ManagerPoints.SetPointsType( ManagerPoints.PointsType.Resize );
+
+                        Mouse.IsSelect = true;
+                        Mouse.typeSelect = Mouse.TypeSelectBrush.Move;
+                        return true;
+                    }
+            }
+
+            //--------------ПРОВЕРКА-ВЫБОРА-ЭНТИТИ----------------------//
+
+            for ( int i = 0; i < mEntity.Count; i++ )
+            {              
+                switch ( typeViewport )
+                {
+                    case Viewport.TypeViewport.Top_2D_xy:
+                        centerBrush = new Vector3f( mEntity[ i ].CenterBrush.X, mEntity[ i ].CenterBrush.Z, 0 );
+                        break;
+
+                    case Viewport.TypeViewport.Front_2D_yz:
+                        centerBrush = new Vector3f( mEntity[ i ].CenterBrush.Z, mEntity[ i ].CenterBrush.Y, 0 );
+                        break;
+
+                    case Viewport.TypeViewport.Side_2D_xz:
+                        centerBrush = new Vector3f( mEntity[ i ].CenterBrush.X, mEntity[ i ].CenterBrush.Y, 0 );
+                        break;
+
+                    case Viewport.TypeViewport.Textured_3D:
+                        //TODO: Сделать возможность выбора браша в 3д
+                        break;
+                }
 
                 if ( PositionClick.X >= centerBrush.X - factorSize &&
                      PositionClick.X <= centerBrush.X + factorSize )
                     if ( PositionClick.Y >= centerBrush.Y - factorSize &&
                          PositionClick.Y <= centerBrush.Y + factorSize )
                     {
-                        if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
+                        if ( Mouse.IsSelect && Mouse.BrushSelect != null )
                             Mouse.BrushSelect.SetColorBrush( Mouse.BrushSelect.DefaultColorBrush );
 
-                        mBrush[ i ].SetColorBrush( new Color( 1, 1, 1 ) );
-                        Mouse.BrushSelect = mBrush[ i ];
+                        mEntity[ i ].SetColorBrush( new Color( 1, 1, 1 ) );
+                        Mouse.BrushSelect = mEntity[ i ];
 
-                        ManagerPoints.SetSelectBrush( mBrush[ i ] );
-                        ManagerPoints.Size = new Vector3f( mBrush[ i ].SelectSize );
+                        ManagerPoints.SetSelect( mEntity[ i ] );
+                        ManagerPoints.SetPointsType( ManagerPoints.PointsType.Rotate );
 
-                        Mouse.IsSelectBrush = true;
-                        Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Move;
+                        Mouse.IsSelect = true;
+                        Mouse.typeSelect = Mouse.TypeSelectBrush.Move;
                         return true;
                     }
             }
@@ -188,14 +232,14 @@ namespace lifeMap.src.system
 
         public static bool SelectPointResizeBrush( Vector3f PositionClick, Viewport.TypeViewport typeViewport )
         {
-            if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
+            if ( Mouse.IsSelect && Mouse.BrushSelect != null )
             {
                 if ( ManagerPoints.IsPointsClick( PositionClick ) )
                 {
                     if ( ManagerPoints.pointsType == ManagerPoints.PointsType.Resize )
-                        Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Resize;
+                        Mouse.typeSelect = Mouse.TypeSelectBrush.Resize;
                     else
-                        Mouse.typeSelectBrush = Mouse.TypeSelectBrush.Rotate;
+                        Mouse.typeSelect = Mouse.TypeSelectBrush.Rotate;
 
                     return true;
                 }

@@ -26,6 +26,14 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
+        public enum BrushType
+        {
+            Brush,
+            Entity
+        };
+
+        //-------------------------------------------------------------------------//
+
         public virtual void Create( Vector3f StartPosition, Vector3f EndPosition ) { }
 
         //-------------------------------------------------------------------------//
@@ -48,13 +56,22 @@ namespace lifeMap.src.brushes
             else
             {
                 TextureBrush.SelectTexture( Gl.GL_TEXTURE_2D );
-
-                if ( Mouse.BrushSelect != this )
-                    Gl.glColor4f( 1, 1, 1, 1 );
-                else
-                    Gl.glColor4f( 1, 0, 0, 0.5f );
-
                 Gl.glBegin( Gl.GL_TRIANGLES );
+
+                if ( !TextureBrush.IsEmpty() )
+                {
+                    if ( Mouse.BrushSelect != this )
+                        Gl.glColor4f( 1, 1, 1, 1 );
+                    else
+                        Gl.glColor4f( 1, 0, 0, 0.5f );
+                }
+                else
+                {
+                    if ( Mouse.BrushSelect != this )
+                        Gl.glColor3f( ColorBrush.R, ColorBrush.G, ColorBrush.B );
+                    else
+                        Gl.glColor4f( 1, 0, 0, 0.5f );
+                }
 
                 for ( int i = 0; i < mIdVertex_Triangles.Count; i++ )
                 {
@@ -120,14 +137,14 @@ namespace lifeMap.src.brushes
                     if ( typeViewport == Viewport.TypeViewport.Front_2D_yz || typeViewport == Viewport.TypeViewport.Side_2D_xz )
                     {
                         Size.Y -= FactorSize.Y;
-                        ManagerPoints.Size.Y -= FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.Y -= FactorSize.Y / 2;
                         Position.Y += FactorSize.Y;
                         ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, 0 ), typeViewport );
                     }
                     else if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                     {
                         Size.Z -= FactorSize.Y;
-                        ManagerPoints.Size.Z -= FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.Z -= FactorSize.Y / 2;
                         Position.Z += FactorSize.Y;
                         ResizeLocalVertex( new Vector3f( 0, 0, FactorSize.Y ), typeViewport );
                     }
@@ -141,8 +158,8 @@ namespace lifeMap.src.brushes
                     {
                         Size.X -= FactorSize.X;
                         Size.Z -= FactorSize.Y;
-                        ManagerPoints.Size.X -= FactorSize.X / 2;
-                        ManagerPoints.Size.Z -= FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.X -= FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Z -= FactorSize.Y / 2;
                         Position.X += FactorSize.X;
                         Position.Z += FactorSize.Y;
                         ResizeLocalVertex( new Vector3f( FactorSize.X, 0, FactorSize.Y ), typeViewport );
@@ -151,8 +168,8 @@ namespace lifeMap.src.brushes
                     {
                         Size.Z -= FactorSize.X;
                         Size.Y -= FactorSize.Y;
-                        ManagerPoints.Size.Z -= FactorSize.X / 2;
-                        ManagerPoints.Size.Y -= FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.Z -= FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Y -= FactorSize.Y / 2;
                         Position.Z += FactorSize.X;
                         Position.Y += FactorSize.Y;
                         ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, FactorSize.X ), typeViewport );
@@ -161,8 +178,8 @@ namespace lifeMap.src.brushes
                     {
                         Size.X -= FactorSize.X;
                         Size.Y -= FactorSize.Y;
-                        ManagerPoints.Size.X -= FactorSize.X / 2;
-                        ManagerPoints.Size.Y -= FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.X -= FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Y -= FactorSize.Y / 2;
                         Position.X += FactorSize.X;
                         Position.Y += FactorSize.Y;
                         ResizeLocalVertex( new Vector3f( FactorSize.X, FactorSize.Y, 0 ), typeViewport );
@@ -175,13 +192,13 @@ namespace lifeMap.src.brushes
                     if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                     {
                         Size.Z -= FactorSize.X;
-                        ManagerPoints.Size.Z -= FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Z -= FactorSize.X / 2;
                         Position.Z += FactorSize.X;
                     }
                     else if ( typeViewport == Viewport.TypeViewport.Top_2D_xy || typeViewport == Viewport.TypeViewport.Side_2D_xz )
                     {
                         Size.X -= FactorSize.X;
-                        ManagerPoints.Size.X -= FactorSize.X / 2;
+                        ManagerPoints.FactorShift.X -= FactorSize.X / 2;
                         Position.X += FactorSize.X;
                     }
 
@@ -195,8 +212,8 @@ namespace lifeMap.src.brushes
                     {
                         Size.X -= FactorSize.X;
                         Size.Z += FactorSize.Y;
-                        ManagerPoints.Size.X -= FactorSize.X / 2;
-                        ManagerPoints.Size.Z += FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.X -= FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Z += FactorSize.Y / 2;
                         Position.X += FactorSize.X;
                         ResizeLocalVertex( new Vector3f( FactorSize.X, 0, FactorSize.Y ), typeViewport );
                     }
@@ -204,8 +221,8 @@ namespace lifeMap.src.brushes
                     {
                         Size.Z -= FactorSize.X;
                         Size.Y += FactorSize.Y;
-                        ManagerPoints.Size.Z -= FactorSize.X / 2;
-                        ManagerPoints.Size.Y += FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.Z -= FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Y += FactorSize.Y / 2;
                         Position.Z += FactorSize.X;
                         ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, FactorSize.X ), typeViewport );
                     }
@@ -213,8 +230,8 @@ namespace lifeMap.src.brushes
                     {
                         Size.X -= FactorSize.X;
                         Size.Y += FactorSize.Y;
-                        ManagerPoints.Size.X -= FactorSize.X / 2;
-                        ManagerPoints.Size.Y += FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.X -= FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Y += FactorSize.Y / 2;
                         Position.X += FactorSize.X;
                         ResizeLocalVertex( new Vector3f( FactorSize.X, FactorSize.Y, 0 ), typeViewport );
                     }
@@ -227,8 +244,8 @@ namespace lifeMap.src.brushes
                     {
                         Size.X += FactorSize.X;
                         Size.Z -= FactorSize.Y;
-                        ManagerPoints.Size.X += FactorSize.X / 2;
-                        ManagerPoints.Size.Z -= FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.X += FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Z -= FactorSize.Y / 2;
                         Position.Z += FactorSize.Y;
                         ResizeLocalVertex( new Vector3f( FactorSize.X, 0, FactorSize.Y ), typeViewport );
                     }
@@ -236,8 +253,8 @@ namespace lifeMap.src.brushes
                     {
                         Size.Z += FactorSize.X;
                         Size.Y -= FactorSize.Y;
-                        ManagerPoints.Size.Z += FactorSize.X / 2;
-                        ManagerPoints.Size.Y -= FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.Z += FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Y -= FactorSize.Y / 2;
                         Position.Y += FactorSize.Y;
                         ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, FactorSize.X ), typeViewport );
                     }
@@ -245,8 +262,8 @@ namespace lifeMap.src.brushes
                     {
                         Size.X += FactorSize.X;
                         Size.Y -= FactorSize.Y;
-                        ManagerPoints.Size.X += FactorSize.X / 2;
-                        ManagerPoints.Size.Y -= FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.X += FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Y -= FactorSize.Y / 2;
                         Position.Y += FactorSize.Y;
                         ResizeLocalVertex( new Vector3f( FactorSize.X, FactorSize.Y, 0 ), typeViewport );
                     }
@@ -258,12 +275,12 @@ namespace lifeMap.src.brushes
                     if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                     {
                         Size.Z += FactorSize.X;
-                        ManagerPoints.Size.Z += FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Z += FactorSize.X / 2;
                     }
                     else if ( typeViewport == Viewport.TypeViewport.Top_2D_xy || typeViewport == Viewport.TypeViewport.Side_2D_xz )
                     {
                         Size.X += FactorSize.X;
-                        ManagerPoints.Size.X += FactorSize.X / 2;
+                        ManagerPoints.FactorShift.X += FactorSize.X / 2;
                     }
 
                     ResizeLocalVertex( new Vector3f( FactorSize.X, 0, 0 ), typeViewport );
@@ -276,24 +293,24 @@ namespace lifeMap.src.brushes
                     {
                         Size.X += FactorSize.X;
                         Size.Z += FactorSize.Y;
-                        ManagerPoints.Size.X += FactorSize.X / 2;
-                        ManagerPoints.Size.Z += FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.X += FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Z += FactorSize.Y / 2;
                         ResizeLocalVertex( new Vector3f( FactorSize.X, 0, FactorSize.Y ), typeViewport );
                     }
                     else if ( typeViewport == Viewport.TypeViewport.Front_2D_yz )
                     {
                         Size.Z += FactorSize.X;
                         Size.Y += FactorSize.Y;
-                        ManagerPoints.Size.Z += FactorSize.X / 2;
-                        ManagerPoints.Size.Y += FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.Z += FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Y += FactorSize.Y / 2;
                         ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, FactorSize.X ), typeViewport );
                     }
                     else if ( typeViewport == Viewport.TypeViewport.Side_2D_xz )
                     {
                         Size.X += FactorSize.X;
                         Size.Y += FactorSize.Y;
-                        ManagerPoints.Size.X += FactorSize.X / 2;
-                        ManagerPoints.Size.Y += FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.X += FactorSize.X / 2;
+                        ManagerPoints.FactorShift.Y += FactorSize.Y / 2;
                         ResizeLocalVertex( new Vector3f( FactorSize.X, FactorSize.Y, 0 ), typeViewport );
                     }
                     break;
@@ -304,13 +321,13 @@ namespace lifeMap.src.brushes
                     if ( typeViewport == Viewport.TypeViewport.Front_2D_yz || typeViewport == Viewport.TypeViewport.Side_2D_xz )
                     {
                         Size.Y += FactorSize.Y;
-                        ManagerPoints.Size.Y += FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.Y += FactorSize.Y / 2;
                         ResizeLocalVertex( new Vector3f( 0, FactorSize.Y, 0 ), typeViewport );
                     }
                     else if ( typeViewport == Viewport.TypeViewport.Top_2D_xy )
                     {
                         Size.Z += FactorSize.Y;
-                        ManagerPoints.Size.Z += FactorSize.Y / 2;
+                        ManagerPoints.FactorShift.Z += FactorSize.Y / 2;
                         ResizeLocalVertex( new Vector3f( 0, 0, FactorSize.Y ), typeViewport );
                     }
                     break;
@@ -384,7 +401,7 @@ namespace lifeMap.src.brushes
 
                     break;
             }
-            
+
             UpdateSelectPoints();
             ToGloablCoords();
         }
@@ -426,8 +443,8 @@ namespace lifeMap.src.brushes
                 }
             }
 
-            SelectSize = ( MaxVertex - MinVertex ) / 2;
-            ManagerPoints.Size = SelectSize;
+            SelectSize = ( ( MaxVertex - MinVertex ) / 2 );
+            ManagerPoints.FactorShift = SelectSize;
         }
 
         //-------------------------------------------------------------------------//
@@ -1001,10 +1018,10 @@ namespace lifeMap.src.brushes
 
         public void UpdateVertex()
         {
-           for ( int i = 0; i < mLocalVertex.Count; i++ )
+            for ( int i = 0; i < mLocalVertex.Count; i++ )
                 mLocalVertex[ i ].DefaultPosition = new Vector3f( mLocalVertex[ i ].Position );
 
-            SelectSize = new Vector3f( ManagerPoints.Size );
+            SelectSize = new Vector3f( ManagerPoints.FactorShift );
         }
 
         //-------------------------------------------------------------------------//
@@ -1188,6 +1205,7 @@ namespace lifeMap.src.brushes
         //-------------------------------------------------------------------------//
 
         public PrimitivesType Type;
+        public BrushType brushType;
         public Vector3f CenterBrush = new Vector3f();
         public Vector3f Size = new Vector3f();
         public Vector3f SelectSize = new Vector3f();

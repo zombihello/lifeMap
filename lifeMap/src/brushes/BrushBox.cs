@@ -33,6 +33,7 @@ namespace lifeMap.src.brushes
         public override void Create( Vector3f StartPosition, Vector3f EndPosition )
         {
             InitBrush( StartPosition, EndPosition, PrimitivesType.Cube, ManagerTexture.SelectTexture );
+            brushType = BasicBrush.BrushType.Brush;
             ColorBrush = new Color( 0, 0.5f, 0.5f );
             DefaultColorBrush = ColorBrush;
 
