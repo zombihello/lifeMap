@@ -1210,9 +1210,9 @@ namespace lifeMap.src.brushes
         public Vector3f Size = new Vector3f();
         public Vector3f SelectSize = new Vector3f();
         public Vector3f Position = new Vector3f();
-        public Color DefaultColorBrush = new Color( 1, 0, 0 );
+        public Color DefaultColorBrush = new Color( 255, 0, 0 );
 
-        protected Color ColorBrush = new Color( 1, 0, 0 );
+        protected Color ColorBrush = new Color( 255, 0, 0 );
         protected Texture TextureBrush = new Texture();
 
         private List<Vertex> mLocalVertex = new List<Vertex>();

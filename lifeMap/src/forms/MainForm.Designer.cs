@@ -95,6 +95,8 @@
             this.button_entitytool = new System.Windows.Forms.Button();
             this.button_camera = new System.Windows.Forms.Button();
             this.button_cursor = new System.Windows.Forms.Button();
+            this.viewportMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_textureView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).BeginInit();
             this.panel_entitytool.SuspendLayout();
@@ -105,6 +107,7 @@
             this.panel_viewport2.SuspendLayout();
             this.panel_viewport1.SuspendLayout();
             this.menuTypeViewport.SuspendLayout();
+            this.viewportMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox_textureView
@@ -444,6 +447,7 @@
             this.view4.TabIndex = 23;
             this.view4.Paint += new System.Windows.Forms.PaintEventHandler(this.view4_Paint);
             this.view4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view4_KeyDown);
+            this.view4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.view4_MouseClick);
             this.view4.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view4_MouseDoubleClick);
             this.view4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view4_MouseDown);
             this.view4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view4_MouseMove);
@@ -467,6 +471,7 @@
             this.view3.TabIndex = 23;
             this.view3.Paint += new System.Windows.Forms.PaintEventHandler(this.view3_Paint);
             this.view3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view3_KeyDown);
+            this.view3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.view3_MouseClick);
             this.view3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view3_MouseDoubleClick);
             this.view3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view3_MouseDown);
             this.view3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view3_MouseMove);
@@ -490,6 +495,7 @@
             this.view1.TabIndex = 23;
             this.view1.Paint += new System.Windows.Forms.PaintEventHandler(this.view1_Paint);
             this.view1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view1_KeyDown);
+            this.view1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.view1_MouseClick);
             this.view1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view1_MouseDoubleClick);
             this.view1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view1_MouseDown);
             this.view1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view1_MouseMove);
@@ -694,6 +700,7 @@
             this.view2.TabIndex = 23;
             this.view2.Paint += new System.Windows.Forms.PaintEventHandler(this.view2_Paint);
             this.view2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view2_KeyDown);
+            this.view2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.view2_MouseClick);
             this.view2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view2_MouseDoubleClick);
             this.view2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view2_MouseDown);
             this.view2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view2_MouseMove);
@@ -848,6 +855,20 @@
             this.button_cursor.UseVisualStyleBackColor = true;
             this.button_cursor.Click += new System.EventHandler(this.button_cursor_Click);
             // 
+            // viewportMenu
+            // 
+            this.viewportMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.propertiesToolStripMenuItem});
+            this.viewportMenu.Name = "viewportMenu";
+            this.viewportMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // propertiesToolStripMenuItem
+            // 
+            this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.propertiesToolStripMenuItem.Text = "Properties";
+            this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -884,6 +905,7 @@
             this.panel_viewport1.ResumeLayout(false);
             this.panel_viewport1.PerformLayout();
             this.menuTypeViewport.ResumeLayout(false);
+            this.viewportMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -955,7 +977,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem mapPropiertesToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;        
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip viewportMenu;
+        private System.Windows.Forms.ToolStripMenuItem propertiesToolStripMenuItem;        
     }
 }
 

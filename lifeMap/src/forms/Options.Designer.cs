@@ -39,7 +39,10 @@
             this.button_browseTextureDirectory = new System.Windows.Forms.Button();
             this.textBox_texturesDirectory = new System.Windows.Forms.TextBox();
             this.label_texturesDirectory = new System.Windows.Forms.Label();
+            this.button_gameDirectory = new System.Windows.Forms.Button();
             this.button_browse = new System.Windows.Forms.Button();
+            this.textBox_gameDirectory = new System.Windows.Forms.TextBox();
+            this.label_gameDirectory = new System.Windows.Forms.Label();
             this.textBox_gameExecutable = new System.Windows.Forms.TextBox();
             this.label_gameExecutableDirectory = new System.Windows.Forms.Label();
             this.button_editConfiguration = new System.Windows.Forms.Button();
@@ -66,9 +69,6 @@
             this.comboBox_sizeGrid = new System.Windows.Forms.ComboBox();
             this.label_sizeGrid = new System.Windows.Forms.Label();
             this.button_ok = new System.Windows.Forms.Button();
-            this.label_gameDirectory = new System.Windows.Forms.Label();
-            this.textBox_gameDirectory = new System.Windows.Forms.TextBox();
-            this.button_gameDirectory = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage_general.SuspendLayout();
             this.tabPage_views.SuspendLayout();
@@ -209,6 +209,17 @@
             this.label_texturesDirectory.TabIndex = 11;
             this.label_texturesDirectory.Text = "Textures Directory (ex C:\\Game\\Textures):";
             // 
+            // button_gameDirectory
+            // 
+            this.button_gameDirectory.Enabled = false;
+            this.button_gameDirectory.Location = new System.Drawing.Point(353, 161);
+            this.button_gameDirectory.Name = "button_gameDirectory";
+            this.button_gameDirectory.Size = new System.Drawing.Size(81, 23);
+            this.button_gameDirectory.TabIndex = 10;
+            this.button_gameDirectory.Text = "Browse";
+            this.button_gameDirectory.UseVisualStyleBackColor = true;
+            this.button_gameDirectory.Click += new System.EventHandler(this.button_browse_gameDir);
+            // 
             // button_browse
             // 
             this.button_browse.Enabled = false;
@@ -219,6 +230,23 @@
             this.button_browse.Text = "Browse";
             this.button_browse.UseVisualStyleBackColor = true;
             this.button_browse.Click += new System.EventHandler(this.button_browse_Click);
+            // 
+            // textBox_gameDirectory
+            // 
+            this.textBox_gameDirectory.Enabled = false;
+            this.textBox_gameDirectory.Location = new System.Drawing.Point(9, 164);
+            this.textBox_gameDirectory.Name = "textBox_gameDirectory";
+            this.textBox_gameDirectory.Size = new System.Drawing.Size(338, 20);
+            this.textBox_gameDirectory.TabIndex = 9;
+            // 
+            // label_gameDirectory
+            // 
+            this.label_gameDirectory.AutoSize = true;
+            this.label_gameDirectory.Location = new System.Drawing.Point(6, 148);
+            this.label_gameDirectory.Name = "label_gameDirectory";
+            this.label_gameDirectory.Size = new System.Drawing.Size(149, 13);
+            this.label_gameDirectory.TabIndex = 8;
+            this.label_gameDirectory.Text = "Game Directory (ex C:\\Game):";
             // 
             // textBox_gameExecutable
             // 
@@ -331,7 +359,7 @@
             this.tabPage_views.Location = new System.Drawing.Point(4, 22);
             this.tabPage_views.Name = "tabPage_views";
             this.tabPage_views.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_views.Size = new System.Drawing.Size(442, 355);
+            this.tabPage_views.Size = new System.Drawing.Size(442, 402);
             this.tabPage_views.TabIndex = 1;
             this.tabPage_views.Text = "Views";
             this.tabPage_views.UseVisualStyleBackColor = true;
@@ -432,7 +460,7 @@
             this.label_MaxIntensivity.Name = "label_MaxIntensivity";
             this.label_MaxIntensivity.Size = new System.Drawing.Size(25, 13);
             this.label_MaxIntensivity.TabIndex = 5;
-            this.label_MaxIntensivity.Text = "100";
+            this.label_MaxIntensivity.Text = "255";
             // 
             // label_SmallIntesivity
             // 
@@ -447,7 +475,7 @@
             // 
             this.trackBar_intensity.BackColor = System.Drawing.Color.White;
             this.trackBar_intensity.Location = new System.Drawing.Point(240, 25);
-            this.trackBar_intensity.Maximum = 100;
+            this.trackBar_intensity.Maximum = 255;
             this.trackBar_intensity.Name = "trackBar_intensity";
             this.trackBar_intensity.Size = new System.Drawing.Size(141, 45);
             this.trackBar_intensity.TabIndex = 2;
@@ -499,34 +527,6 @@
             this.button_ok.Text = "OK";
             this.button_ok.UseVisualStyleBackColor = true;
             this.button_ok.Click += new System.EventHandler(this.button_ok_Click);
-            // 
-            // label_gameDirectory
-            // 
-            this.label_gameDirectory.AutoSize = true;
-            this.label_gameDirectory.Location = new System.Drawing.Point(6, 148);
-            this.label_gameDirectory.Name = "label_gameDirectory";
-            this.label_gameDirectory.Size = new System.Drawing.Size(149, 13);
-            this.label_gameDirectory.TabIndex = 8;
-            this.label_gameDirectory.Text = "Game Directory (ex C:\\Game):";
-            // 
-            // textBox_gameDirectory
-            // 
-            this.textBox_gameDirectory.Enabled = false;
-            this.textBox_gameDirectory.Location = new System.Drawing.Point(9, 164);
-            this.textBox_gameDirectory.Name = "textBox_gameDirectory";
-            this.textBox_gameDirectory.Size = new System.Drawing.Size(338, 20);
-            this.textBox_gameDirectory.TabIndex = 9;
-            // 
-            // button_gameDirectory
-            // 
-            this.button_gameDirectory.Enabled = false;
-            this.button_gameDirectory.Location = new System.Drawing.Point(353, 161);
-            this.button_gameDirectory.Name = "button_gameDirectory";
-            this.button_gameDirectory.Size = new System.Drawing.Size(81, 23);
-            this.button_gameDirectory.TabIndex = 10;
-            this.button_gameDirectory.Text = "Browse";
-            this.button_gameDirectory.UseVisualStyleBackColor = true;
-            this.button_gameDirectory.Click += new System.EventHandler(this.button_browse_gameDir);
             // 
             // Options
             // 

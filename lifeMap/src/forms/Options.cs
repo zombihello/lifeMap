@@ -22,7 +22,7 @@ namespace lifeMap.src
             openFileDialog.Filter = "Data Entity Game | *.deg";
 
             comboBox_sizeGrid.SelectedIndex = 2;
-            trackBar_intensity.Value = 20;
+            trackBar_intensity.Value = 45;
             trackBar_renderDistance.Value = 1000;
             checkBox_filterTextures.Checked = true;
             textBox_cameraFOV.Text = 45.ToString();
@@ -322,13 +322,16 @@ namespace lifeMap.src
 
         public List<string> GetRouteToDEG( string NameConfiguration = "" )
         {
-            if ( NameConfiguration == "" )
-                NameConfiguration = TempConfiguration;
-
             List<string> RoutesToDEG = new List<string>();
 
-            for ( int i = 0; i < mListBox[ NameConfiguration ].Items.Count; i++ )
-                RoutesToDEG.Add( mListBox[ NameConfiguration ].Items[i].ToString() );
+            if ( TempConfiguration != null )
+            {
+                if ( NameConfiguration == "" )
+                    NameConfiguration = TempConfiguration;
+
+                for ( int i = 0; i < mListBox[ NameConfiguration ].Items.Count; i++ )
+                    RoutesToDEG.Add( mListBox[ NameConfiguration ].Items[ i ].ToString() );
+            }
 
             return RoutesToDEG;
         }

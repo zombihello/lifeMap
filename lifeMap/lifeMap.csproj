@@ -126,6 +126,12 @@
     <Compile Include="src\forms\EditConfiguration.Designer.cs">
       <DependentUpon>EditConfiguration.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\forms\EntityProperties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\forms\EntityProperties.Designer.cs">
+      <DependentUpon>EntityProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\forms\MapProperties.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -184,6 +190,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\forms\EditConfiguration.resx">
       <DependentUpon>EditConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\forms\EntityProperties.resx">
+      <DependentUpon>EntityProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

@@ -69,7 +69,7 @@ namespace lifeMap.src.system
         public static void PointsClear()
         {
             mPoints.Clear();
-            brushSelect = null;
+            brushSelect = null;          
         }
 
         //-------------------------------------------------------------------------//

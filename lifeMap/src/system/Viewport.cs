@@ -199,7 +199,7 @@ namespace lifeMap.src
         public static float fSize = 16f;
         public static float cameraFOV = 45f;
         public static float zFar = 1000f;
-        public static Color colorGrid = new Color( 0.2f, 0.2f, 0.2f );
+        public static Color colorGrid = new Color( 51, 51, 51 );
 
         public bool bEnabled = true;
         public float FactorZoom = 1;
