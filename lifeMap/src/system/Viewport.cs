@@ -23,9 +23,9 @@ namespace lifeMap.src
         public enum TypeViewport
         {
             None,
-            Top_2D_xy,
+            Top_2D_xz,
             Front_2D_yz,
-            Side_2D_xz,
+            Side_2D_xy,
             Textured_3D
         };
 
@@ -50,7 +50,26 @@ namespace lifeMap.src
             Camera = new Camera( View );
             type = TypeViewport;
             LabelViewport = labeViewport;
-            LabelViewport.Text = type.ToString();
+
+            switch ( TypeViewport )
+            {
+                case Viewport.TypeViewport.Front_2D_yz:
+                    LabelViewport.Text = "Front 2D (Y/Z)";
+                    break;
+
+                case Viewport.TypeViewport.Side_2D_xy:
+                    LabelViewport.Text = "Side 2D (X/Y)";
+                    break;
+
+                case Viewport.TypeViewport.Textured_3D:
+                    LabelViewport.Text = "Textured 3D";
+                    break;
+
+                case Viewport.TypeViewport.Top_2D_xz:
+                    LabelViewport.Text = "Top 2D (X/Z)";
+                    break;
+            }
+
             vScrollBar = scrollBarV;
             hScrollBar = scrollBarH;
 
@@ -114,7 +133,7 @@ namespace lifeMap.src
                     RenderGrid();
                     Camera.RenderCamera();
 
-                    if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
+                    if ( Mouse.IsSelect && Mouse.BrushSelect != null )
                     {
                         ManagerPoints.PointsUpdate();
                         ManagerPoints.PointsRender( type );
@@ -131,7 +150,7 @@ namespace lifeMap.src
 
         private void RenderGrid()
         {
-            if ( type == TypeViewport.Top_2D_xy )
+            if ( type == TypeViewport.Top_2D_xz )
                 Gl.glRotatef( 90, 1, 0, 0 );
             else if ( type == TypeViewport.Front_2D_yz )
                 Gl.glRotatef( -90, 0, 1, 0 );
@@ -166,7 +185,7 @@ namespace lifeMap.src
 
             Gl.glClear( Gl.GL_DEPTH_BUFFER_BIT );
 
-            if ( type == TypeViewport.Top_2D_xy )
+            if ( type == TypeViewport.Top_2D_xz )
                 Gl.glRotatef( -90, 1, 0, 0 );
             else if ( type == TypeViewport.Front_2D_yz )
                 Gl.glRotatef( 90, 0, 1, 0 );
@@ -177,7 +196,25 @@ namespace lifeMap.src
         public void SetTypeViewport( TypeViewport TypeViewport )
         {
             type = TypeViewport;
-            LabelViewport.Text = type.ToString();
+
+            switch ( TypeViewport )
+            {
+                case Viewport.TypeViewport.Front_2D_yz:
+                    LabelViewport.Text = "Front 2D (Y/Z)";
+                    break;
+
+                case Viewport.TypeViewport.Side_2D_xy:
+                    LabelViewport.Text = "Side 2D (X/Y)";
+                    break;
+
+                case Viewport.TypeViewport.Textured_3D:
+                    LabelViewport.Text = "Textured 3D";
+                    break;
+
+                case Viewport.TypeViewport.Top_2D_xz:
+                    LabelViewport.Text = "Top 2D (X/Z)";
+                    break;
+            }
 
             if ( type == TypeViewport.Textured_3D )
             {
@@ -199,7 +236,7 @@ namespace lifeMap.src
         public static float fSize = 16f;
         public static float cameraFOV = 45f;
         public static float zFar = 1000f;
-        public static Color colorGrid = new Color( 0.2f, 0.2f, 0.2f );
+        public static Color colorGrid = new Color( 51, 51, 51 );
 
         public bool bEnabled = true;
         public float FactorZoom = 1;

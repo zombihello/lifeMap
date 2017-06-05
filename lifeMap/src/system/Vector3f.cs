@@ -28,7 +28,31 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public Vector3f( Vector3f clone)
+        public Vector3f( string values )
+        {
+            string[] tmpValues = values.Split( ' ' );
+            X = Y = Z = 0;
+
+            for ( int i = 0; i < tmpValues.Length; i++ )
+                switch ( i )
+                {
+                    case 0:
+                        X = float.Parse( tmpValues[ i ] );
+                        break;
+
+                    case 1:
+                        Y = float.Parse( tmpValues[ i ] );
+                        break;
+
+                    case 2:
+                        Z = float.Parse( tmpValues[ i ] );
+                        return;
+                }
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public Vector3f( Vector3f clone )
         {
             X = clone.X;
             Y = clone.Y;

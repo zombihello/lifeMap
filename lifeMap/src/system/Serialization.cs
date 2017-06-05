@@ -16,8 +16,16 @@ namespace lifeMap.src.system
 
     struct SaveTexture
     {
-        public string Route;
         public string Name;
+    };
+
+    //-------------------------------------------------------------------------//
+
+    struct SaveEntity
+    {
+        public string EntityName;
+        public Vector3f Position;
+        public Dictionary<string, string> Values;
     };
 
     //-------------------------------------------------------------------------//
@@ -70,7 +78,7 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public void ExportMap( string Route )
+        public void ExportMap( string Route, string TextureRoute )
         {
             string CodeMap = "";
 
@@ -93,7 +101,7 @@ namespace lifeMap.src.system
                 CodeMap += "<Textures>\n";
 
                 for ( int i = 0; i < Textures.Count; i++ )
-                    CodeMap += "<Texture Name=\"" + Textures[ i ].Name + "\" Route=\"" + Textures[ i ].Route + "\"/>\n";
+                    CodeMap += "<Texture Name=\"" + Textures[ i ].Name + "\" Route=\"" + TextureRoute + "\\" + Textures[ i ].Name + "\"/>\n";
 
                 CodeMap += "</Textures>\n";
             }
@@ -150,6 +158,24 @@ namespace lifeMap.src.system
 
             CodeMap += "</Brushes>\n";
 
+            CodeMap += "<Entitys>\n";
+
+            for ( int i = 0; i < Entitys.Count; i++ )
+            {
+                CodeMap += "<Entity Name=\"" + Entitys[ i ].EntityName + "\"/>\n";
+                CodeMap += "<Position X=\"" + Entitys[ i ].Position.X + "\" Y=\"" + Entitys[ i ].Position.Y + "\" Z=\"" + Entitys[ i ].Position.Z + "\"/>\n";
+
+                for ( int j = 0; j < Entitys[ i ].Values.Keys.Count; j++ )
+                {
+                    string nameValue = Entitys[ i ].Values.Keys.ToList()[ j ].ToString();
+                    CodeMap += "<Value Name=\"" + nameValue + "\" Value=\"" + Entitys[ i ].Values[ nameValue ] + "\"/>\n";
+                }
+
+                CodeMap += "</Entity>\n";
+            }
+
+            CodeMap += "</Entitys>\n";
+
             CodeMap += "</Map>";
 
             streamWriter.Write( CodeMap );
@@ -170,6 +196,7 @@ namespace lifeMap.src.system
             SkyBoxName = serialization.SkyBoxName;
             Textures = serialization.Textures;
             Brushes = serialization.Brushes;
+            Entitys = serialization.Entitys;
         }
 
         //-------------------------------------------------------------------------//
@@ -183,12 +210,11 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public void SetLoadTextures( List<Texture> textures, string DirectoryTextures )
+        public void SetLoadTextures( List<Texture> textures )
         {
             for ( int i = 0; i < textures.Count; i++ )
             {
                 SaveTexture saveTexture = new SaveTexture();
-                saveTexture.Route = DirectoryTextures + "\\" + Path.GetFileName( textures[ i ].Route );
                 saveTexture.Name = textures[ i ].Name;
                 Textures.Add( saveTexture );
             }
@@ -213,6 +239,19 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
+        public void SetEntitys( List<Entity> entitys )
+        {
+            for ( int i = 0; i < entitys.Count; i++ )
+            {
+                SaveEntity saveEntity = new SaveEntity();
+                saveEntity = entitys[ i ].ToSave();
+
+                Entitys.Add( saveEntity );
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
         public void GetMapSettings( MapProperties mapProperties )
         {
             mapProperties.SetValue( "Name Map", NameMap );
@@ -222,14 +261,14 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public List<Texture> GetLoadTextures()
+        public List<Texture> GetLoadTextures( string DirectoryTextures )
         {
             List<Texture> mTexture = new List<Texture>();
 
             for ( int i = 0; i < Textures.Count; i++ )
             {
                 Texture texture = new Texture();
-                texture.LoadTexture( Textures[ i ].Route );
+                texture.LoadTexture( DirectoryTextures + "\\" + Textures[ i ].Name );
                 mTexture.Add( texture );
             }
 
@@ -253,6 +292,22 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
+        public List<Entity> GetEntitys()
+        {
+            List<Entity> mEntitys = new List<Entity>();
+
+            if ( Entity.listEntity == null )
+                return mEntitys;
+
+            for ( int i = 0; i < Entitys.Count; i++ )
+                if ( Entity.listEntity.Entity.ContainsKey( Entitys[ i ].EntityName ) )
+                    mEntitys.Add( new Entity( Entitys[ i ] ) );
+
+            return mEntitys;
+        }
+
+        //-------------------------------------------------------------------------//
+
         public void ClearSerialization()
         {
             NameMap = "";
@@ -261,6 +316,7 @@ namespace lifeMap.src.system
 
             Textures.Clear();
             Brushes.Clear();
+            Entitys.Clear();
         }
 
         //-------------------------------------------------------------------------//
@@ -271,6 +327,7 @@ namespace lifeMap.src.system
 
         public List<SaveTexture> Textures = new List<SaveTexture>();
         public Dictionary<string, List<SaveBrush>> Brushes = new Dictionary<string, List<SaveBrush>>();
+        public List<SaveEntity> Entitys = new List<SaveEntity>();
     }
 
     //-------------------------------------------------------------------------//

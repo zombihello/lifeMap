@@ -81,7 +81,7 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public void Load( string Route, Options options )
+        public bool Load( string Route, Options options )
         {
             if ( File.Exists( Route ) )
             {
@@ -93,7 +93,11 @@ namespace lifeMap.src.system
 
                 options.LoadGeneral( General );
                 options.LoadViews( Views );
+
+                return true;
             }
+            else
+                return false;
         }
 
         //-------------------------------------------------------------------------//

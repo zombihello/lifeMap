@@ -38,13 +38,13 @@ namespace lifeMap
             Viewport1 = new Viewport( view1, Viewport.TypeViewport.Textured_3D, label_viewport1, vScrollBar_viewport1, hScrollBar_viewport1 );
             Viewport1.bEnabled = false;
 
-            Viewport2 = new Viewport( view2, Viewport.TypeViewport.Top_2D_xy, label_viewport2, vScrollBar__viewport2, hScrollBar_viewport2 );
+            Viewport2 = new Viewport( view2, Viewport.TypeViewport.Top_2D_xz, label_viewport2, vScrollBar__viewport2, hScrollBar_viewport2 );
             Viewport2.bEnabled = false;
 
             Viewport3 = new Viewport( view3, Viewport.TypeViewport.Front_2D_yz, label_viewport3, vScrollBar_viewport3, hScrollBar_viewport3 );
             Viewport3.bEnabled = false;
 
-            Viewport4 = new Viewport( view4, Viewport.TypeViewport.Side_2D_xz, label_viewport4, vScrollBar_viewport4, hScrollBar_viewport4 );
+            Viewport4 = new Viewport( view4, Viewport.TypeViewport.Side_2D_xy, label_viewport4, vScrollBar_viewport4, hScrollBar_viewport4 );
             Viewport4.bEnabled = false;
 
             view1.MouseWheel += new MouseEventHandler( view1_MouseWheel );
@@ -59,8 +59,37 @@ namespace lifeMap
             Viewport3.Camera.SetPosition( new Vector3f( view3.Width / 2, view3.Height / 2, 0 ) );
             Viewport4.Camera.SetPosition( new Vector3f( view4.Width / 2, view4.Height / 2, 0 ) );
 
-            SerializationSettings ss = new SerializationSettings();
-            ss.Load( "settings.cfg", options );
+            SerializationSettings settings = new SerializationSettings();
+            settings.Load( "settings.cfg", options );
+
+            LoadListEntity();
+
+            for ( int i = 0; i < comboBox_CategEntity.Items.Count; i++ )
+                Program.SelectEntity.Add( comboBox_CategEntity.Items[ i ].ToString(), "" );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public void LoadListEntity()
+        {
+            listEntity.Entity.Clear();
+
+            SerializationEntity entity = new SerializationEntity();
+            List<string> RouteToDEG = options.GetRouteToDEG();
+
+            for ( int i = 0; i < RouteToDEG.Count; i++ )
+            {
+                Dictionary<string, Dictionary<string, Dictionary<string, string>>> tmpEntity = new Dictionary<string, Dictionary<string, Dictionary<string, string>>>();
+
+                if ( entity.LoadEntity( RouteToDEG[ i ] ) )
+                {
+                    tmpEntity = entity.listEntity.Entity;
+
+                    for ( int j = 0; j < tmpEntity.Keys.Count; j++ )
+                        if ( !listEntity.Entity.ContainsKey( tmpEntity.Keys.ToList()[ j ] ) )
+                            listEntity.Entity.Add( tmpEntity.Keys.ToList()[ j ], tmpEntity[ tmpEntity.Keys.ToList()[ j ] ] );
+                }
+            }
         }
 
         //-------------------------------------------------------------------------//
@@ -87,7 +116,7 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        private void Viewport_MouseDown( Viewport Viewport, Vector3f MousePosition )
+        private void Viewport_MouseDown( Viewport Viewport, Vector3f MousePosition, MouseButtons Button )
         {
             if ( Viewport.bEnabled )
                 if ( !Mouse.IsClick )
@@ -95,26 +124,26 @@ namespace lifeMap
                     Mouse.UpdatePosition( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), Viewport.FactorZoom );
                     Mouse.SetClick( Viewport.type, Viewport.Camera );
 
-                    if ( Program.selectTool == Program.SelectTool.CursorTool )
+                    if ( Program.selectTool == Program.SelectTool.CursorTool && !Mouse.IsSelect )
                     {
-                        if ( !Mouse.IsSelectBrush )
-                            Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
-                        else
-                        {
-                            if ( !Scene.SelectPointResizeBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type ) )
-                                Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type );
-                        }
+                        Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type, Button );
                     }
+                    else if ( Mouse.IsSelect )
+                    {
+                        if ( !Scene.SelectPointResizeBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type ) )
+                            Scene.SelectBrush( Program.ToNewCoords( Viewport.Camera.Position, Mouse.Position ), Viewport.type, Button );
+                    }
+
                 }
         }
 
         //-------------------------------------------------------------------------//
 
-        private void Viewport_MouseUp( Viewport Viewport )
+        private void Viewport_MouseUp( Viewport Viewport, MouseButtons Button )
         {
-            if ( Viewport.bEnabled )
-                if ( Mouse.IsClick )
-                {
+            if ( Mouse.IsClick )
+            {
+                if ( Button == System.Windows.Forms.MouseButtons.Left )
                     switch ( Program.selectTool )
                     {
                         case Program.SelectTool.CursorTool:
@@ -125,25 +154,27 @@ namespace lifeMap
                         case Program.SelectTool.CameraTool:
                             break;
 
-                        case Program.SelectTool.EntityTool: break;
+                        case Program.SelectTool.EntityTool:
+                            Scene.CreateEntity( Viewport.type, Viewport );
+                            break;
 
                         case Program.SelectTool.BoxTool:
                             Scene.CreateBrush();
                             break;
                     }
 
-                    Refresh();
-                    Mouse.RemoveClick();
-                }
+                Refresh();
+                Mouse.RemoveClick();
+            }
         }
 
         //-------------------------------------------------------------------------//
-        private void Viewport_MouseMove( Viewport Viewport, Vector3f MousePosition )
+        private void Viewport_MouseMove( Viewport Viewport, Vector3f MousePosition, MouseButtons Button )
         {
-            if ( Viewport.bEnabled )
-            {
-                Mouse.UpdatePosition( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), Viewport.FactorZoom, Viewport.fSize );
+            Mouse.UpdatePosition( MousePosition.X, Math.Abs( MousePosition.Y - Viewport.View.Height ), Viewport.FactorZoom, Viewport.fSize );
 
+            if ( Button == System.Windows.Forms.MouseButtons.Left && Viewport.bEnabled )
+            {
                 if ( Mouse.IsClick )
                 {
                     switch ( Program.selectTool )
@@ -153,11 +184,11 @@ namespace lifeMap
                             break;
 
                         case Program.SelectTool.CursorTool:
-                            if ( Mouse.IsSelectBrush )
+                            if ( Mouse.IsSelect )
                             {
                                 Vector3f OffsetPosition = new Vector3f( Mouse.Position.X - Mouse.OldPosition.X, Mouse.Position.Y - Mouse.OldPosition.Y, 0 );
 
-                                switch ( Mouse.typeSelectBrush )
+                                switch ( Mouse.typeSelect )
                                 {
                                     case Mouse.TypeSelectBrush.Move:
                                         Mouse.BrushSelect.Move( OffsetPosition, Viewport.type );
@@ -177,7 +208,8 @@ namespace lifeMap
                         case Program.SelectTool.CameraTool:
                             break;
 
-                        case Program.SelectTool.EntityTool: break;
+                        case Program.SelectTool.EntityTool:
+                            break;
                     }
 
                     Refresh();
@@ -216,6 +248,18 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        private void Viewport_ShowViewportMenu( Viewport Viewport, MouseButtons Button )
+        {
+            if ( Button == System.Windows.Forms.MouseButtons.Right )
+                if ( Viewport.bEnabled && Viewport.type != src.Viewport.TypeViewport.Textured_3D )
+                {
+                    if ( Mouse.IsSelect && Mouse.EntitySelect != null )
+                        viewportMenu.Show( Cursor.Position.X, Cursor.Position.Y );
+                }
+        }
+
+        //-------------------------------------------------------------------------//
+
         private void Viewport_MouseWheel( Viewport Viewport, HScrollBar hScrollBar, VScrollBar vScrollBar, MouseEventArgs e )
         {
             if ( Viewport.bEnabled && Viewport.type != Viewport.TypeViewport.Textured_3D )
@@ -230,13 +274,13 @@ namespace lifeMap
                         {
                             Viewport.FactorZoom--;
                         }
-                      
+
                     }
                 }
                 else
                 {
                     if ( Viewport.FactorZoom < 5 )
-                    {                        
+                    {
                         Viewport.FactorZoom++;
 
                         if ( Viewport.FactorZoom == 0 )
@@ -244,7 +288,7 @@ namespace lifeMap
                             Viewport.FactorZoom++;
                         }
                     }
-                 }
+                }
 
                 Viewport.View.Refresh();
             }
@@ -268,15 +312,16 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        private void Viewport_MouseDoubleClick()
+        private void Viewport_MouseDoubleClick( MouseButtons Button )
         {
-            if ( Mouse.IsSelectBrush && Mouse.BrushSelect != null )
-            {
-                if ( ManagerPoints.pointsType != ManagerPoints.PointsType.Rotate )
-                    ManagerPoints.SetPointsType( ManagerPoints.PointsType.Rotate );
-                else
-                    ManagerPoints.SetPointsType( ManagerPoints.PointsType.Resize );
-            }
+            if ( Button == System.Windows.Forms.MouseButtons.Left )
+                if ( Mouse.IsSelect && Mouse.BrushSelect != null && Mouse.BrushSelect.brushType != BasicBrush.BrushType.Entity )
+                {
+                    if ( ManagerPoints.pointsType != ManagerPoints.PointsType.Rotate )
+                        ManagerPoints.SetPointsType( ManagerPoints.PointsType.Rotate );
+                    else
+                        ManagerPoints.SetPointsType( ManagerPoints.PointsType.Resize );
+                }
         }
 
         //-------------------------------------------------------------------------//
@@ -294,21 +339,21 @@ namespace lifeMap
 
         private void view1_MouseUp( object sender, MouseEventArgs e )
         {
-            Viewport_MouseUp( Viewport1 );
+            Viewport_MouseUp( Viewport1, e.Button );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view1_MouseDown( object sender, MouseEventArgs e )
         {
-            Viewport_MouseDown( Viewport1, new Vector3f( e.X, e.Y, 0 ) );
+            Viewport_MouseDown( Viewport1, new Vector3f( e.X, e.Y, 0 ), e.Button );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view1_MouseMove( object sender, MouseEventArgs e )
         {
-            Viewport_MouseMove( Viewport1, new Vector3f( e.X, e.Y, 0 ) );
+            Viewport_MouseMove( Viewport1, new Vector3f( e.X, e.Y, 0 ), e.Button );
         }
 
         //-------------------------------------------------------------------------//
@@ -322,7 +367,7 @@ namespace lifeMap
 
         private void view1_MouseWheel( object sender, MouseEventArgs e )
         {
-            Viewport_MouseWheel( Viewport1, hScrollBar_viewport1, vScrollBar_viewport1, e );           
+            Viewport_MouseWheel( Viewport1, hScrollBar_viewport1, vScrollBar_viewport1, e );
         }
 
         //-------------------------------------------------------------------------//
@@ -364,7 +409,14 @@ namespace lifeMap
 
         private void view1_MouseDoubleClick( object sender, MouseEventArgs e )
         {
-            Viewport_MouseDoubleClick();
+            Viewport_MouseDoubleClick( e.Button );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view1_MouseClick( object sender, MouseEventArgs e )
+        {
+            Viewport_ShowViewportMenu( Viewport1, e.Button );
         }
 
         //-------------------------------------------------------------------------//
@@ -382,21 +434,21 @@ namespace lifeMap
 
         private void view2_MouseDown( object sender, MouseEventArgs e )
         {
-            Viewport_MouseDown( Viewport2, new Vector3f( e.X, e.Y, 0 ) );
+            Viewport_MouseDown( Viewport2, new Vector3f( e.X, e.Y, 0 ), e.Button );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view2_MouseUp( object sender, MouseEventArgs e )
         {
-            Viewport_MouseUp( Viewport2 );
+            Viewport_MouseUp( Viewport2, e.Button );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view2_MouseMove( object sender, MouseEventArgs e )
         {
-            Viewport_MouseMove( Viewport2, new Vector3f( e.X, e.Y, 0 ) );
+            Viewport_MouseMove( Viewport2, new Vector3f( e.X, e.Y, 0 ), e.Button );
         }
 
         //-------------------------------------------------------------------------//
@@ -452,7 +504,14 @@ namespace lifeMap
 
         private void view2_MouseDoubleClick( object sender, MouseEventArgs e )
         {
-            Viewport_MouseDoubleClick();
+            Viewport_MouseDoubleClick( e.Button );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view2_MouseClick( object sender, MouseEventArgs e )
+        {
+            Viewport_ShowViewportMenu( Viewport2, e.Button );
         }
 
         //-------------------------------------------------------------------------//
@@ -470,21 +529,21 @@ namespace lifeMap
 
         private void view3_MouseUp( object sender, MouseEventArgs e )
         {
-            Viewport_MouseUp( Viewport3 );
+            Viewport_MouseUp( Viewport3, e.Button );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view3_MouseDown( object sender, MouseEventArgs e )
         {
-            Viewport_MouseDown( Viewport3, new Vector3f( e.X, e.Y, 0 ) );
+            Viewport_MouseDown( Viewport3, new Vector3f( e.X, e.Y, 0 ), e.Button );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view3_MouseMove( object sender, MouseEventArgs e )
         {
-            Viewport_MouseMove( Viewport3, new Vector3f( e.X, e.Y, 0 ) );
+            Viewport_MouseMove( Viewport3, new Vector3f( e.X, e.Y, 0 ), e.Button );
         }
 
         //-------------------------------------------------------------------------//
@@ -540,7 +599,14 @@ namespace lifeMap
 
         private void view3_MouseDoubleClick( object sender, MouseEventArgs e )
         {
-            Viewport_MouseDoubleClick();
+            Viewport_MouseDoubleClick( e.Button );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view3_MouseClick( object sender, MouseEventArgs e )
+        {
+            Viewport_ShowViewportMenu( Viewport3, e.Button );
         }
 
         //-------------------------------------------------------------------------//
@@ -558,21 +624,21 @@ namespace lifeMap
 
         private void view4_MouseUp( object sender, MouseEventArgs e )
         {
-            Viewport_MouseUp( Viewport4 );
+            Viewport_MouseUp( Viewport4, e.Button );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view4_MouseDown( object sender, MouseEventArgs e )
         {
-            Viewport_MouseDown( Viewport4, new Vector3f( e.X, e.Y, 0 ) );
+            Viewport_MouseDown( Viewport4, new Vector3f( e.X, e.Y, 0 ), e.Button );
         }
 
         //-------------------------------------------------------------------------//
 
         private void view4_MouseMove( object sender, MouseEventArgs e )
         {
-            Viewport_MouseMove( Viewport4, new Vector3f( e.X, e.Y, 0 ) );
+            Viewport_MouseMove( Viewport4, new Vector3f( e.X, e.Y, 0 ), e.Button );
         }
 
         //-------------------------------------------------------------------------//
@@ -628,7 +694,14 @@ namespace lifeMap
 
         private void view4_MouseDoubleClick( object sender, MouseEventArgs e )
         {
-            Viewport_MouseDoubleClick();
+            Viewport_MouseDoubleClick( e.Button );
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void view4_MouseClick( object sender, MouseEventArgs e )
+        {
+            Viewport_ShowViewportMenu( Viewport4, e.Button );
         }
 
         //-------------------------------------------------------------------------//
@@ -654,6 +727,12 @@ namespace lifeMap
 
         private void toolStripMenuItem2_Click( object sender, EventArgs e ) // NEW MAP
         {
+            if ( options.GetRouteToDEG().Count == 0 )
+            {
+                MessageBox.Show( "No upload game data files (entity)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
+
             Scene.Clear();
             ManagerTexture.ClearTextures();
             image_previewTexture.Image = null;
@@ -687,10 +766,19 @@ namespace lifeMap
 
         private void toolStripMenuItem3_Click( object sender, EventArgs e ) // LOAD MAP
         {
+            if ( options.GetRouteToDEG().Count == 0 )
+            {
+                MessageBox.Show( "No upload game data files (entity)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
+
             openFileDialog.Filter = "lifeMap | *.map";
+            openFileDialog.InitialDirectory = options.GetSrcMapDirectory();
 
             if ( openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK )
             {
+                saveFileDialog.FileName = openFileDialog.FileName;
+
                 Scene.Clear();
                 ManagerTexture.ClearTextures();
                 image_previewTexture.Image = null;
@@ -701,8 +789,8 @@ namespace lifeMap
                 serialization.LoadMap( openFileDialog.FileName );
 
                 serialization.GetMapSettings( mapProperties );
-                ManagerTexture.mTextures = serialization.GetLoadTextures();
-          
+                ManagerTexture.mTextures = serialization.GetLoadTextures( options.GetTexturesDirecoty() );
+
                 for ( int i = 0; i < ManagerTexture.mTextures.Count; i++ )
                 {
                     ManagerTexture.mTextures[ i ].Route = options.GetTexturesDirecoty() + "\\" + ManagerTexture.mTextures[ i ].Name;
@@ -717,6 +805,7 @@ namespace lifeMap
                 }
 
                 Scene.SetAllBrushes( serialization.GetSolidBrushes() );
+                Scene.SetAllEntitys( serialization.GetEntitys() );
 
                 menuBar.Items[ 1 ].Visible = true;
 
@@ -747,13 +836,15 @@ namespace lifeMap
         private void toolStripMenuItem4_Click( object sender, EventArgs e ) // SAVE MAP
         {
             saveFileDialog.Filter = "lifeMap | *.map";
+            saveFileDialog.InitialDirectory = options.GetSrcMapDirectory();
 
             if ( saveFileDialog.FileName != "" || saveFileDialog.FileName == "" && saveFileDialog.ShowDialog() == DialogResult.OK )
             {
                 Serialization serialization = new Serialization();
                 serialization.SetMapSettings( mapProperties );
-                serialization.SetLoadTextures( ManagerTexture.mTextures, options.GetTexturesDirecoty() );
+                serialization.SetLoadTextures( ManagerTexture.mTextures );
                 serialization.SetSolidBrushes( Scene.GetAllBrushes() );
+                serialization.SetEntitys( Scene.GetAllEntitys() );
 
                 serialization.SaveMap( saveFileDialog.FileName );
             }
@@ -771,8 +862,9 @@ namespace lifeMap
             {
                 Serialization serialization = new Serialization();
                 serialization.SetMapSettings( mapProperties );
-                serialization.SetLoadTextures( ManagerTexture.mTextures, options.GetTexturesDirecoty() );
+                serialization.SetLoadTextures( ManagerTexture.mTextures );
                 serialization.SetSolidBrushes( Scene.GetAllBrushes() );
+                serialization.SetEntitys( Scene.GetAllEntitys() );
 
                 serialization.SaveMap( saveFileDialog.FileName );
             }
@@ -791,7 +883,7 @@ namespace lifeMap
                 {
                     Serialization serialization = new Serialization();
                     serialization.SetMapSettings( mapProperties );
-                
+
                     string GameRootDir = options.GetGameDirectory();
                     string GamaExeDir = options.GetGameExecutable();
                     string TextureRoute = "";
@@ -806,11 +898,12 @@ namespace lifeMap
                         TextureRoute += "..\\";
                     }
 
-                    TextureRoute += options.GetTexturesDirecoty().Remove( 0, GameRootDir.Length+1);
-                    serialization.SetLoadTextures( ManagerTexture.mTextures, TextureRoute );
+                    TextureRoute += options.GetTexturesDirecoty().Remove( 0, GameRootDir.Length + 1 );
+                    serialization.SetLoadTextures( ManagerTexture.mTextures );
                     serialization.SetSolidBrushes( Scene.GetAllBrushes(), true );
+                    serialization.SetEntitys( Scene.GetAllEntitys() );
 
-                    serialization.ExportMap( saveFileDialog.FileName );
+                    serialization.ExportMap( saveFileDialog.FileName, TextureRoute );
                 }
 
                 if ( runMap.IsStartGame() )
@@ -894,13 +987,30 @@ namespace lifeMap
 
             int Intensity = options.GetIntensity();
 
-            Viewport.fSize = options.GetSizeGrid();        
-            Viewport.colorGrid = new lifeMap.src.Color( Intensity/100f,Intensity/100f,Intensity/100f );
+            Viewport.fSize = options.GetSizeGrid();
+            Viewport.colorGrid = new lifeMap.src.Color( Intensity, Intensity, Intensity );
             Viewport.cameraFOV = options.GetCameraFOV();
             Viewport.zFar = options.GetRenderDistance();
             ManagerTexture.SetFilterTexture( options.GetFilterTexture() );
+            LoadListEntity();
 
-            SerializationSettings saveSettings = new SerializationSettings();           
+            if ( string.Equals( comboBox_CategEntity.SelectedItem, "Entity" ) )
+            {
+                comboBox_ObjEntity.Items.Clear();
+                comboBox_ObjEntity.Items.Add( "" );
+                comboBox_ObjEntity.Items.Clear();
+
+                Dictionary<string, Dictionary<string, Dictionary<string, string>>> tmpEntity = new Dictionary<string, Dictionary<string, Dictionary<string, string>>>();
+                tmpEntity = listEntity.Entity;
+
+                for ( int i = 0; i < tmpEntity.Keys.Count; i++ )
+                    comboBox_ObjEntity.Items.Add( tmpEntity.Keys.ToList()[ i ] );
+
+                if ( comboBox_ObjEntity.Items.Count > 0 )
+                    comboBox_ObjEntity.SelectedIndex = 0;
+            }
+
+            SerializationSettings saveSettings = new SerializationSettings();
             saveSettings.Save( "settings.cfg", options );
 
             Refresh();
@@ -921,14 +1031,14 @@ namespace lifeMap
 
         private void dSideToolStripMenuItem_Click( object sender, EventArgs e ) // SIDE 2D
         {
-            TmpViewport.SetTypeViewport( Viewport.TypeViewport.Side_2D_xz );
+            TmpViewport.SetTypeViewport( Viewport.TypeViewport.Side_2D_xy );
         }
 
         //-------------------------------------------------------------------------//
 
         private void dTopZYToolStripMenuItem_Click( object sender, EventArgs e ) // TOP 2D
         {
-            TmpViewport.SetTypeViewport( Viewport.TypeViewport.Top_2D_xy );
+            TmpViewport.SetTypeViewport( Viewport.TypeViewport.Top_2D_xz );
         }
 
         //-------------------------------------------------------------------------//
@@ -972,6 +1082,11 @@ namespace lifeMap
             Program.selectTool = Program.SelectTool.EntityTool;
             Scene.ClearBrushSelect();
             Mouse.RemoveClick();
+            comboBox_CategEntity.SelectedItem = "Entity";
+
+            if ( comboBox_ObjEntity.Items.Count > 1 )
+                Program.SelectEntity[ "Entity" ] = comboBox_ObjEntity.SelectedItem.ToString();
+
             Refresh();
         }
 
@@ -982,6 +1097,9 @@ namespace lifeMap
             Program.selectTool = Program.SelectTool.BoxTool;
             Scene.ClearBrushSelect();
             Mouse.RemoveClick();
+            comboBox_CategEntity.SelectedItem = "Primitives";
+            Program.SelectEntity[ "Primitives" ] = comboBox_ObjEntity.SelectedItem.ToString();
+
             Refresh();
         }
 
@@ -996,6 +1114,7 @@ namespace lifeMap
         private void button_texturePreview_Click( object sender, EventArgs e )
         {
             openFileDialog.Filter = "";
+            openFileDialog.InitialDirectory = options.GetTexturesDirecoty();
 
             if ( openFileDialog.ShowDialog() == DialogResult.OK &&
                 !ManagerTexture.IsTextureExist( Path.GetFileName( openFileDialog.FileName ) ) )
@@ -1017,6 +1136,65 @@ namespace lifeMap
         }
 
         //-------------------------------------------------------------------------//
+        //                          MENU SELECT ENTITY                             //
+        //-------------------------------------------------------------------------//
+
+        private void comboBox_CategEntity_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            int IndexSelect = comboBox_CategEntity.SelectedIndex;
+            string selectCategory = comboBox_CategEntity.Items[ IndexSelect ].ToString();
+
+            comboBox_ObjEntity.Items.Clear();
+            comboBox_ObjEntity.Items.Add( "" );
+            comboBox_ObjEntity.Items.Clear();
+
+            if ( string.Equals( selectCategory, "Entity" ) )
+            {
+                Program.SelectCategoryEntity = "Entity";
+
+                for ( int i = 0; i < listEntity.Entity.Keys.Count; i++ )
+                {
+                    string key = listEntity.Entity.Keys.ToList()[ i ];
+                    comboBox_ObjEntity.Items.Add( key );
+                }
+            }
+            else if ( string.Equals( selectCategory, "Primitives" ) )
+            {
+                Program.SelectCategoryEntity = "Primitives";
+
+                comboBox_ObjEntity.Items.Add( "Cube" );
+                comboBox_ObjEntity.Items.Add( "Sphere" );
+                comboBox_ObjEntity.Items.Add( "Plane" );
+            }
+
+            if ( comboBox_ObjEntity.Items.Count > 0 )
+                comboBox_ObjEntity.SelectedIndex = 0;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void comboBox_ObjEntity_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            int IndexSelect = comboBox_ObjEntity.SelectedIndex;
+            string selectEntity = comboBox_ObjEntity.Items[ IndexSelect ].ToString();
+
+            Program.SelectEntity[ comboBox_CategEntity.SelectedItem.ToString() ] = selectEntity;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        //-------------------------------------------------------------------------//
+        //                          VIEWPORT MENU                                  //
+        //-------------------------------------------------------------------------//
+
+        //-------------------------------------------------------------------------//
+
+        private void propertiesToolStripMenuItem_Click( object sender, EventArgs e )
+        {
+            Mouse.EntitySelect.ShowProperties();
+        }
+
+        //-------------------------------------------------------------------------//
 
         public static Options options = new Options();
         public static SimpleOpenGlControl MainContext = new SimpleOpenGlControl();
@@ -1026,6 +1204,7 @@ namespace lifeMap
         private MapProperties mapProperties = new MapProperties();
         private RunMap runMap = new RunMap();
         private Vector3f FactorMoveCamera = new Vector3f( 0, 0, 0 );
+        private ListEntity listEntity = new ListEntity();
 
         private Viewport TmpViewport;
         private Viewport Viewport1;

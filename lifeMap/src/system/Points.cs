@@ -57,7 +57,7 @@ namespace lifeMap.src.system
         {
             if ( typeViewport != Viewport.TypeViewport.Textured_3D )
             {
-                Gl.glPointSize( 8 );
+                Gl.glPointSize( ManagerPoints.SizePoint );
                 Gl.glBegin( Gl.GL_POINTS );
                 Gl.glColor3f( 1, 1, 1 );
 
@@ -80,46 +80,46 @@ namespace lifeMap.src.system
                 case Viewport.TypeViewport.Front_2D_yz:
                     if ( ManagerPoints.pointsType == ManagerPoints.PointsType.Resize )
                     {
-                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z - ManagerPoints.Size.Z ) ); // Left Center
-                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z + ManagerPoints.Size.Z ) ); // Right Center
-                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + ManagerPoints.Size.Y, CenterBrush.Z ) ); // Top Center
-                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - ManagerPoints.Size.Y, CenterBrush.Z ) ); // Bottom Center
+                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z - ManagerPoints.FactorShift.Z ) ); // Left Center
+                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z + ManagerPoints.FactorShift.Z ) ); // Right Center
+                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + ManagerPoints.FactorShift.Y, CenterBrush.Z ) ); // Top Center
+                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - ManagerPoints.FactorShift.Y, CenterBrush.Z ) ); // Bottom Center
                     }
 
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - ManagerPoints.Size.Y, CenterBrush.Z - ManagerPoints.Size.Z ) ); // Left Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + ManagerPoints.Size.Y, CenterBrush.Z - ManagerPoints.Size.Z ) ); // Left Top
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - ManagerPoints.Size.Y, CenterBrush.Z + ManagerPoints.Size.Z ) ); // Right Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + ManagerPoints.Size.Y, CenterBrush.Z + ManagerPoints.Size.Z ) ); // Right Top
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - ManagerPoints.FactorShift.Y, CenterBrush.Z - ManagerPoints.FactorShift.Z ) ); // Left Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + ManagerPoints.FactorShift.Y, CenterBrush.Z - ManagerPoints.FactorShift.Z ) ); // Left Top
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - ManagerPoints.FactorShift.Y, CenterBrush.Z + ManagerPoints.FactorShift.Z ) ); // Right Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + ManagerPoints.FactorShift.Y, CenterBrush.Z + ManagerPoints.FactorShift.Z ) ); // Right Top
                     break;
 
-                case Viewport.TypeViewport.Side_2D_xz:
+                case Viewport.TypeViewport.Side_2D_xy:
                     if ( ManagerPoints.pointsType == ManagerPoints.PointsType.Resize )
                     {
-                        mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.Size.X, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
-                        mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.Size.X, CenterBrush.Y, CenterBrush.Z ) ); // Right Center
-                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + ManagerPoints.Size.Y, CenterBrush.Z ) ); // Top Center
-                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - ManagerPoints.Size.Y, CenterBrush.Z ) ); // Bottom Center
+                        mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
+                        mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z ) ); // Right Center
+                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + ManagerPoints.FactorShift.Y, CenterBrush.Z ) ); // Top Center
+                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y - ManagerPoints.FactorShift.Y, CenterBrush.Z ) ); // Bottom Center
                     }
 
-                    mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.Size.X, CenterBrush.Y - ManagerPoints.Size.Y, CenterBrush.Z ) ); // Left Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.Size.X, CenterBrush.Y + ManagerPoints.Size.Y, CenterBrush.Z ) ); // Left Top
-                    mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.Size.X, CenterBrush.Y - ManagerPoints.Size.Y, CenterBrush.Z ) ); // Right Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.Size.X, CenterBrush.Y + ManagerPoints.Size.Y, CenterBrush.Z ) ); // Right Top
+                    mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.FactorShift.X, CenterBrush.Y - ManagerPoints.FactorShift.Y, CenterBrush.Z ) ); // Left Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.FactorShift.X, CenterBrush.Y + ManagerPoints.FactorShift.Y, CenterBrush.Z ) ); // Left Top
+                    mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.FactorShift.X, CenterBrush.Y - ManagerPoints.FactorShift.Y, CenterBrush.Z ) ); // Right Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.FactorShift.X, CenterBrush.Y + ManagerPoints.FactorShift.Y, CenterBrush.Z ) ); // Right Top
                     break;
 
-                case Viewport.TypeViewport.Top_2D_xy:
+                case Viewport.TypeViewport.Top_2D_xz:
                     if ( ManagerPoints.pointsType == ManagerPoints.PointsType.Resize )
                     {
-                        mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.Size.X, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
-                        mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.Size.X, CenterBrush.Y, CenterBrush.Z ) ); // Right Center
-                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z + ManagerPoints.Size.Z ) ); // Top Center
-                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z - ManagerPoints.Size.Z ) ); // Bottom Center
+                        mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
+                        mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z ) ); // Right Center
+                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z + ManagerPoints.FactorShift.Z ) ); // Top Center
+                        mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y, CenterBrush.Z - ManagerPoints.FactorShift.Z ) ); // Bottom Center
                     }
 
-                    mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.Size.X, CenterBrush.Y, CenterBrush.Z - ManagerPoints.Size.Z ) ); // Left Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.Size.X, CenterBrush.Y, CenterBrush.Z + ManagerPoints.Size.Z ) ); // Left Top
-                    mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.Size.X, CenterBrush.Y, CenterBrush.Z - ManagerPoints.Size.Z ) ); // Right Bottom
-                    mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.Size.X, CenterBrush.Y, CenterBrush.Z + ManagerPoints.Size.Z ) ); // Right Top
+                    mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z - ManagerPoints.FactorShift.Z ) ); // Left Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z + ManagerPoints.FactorShift.Z ) ); // Left Top
+                    mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z - ManagerPoints.FactorShift.Z ) ); // Right Bottom
+                    mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z + ManagerPoints.FactorShift.Z ) ); // Right Top
                     break;
             }
 
@@ -133,7 +133,7 @@ namespace lifeMap.src.system
             {
                 Vector3f PositionPoint = mPoints[i];
 
-                float factorSize = 15;
+                float factorSize = 4;
 
                 if ( Viewport.TmpViewport.FactorZoom > 0 )
                     factorSize *= Viewport.TmpViewport.FactorZoom;
@@ -153,7 +153,7 @@ namespace lifeMap.src.system
                         }
                         break;
 
-                    case Viewport.TypeViewport.Side_2D_xz:
+                    case Viewport.TypeViewport.Side_2D_xy:
                         if ( PositionClick.X <= PositionPoint.X + factorSize &&
                              PositionClick.X >= PositionPoint.X - factorSize &&
                              PositionClick.Y <= PositionPoint.Y + factorSize &&
@@ -164,7 +164,7 @@ namespace lifeMap.src.system
                         }
                         break;
 
-                    case Viewport.TypeViewport.Top_2D_xy:
+                    case Viewport.TypeViewport.Top_2D_xz:
                         if ( PositionClick.X <= PositionPoint.X + factorSize &&
                              PositionClick.X >= PositionPoint.X - factorSize &&
                              PositionClick.Y <= PositionPoint.Z + factorSize &&

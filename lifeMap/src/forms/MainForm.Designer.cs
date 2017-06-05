@@ -59,6 +59,8 @@
             this.biggerGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.mapPropiertesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuBar_Help = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -93,8 +95,8 @@
             this.button_entitytool = new System.Windows.Forms.Button();
             this.button_camera = new System.Windows.Forms.Button();
             this.button_cursor = new System.Windows.Forms.Button();
-            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewportMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.propertiesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel_textureView.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).BeginInit();
             this.panel_entitytool.SuspendLayout();
@@ -105,6 +107,7 @@
             this.panel_viewport2.SuspendLayout();
             this.panel_viewport1.SuspendLayout();
             this.menuTypeViewport.SuspendLayout();
+            this.viewportMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // comboBox_textureView
@@ -193,10 +196,13 @@
             // 
             this.comboBox_ObjEntity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_ObjEntity.FormattingEnabled = true;
+            this.comboBox_ObjEntity.ItemHeight = 13;
             this.comboBox_ObjEntity.Location = new System.Drawing.Point(4, 61);
             this.comboBox_ObjEntity.Name = "comboBox_ObjEntity";
             this.comboBox_ObjEntity.Size = new System.Drawing.Size(116, 21);
+            this.comboBox_ObjEntity.Sorted = true;
             this.comboBox_ObjEntity.TabIndex = 3;
+            this.comboBox_ObjEntity.SelectedIndexChanged += new System.EventHandler(this.comboBox_ObjEntity_SelectedIndexChanged);
             // 
             // label_entitytool_objects
             // 
@@ -211,10 +217,14 @@
             // 
             this.comboBox_CategEntity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_CategEntity.FormattingEnabled = true;
+            this.comboBox_CategEntity.Items.AddRange(new object[] {
+            "Primitives",
+            "Entity"});
             this.comboBox_CategEntity.Location = new System.Drawing.Point(3, 20);
             this.comboBox_CategEntity.Name = "comboBox_CategEntity";
             this.comboBox_CategEntity.Size = new System.Drawing.Size(117, 21);
             this.comboBox_CategEntity.TabIndex = 1;
+            this.comboBox_CategEntity.SelectedIndexChanged += new System.EventHandler(this.comboBox_CategEntity_SelectedIndexChanged);
             // 
             // label_entitytool_categories
             // 
@@ -380,6 +390,25 @@
             this.mapPropiertesToolStripMenuItem.Text = "Map Properties";
             this.mapPropiertesToolStripMenuItem.Click += new System.EventHandler(this.mapPropiertesToolStripMenuItem_Click);
             // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.optionsToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.ShowDropDownArrow = false;
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(40, 22);
+            this.toolStripDropDownButton1.Text = "Tools";
+            // 
+            // optionsToolStripMenuItem
+            // 
+            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
+            this.optionsToolStripMenuItem.Text = "Options";
+            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            // 
             // menuBar_Help
             // 
             this.menuBar_Help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -418,6 +447,7 @@
             this.view4.TabIndex = 23;
             this.view4.Paint += new System.Windows.Forms.PaintEventHandler(this.view4_Paint);
             this.view4.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view4_KeyDown);
+            this.view4.MouseClick += new System.Windows.Forms.MouseEventHandler(this.view4_MouseClick);
             this.view4.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view4_MouseDoubleClick);
             this.view4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view4_MouseDown);
             this.view4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view4_MouseMove);
@@ -441,6 +471,7 @@
             this.view3.TabIndex = 23;
             this.view3.Paint += new System.Windows.Forms.PaintEventHandler(this.view3_Paint);
             this.view3.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view3_KeyDown);
+            this.view3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.view3_MouseClick);
             this.view3.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view3_MouseDoubleClick);
             this.view3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view3_MouseDown);
             this.view3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view3_MouseMove);
@@ -464,6 +495,7 @@
             this.view1.TabIndex = 23;
             this.view1.Paint += new System.Windows.Forms.PaintEventHandler(this.view1_Paint);
             this.view1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view1_KeyDown);
+            this.view1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.view1_MouseClick);
             this.view1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view1_MouseDoubleClick);
             this.view1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view1_MouseDown);
             this.view1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view1_MouseMove);
@@ -668,6 +700,7 @@
             this.view2.TabIndex = 23;
             this.view2.Paint += new System.Windows.Forms.PaintEventHandler(this.view2_Paint);
             this.view2.KeyDown += new System.Windows.Forms.KeyEventHandler(this.view2_KeyDown);
+            this.view2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.view2_MouseClick);
             this.view2.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.view2_MouseDoubleClick);
             this.view2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.view2_MouseDown);
             this.view2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.view2_MouseMove);
@@ -747,14 +780,14 @@
             // 
             this.dSideToolStripMenuItem.Name = "dSideToolStripMenuItem";
             this.dSideToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.dSideToolStripMenuItem.Text = "2D Side (X/Z)";
+            this.dSideToolStripMenuItem.Text = "2D Side (X/Y)";
             this.dSideToolStripMenuItem.Click += new System.EventHandler(this.dSideToolStripMenuItem_Click);
             // 
             // dTopZYToolStripMenuItem
             // 
             this.dTopZYToolStripMenuItem.Name = "dTopZYToolStripMenuItem";
             this.dTopZYToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.dTopZYToolStripMenuItem.Text = "2D Top (X/Y)";
+            this.dTopZYToolStripMenuItem.Text = "2D Top (X/Z)";
             this.dTopZYToolStripMenuItem.Click += new System.EventHandler(this.dTopZYToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
@@ -822,24 +855,19 @@
             this.button_cursor.UseVisualStyleBackColor = true;
             this.button_cursor.Click += new System.EventHandler(this.button_cursor_Click);
             // 
-            // toolStripDropDownButton1
+            // viewportMenu
             // 
-            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.optionsToolStripMenuItem});
-            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
-            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.ShowDropDownArrow = false;
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(40, 22);
-            this.toolStripDropDownButton1.Text = "Tools";
+            this.viewportMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.propertiesToolStripMenuItem});
+            this.viewportMenu.Name = "viewportMenu";
+            this.viewportMenu.Size = new System.Drawing.Size(128, 26);
             // 
-            // optionsToolStripMenuItem
+            // propertiesToolStripMenuItem
             // 
-            this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.optionsToolStripMenuItem.Text = "Options";
-            this.optionsToolStripMenuItem.Click += new System.EventHandler(this.optionsToolStripMenuItem_Click);
+            this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.propertiesToolStripMenuItem.Text = "Properties";
+            this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
             // 
             // MainForm
             // 
@@ -877,6 +905,7 @@
             this.panel_viewport1.ResumeLayout(false);
             this.panel_viewport1.PerformLayout();
             this.menuTypeViewport.ResumeLayout(false);
+            this.viewportMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -948,7 +977,9 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
         private System.Windows.Forms.ToolStripMenuItem mapPropiertesToolStripMenuItem;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;        
+        private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip viewportMenu;
+        private System.Windows.Forms.ToolStripMenuItem propertiesToolStripMenuItem;        
     }
 }
 

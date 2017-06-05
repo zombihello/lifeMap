@@ -23,7 +23,8 @@ namespace lifeMap.src.brushes
             endPosition = EndPosition;
 
             InitBrush( StartPosition, EndPosition, PrimitivesType.Cube, ManagerTexture.SelectTexture );
-            ColorBrush = new Color( 1, 1, 1 );
+            brushType = BrushType.Brush;
+            ColorBrush = new Color( 255, 255, 255 );
             DefaultColorBrush = ColorBrush;
 
             // Front

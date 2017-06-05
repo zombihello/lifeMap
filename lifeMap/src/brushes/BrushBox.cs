@@ -24,7 +24,7 @@ namespace lifeMap.src.brushes
         public BrushBox( SaveBrush brush )
         {
             InitBrush( brush, PrimitivesType.Cube );
-            ColorBrush = new Color( 0, 0.5f, 0.5f );
+            ColorBrush = new Color( 0, 127, 127 );
             DefaultColorBrush = ColorBrush;
         }
 
@@ -33,7 +33,8 @@ namespace lifeMap.src.brushes
         public override void Create( Vector3f StartPosition, Vector3f EndPosition )
         {
             InitBrush( StartPosition, EndPosition, PrimitivesType.Cube, ManagerTexture.SelectTexture );
-            ColorBrush = new Color( 0, 0.5f, 0.5f );
+            brushType = BasicBrush.BrushType.Brush;
+            ColorBrush = new Color( 0, 127, 127 );
             DefaultColorBrush = ColorBrush;
 
             // Front
