@@ -296,8 +296,12 @@ namespace lifeMap.src.system
         {
             List<Entity> mEntitys = new List<Entity>();
 
+            if ( Entity.listEntity == null )
+                return mEntitys;
+
             for ( int i = 0; i < Entitys.Count; i++ )
-                mEntitys.Add( new Entity( Entitys[ i ] ) );
+                if ( Entity.listEntity.Entity.ContainsKey( Entitys[ i ].EntityName ) )
+                    mEntitys.Add( new Entity( Entitys[ i ] ) );
 
             return mEntitys;
         }

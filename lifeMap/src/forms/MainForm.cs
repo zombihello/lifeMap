@@ -38,13 +38,13 @@ namespace lifeMap
             Viewport1 = new Viewport( view1, Viewport.TypeViewport.Textured_3D, label_viewport1, vScrollBar_viewport1, hScrollBar_viewport1 );
             Viewport1.bEnabled = false;
 
-            Viewport2 = new Viewport( view2, Viewport.TypeViewport.Top_2D_xy, label_viewport2, vScrollBar__viewport2, hScrollBar_viewport2 );
+            Viewport2 = new Viewport( view2, Viewport.TypeViewport.Top_2D_xz, label_viewport2, vScrollBar__viewport2, hScrollBar_viewport2 );
             Viewport2.bEnabled = false;
 
             Viewport3 = new Viewport( view3, Viewport.TypeViewport.Front_2D_yz, label_viewport3, vScrollBar_viewport3, hScrollBar_viewport3 );
             Viewport3.bEnabled = false;
 
-            Viewport4 = new Viewport( view4, Viewport.TypeViewport.Side_2D_xz, label_viewport4, vScrollBar_viewport4, hScrollBar_viewport4 );
+            Viewport4 = new Viewport( view4, Viewport.TypeViewport.Side_2D_xy, label_viewport4, vScrollBar_viewport4, hScrollBar_viewport4 );
             Viewport4.bEnabled = false;
 
             view1.MouseWheel += new MouseEventHandler( view1_MouseWheel );
@@ -727,6 +727,12 @@ namespace lifeMap
 
         private void toolStripMenuItem2_Click( object sender, EventArgs e ) // NEW MAP
         {
+            if ( options.GetRouteToDEG().Count == 0 )
+            {
+                MessageBox.Show( "No upload game data files (entity)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
+
             Scene.Clear();
             ManagerTexture.ClearTextures();
             image_previewTexture.Image = null;
@@ -760,11 +766,19 @@ namespace lifeMap
 
         private void toolStripMenuItem3_Click( object sender, EventArgs e ) // LOAD MAP
         {
+            if ( options.GetRouteToDEG().Count == 0 )
+            {
+                MessageBox.Show( "No upload game data files (entity)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                return;
+            }
+
             openFileDialog.Filter = "lifeMap | *.map";
             openFileDialog.InitialDirectory = options.GetSrcMapDirectory();
 
             if ( openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK )
             {
+                saveFileDialog.FileName = openFileDialog.FileName;
+
                 Scene.Clear();
                 ManagerTexture.ClearTextures();
                 image_previewTexture.Image = null;
@@ -1017,14 +1031,14 @@ namespace lifeMap
 
         private void dSideToolStripMenuItem_Click( object sender, EventArgs e ) // SIDE 2D
         {
-            TmpViewport.SetTypeViewport( Viewport.TypeViewport.Side_2D_xz );
+            TmpViewport.SetTypeViewport( Viewport.TypeViewport.Side_2D_xy );
         }
 
         //-------------------------------------------------------------------------//
 
         private void dTopZYToolStripMenuItem_Click( object sender, EventArgs e ) // TOP 2D
         {
-            TmpViewport.SetTypeViewport( Viewport.TypeViewport.Top_2D_xy );
+            TmpViewport.SetTypeViewport( Viewport.TypeViewport.Top_2D_xz );
         }
 
         //-------------------------------------------------------------------------//

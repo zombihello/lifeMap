@@ -22,7 +22,7 @@ namespace lifeMap.src
             openFileDialog.Filter = "Data Entity Game | *.deg";
 
             comboBox_sizeGrid.SelectedIndex = 2;
-            trackBar_intensity.Value = 45;
+            trackBar_intensity.Value = 60;
             trackBar_renderDistance.Value = 1000;
             checkBox_filterTextures.Checked = true;
             textBox_cameraFOV.Text = 45.ToString();

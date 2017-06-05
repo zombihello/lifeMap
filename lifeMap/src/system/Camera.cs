@@ -60,7 +60,7 @@ namespace lifeMap.src.system
                     Glu.gluLookAt( Position.X, Position.Y, Position.Z, CenterPosition.X, CenterPosition.Y, CenterPosition.Z, 0, 1, 0 );
                     break;
 
-                case Viewport.TypeViewport.Top_2D_xy:
+                case Viewport.TypeViewport.Top_2D_xz:
                     Gl.glRotatef( -90, 1, 0, 0 );
                     break;
 

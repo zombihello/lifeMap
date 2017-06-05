@@ -22,18 +22,7 @@ namespace lifeMap.src.brushes
 
         public Entity( SaveEntity saveEntity )
         {
-            Dictionary<string, string> TmpValues = saveEntity.Values;
-            Dictionary<string, string> TmpSettings = listEntity.Entity[ saveEntity.EntityName ][ "Settings" ];
-
-            brushType = BasicBrush.BrushType.Entity;
-            this.Position = saveEntity.Position;
-            EntityName = saveEntity.EntityName;
-            Size = new Vector3f( TmpSettings[ "Size" ] );
-            SelectSize = new Vector3f( Size / 2 );
-            ColorBrush = DefaultColorBrush = new Color( TmpSettings[ "Color" ] );
-
-            for ( int i = 0; i < TmpValues.Keys.Count; i++ )
-                mValues[ TmpValues.Keys.ToList()[ i ].ToString() ] = TmpValues[ TmpValues.Keys.ToList()[ i ] ];
+            InitEntity( saveEntity );
 
             // Front
             AddVertex( 0, 0, 0, Vertex.TypeVertex.LeftBottom ); // 0
@@ -56,18 +45,7 @@ namespace lifeMap.src.brushes
 
         public void Create( Vector3f Position )
         {
-            Dictionary<string, string> TmpValues = listEntity.Entity[ Program.SelectEntity[ "Entity" ] ][ "Value" ];
-            Dictionary<string, string> TmpSettings = listEntity.Entity[ Program.SelectEntity[ "Entity" ] ][ "Settings" ];
-
-            brushType = BasicBrush.BrushType.Entity;
-            this.Position = Program.Align( Position, Viewport.fSize );
-            EntityName = Program.SelectEntity[ "Entity" ];
-            Size = new Vector3f( TmpSettings[ "Size" ] );
-            SelectSize = new Vector3f( Size / 2 );
-            ColorBrush = DefaultColorBrush = new Color( TmpSettings[ "Color" ] );
-       
-            for ( int i = 0; i < TmpValues.Keys.Count; i++ )
-                mValues[ TmpValues.Keys.ToList()[ i ].ToString() ] = TmpValues[ TmpValues.Keys.ToList()[ i ] ];
+            InitEntity( Position );
 
             // Front
             AddVertex( 0, 0, 0, Vertex.TypeVertex.LeftBottom ); // 0
@@ -100,12 +78,83 @@ namespace lifeMap.src.brushes
 
         public SaveEntity ToSave()
         {
-            SaveEntity saveEntity = new SaveEntity();      
+            SaveEntity saveEntity = new SaveEntity();
             saveEntity.EntityName = EntityName;
             saveEntity.Position = Position;
             saveEntity.Values = mValues;
 
             return saveEntity;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void InitEntity( SaveEntity saveEntity )
+        {
+            Dictionary<string, string> TmpValues = saveEntity.Values;
+            Dictionary<string, string> TmpSettings = new Dictionary<string, string>();
+
+            if ( listEntity.Entity[ saveEntity.EntityName ].ContainsKey( "Settings" ) )
+            {
+                TmpSettings = listEntity.Entity[ saveEntity.EntityName ][ "Settings" ];
+
+                if ( !TmpSettings.ContainsKey( "Size" ) )
+                    TmpSettings.Add( "Size", "16 16 16" );
+
+                if ( !TmpSettings.ContainsKey( "Color" ) )
+                    TmpSettings.Add( "Color", "234 20 239" );
+            }
+            else
+            {
+                TmpSettings.Add( "Size", "16 16 16" );
+                TmpSettings.Add( "Color", "234 20 239" );
+            }
+
+            brushType = BasicBrush.BrushType.Entity;
+            this.Position = saveEntity.Position;
+            EntityName = saveEntity.EntityName;
+            Size = new Vector3f( TmpSettings[ "Size" ] );
+            SelectSize = new Vector3f( Size / 2 );
+            ColorBrush = DefaultColorBrush = new Color( TmpSettings[ "Color" ] );
+
+            for ( int i = 0; i < TmpValues.Keys.Count; i++ )
+                mValues[ TmpValues.Keys.ToList()[ i ].ToString() ] = TmpValues[ TmpValues.Keys.ToList()[ i ] ];
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void InitEntity( Vector3f Position )
+        {
+            Dictionary<string, string> TmpValues = new Dictionary<string,string>();
+            Dictionary<string, string> TmpSettings = new Dictionary<string,string>();
+
+            if ( listEntity.Entity[ Program.SelectEntity[ "Entity" ] ].ContainsKey( "Value" ) )
+                TmpValues = listEntity.Entity[ Program.SelectEntity[ "Entity" ] ][ "Value" ];
+
+            if ( listEntity.Entity[ Program.SelectEntity[ "Entity" ] ].ContainsKey( "Settings" ) )
+            {
+                TmpSettings = listEntity.Entity[ Program.SelectEntity[ "Entity" ] ][ "Settings" ];
+
+                if ( !TmpSettings.ContainsKey( "Size" ) )
+                    TmpSettings.Add( "Size", "16 16 16" );
+
+                if ( !TmpSettings.ContainsKey( "Color" ) )
+                    TmpSettings.Add( "Color", "234 20 239" );
+            }
+            else
+            {
+                TmpSettings.Add( "Size", "16 16 16" );
+                TmpSettings.Add( "Color", "234 20 239" );
+            }
+
+            brushType = BasicBrush.BrushType.Entity;
+            this.Position = Program.Align( Position, Viewport.fSize );
+            EntityName = Program.SelectEntity[ "Entity" ];
+            Size = new Vector3f( TmpSettings[ "Size" ] );
+            SelectSize = new Vector3f( Size / 2 );
+            ColorBrush = DefaultColorBrush = new Color( TmpSettings[ "Color" ] );
+
+            for ( int i = 0; i < TmpValues.Keys.Count; i++ )
+                mValues[ TmpValues.Keys.ToList()[ i ].ToString() ] = TmpValues[ TmpValues.Keys.ToList()[ i ] ];
         }
 
         //-------------------------------------------------------------------------//

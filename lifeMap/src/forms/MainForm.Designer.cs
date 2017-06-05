@@ -780,14 +780,14 @@
             // 
             this.dSideToolStripMenuItem.Name = "dSideToolStripMenuItem";
             this.dSideToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.dSideToolStripMenuItem.Text = "2D Side (X/Z)";
+            this.dSideToolStripMenuItem.Text = "2D Side (X/Y)";
             this.dSideToolStripMenuItem.Click += new System.EventHandler(this.dSideToolStripMenuItem_Click);
             // 
             // dTopZYToolStripMenuItem
             // 
             this.dTopZYToolStripMenuItem.Name = "dTopZYToolStripMenuItem";
             this.dTopZYToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
-            this.dTopZYToolStripMenuItem.Text = "2D Top (X/Y)";
+            this.dTopZYToolStripMenuItem.Text = "2D Top (X/Z)";
             this.dTopZYToolStripMenuItem.Click += new System.EventHandler(this.dTopZYToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
@@ -860,12 +860,12 @@
             this.viewportMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.propertiesToolStripMenuItem});
             this.viewportMenu.Name = "viewportMenu";
-            this.viewportMenu.Size = new System.Drawing.Size(153, 48);
+            this.viewportMenu.Size = new System.Drawing.Size(128, 26);
             // 
             // propertiesToolStripMenuItem
             // 
             this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.propertiesToolStripMenuItem.Text = "Properties";
             this.propertiesToolStripMenuItem.Click += new System.EventHandler(this.propertiesToolStripMenuItem_Click);
             // 

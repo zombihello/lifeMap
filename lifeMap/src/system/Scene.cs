@@ -60,7 +60,7 @@ namespace lifeMap.src.system
 
             switch ( typeViewport )
             {
-                case Viewport.TypeViewport.Top_2D_xy:
+                case Viewport.TypeViewport.Top_2D_xz:
                     BrushSelect = new BrushSelect();
                     StartPosition.Z = StartPosition.Y;
                     EndPosition.Z = EndPosition.Y;
@@ -76,7 +76,7 @@ namespace lifeMap.src.system
                     BrushSelect.Create( StartPosition, EndPosition );
                     break;
 
-                case Viewport.TypeViewport.Side_2D_xz:
+                case Viewport.TypeViewport.Side_2D_xy:
                     BrushSelect = new BrushSelect();
                     StartPosition.Z = EndPosition.Z = 0;
                     BrushSelect.Create( StartPosition, EndPosition );
@@ -101,12 +101,15 @@ namespace lifeMap.src.system
 
         public static void CreateEntity( Viewport.TypeViewport typeViewport, Viewport viewport )
         {
+            if ( Entity.listEntity == null || !Entity.listEntity.Entity.ContainsKey( Program.SelectEntity[ "Entity" ] ) )
+                return;
+
             Entity entity = new Entity();
             Vector3f Position = Program.ToNewCoords( viewport.Camera.Position, Mouse.ClickPosition );
 
             switch ( typeViewport )
             {
-                case Viewport.TypeViewport.Top_2D_xy:
+                case Viewport.TypeViewport.Top_2D_xz:
                     Position.Z = Position.Y;
                     Position.Y = Position.Y = 0;
                     entity.Create( Position );
@@ -118,7 +121,7 @@ namespace lifeMap.src.system
                     entity.Create( Position );
                     break;
 
-                case Viewport.TypeViewport.Side_2D_xz:
+                case Viewport.TypeViewport.Side_2D_xy:
                     Position.Z = 0;
                     entity.Create( Position );
                     break;
@@ -146,7 +149,7 @@ namespace lifeMap.src.system
             {
                 switch ( typeViewport )
                 {
-                    case Viewport.TypeViewport.Top_2D_xy:
+                    case Viewport.TypeViewport.Top_2D_xz:
                         centerBrush = new Vector3f( mEntity[ i ].CenterBrush.X, mEntity[ i ].CenterBrush.Z, 0 );
                         break;
 
@@ -154,7 +157,7 @@ namespace lifeMap.src.system
                         centerBrush = new Vector3f( mEntity[ i ].CenterBrush.Z, mEntity[ i ].CenterBrush.Y, 0 );
                         break;
 
-                    case Viewport.TypeViewport.Side_2D_xz:
+                    case Viewport.TypeViewport.Side_2D_xy:
                         centerBrush = new Vector3f( mEntity[ i ].CenterBrush.X, mEntity[ i ].CenterBrush.Y, 0 );
                         break;
 
@@ -192,7 +195,7 @@ namespace lifeMap.src.system
             {
                 switch ( typeViewport )
                 {
-                    case Viewport.TypeViewport.Top_2D_xy:
+                    case Viewport.TypeViewport.Top_2D_xz:
                         centerBrush = new Vector3f( mBrush[ i ].CenterBrush.X, mBrush[ i ].CenterBrush.Z, 0 );
                         break;
 
@@ -200,7 +203,7 @@ namespace lifeMap.src.system
                         centerBrush = new Vector3f( mBrush[ i ].CenterBrush.Z, mBrush[ i ].CenterBrush.Y, 0 );
                         break;
 
-                    case Viewport.TypeViewport.Side_2D_xz:
+                    case Viewport.TypeViewport.Side_2D_xy:
                         centerBrush = new Vector3f( mBrush[ i ].CenterBrush.X, mBrush[ i ].CenterBrush.Y, 0 );
                         break;
 

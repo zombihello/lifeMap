@@ -92,7 +92,7 @@ namespace lifeMap.src.system
                     mPoints.Add( new Vector3f( CenterBrush.X, CenterBrush.Y + ManagerPoints.FactorShift.Y, CenterBrush.Z + ManagerPoints.FactorShift.Z ) ); // Right Top
                     break;
 
-                case Viewport.TypeViewport.Side_2D_xz:
+                case Viewport.TypeViewport.Side_2D_xy:
                     if ( ManagerPoints.pointsType == ManagerPoints.PointsType.Resize )
                     {
                         mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
@@ -107,7 +107,7 @@ namespace lifeMap.src.system
                     mPoints.Add( new Vector3f( CenterBrush.X + ManagerPoints.FactorShift.X, CenterBrush.Y + ManagerPoints.FactorShift.Y, CenterBrush.Z ) ); // Right Top
                     break;
 
-                case Viewport.TypeViewport.Top_2D_xy:
+                case Viewport.TypeViewport.Top_2D_xz:
                     if ( ManagerPoints.pointsType == ManagerPoints.PointsType.Resize )
                     {
                         mPoints.Add( new Vector3f( CenterBrush.X - ManagerPoints.FactorShift.X, CenterBrush.Y, CenterBrush.Z ) ); // Left Center
@@ -153,7 +153,7 @@ namespace lifeMap.src.system
                         }
                         break;
 
-                    case Viewport.TypeViewport.Side_2D_xz:
+                    case Viewport.TypeViewport.Side_2D_xy:
                         if ( PositionClick.X <= PositionPoint.X + factorSize &&
                              PositionClick.X >= PositionPoint.X - factorSize &&
                              PositionClick.Y <= PositionPoint.Y + factorSize &&
@@ -164,7 +164,7 @@ namespace lifeMap.src.system
                         }
                         break;
 
-                    case Viewport.TypeViewport.Top_2D_xy:
+                    case Viewport.TypeViewport.Top_2D_xz:
                         if ( PositionClick.X <= PositionPoint.X + factorSize &&
                              PositionClick.X >= PositionPoint.X - factorSize &&
                              PositionClick.Y <= PositionPoint.Z + factorSize &&

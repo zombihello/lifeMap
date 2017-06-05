@@ -43,6 +43,9 @@ namespace lifeMap.src.system
             string CodeEntity = File.ReadAllText( Route );
             ListEntity serialization = JsonConvert.DeserializeObject<ListEntity>( CodeEntity );
 
+            if ( serialization == null )
+                return false;
+
             listEntity = serialization;
             Entity.listEntity = listEntity;
 

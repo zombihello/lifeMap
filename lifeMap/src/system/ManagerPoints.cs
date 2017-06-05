@@ -30,9 +30,9 @@ namespace lifeMap.src.system
             brushSelect = Brush;
             FactorShift = Brush.SelectSize;
 
-            mPoints.Add( new Points( brushSelect, Viewport.TypeViewport.Top_2D_xy ) );
+            mPoints.Add( new Points( brushSelect, Viewport.TypeViewport.Top_2D_xz ) );
             mPoints.Add( new Points( brushSelect, Viewport.TypeViewport.Front_2D_yz ) );
-            mPoints.Add( new Points( brushSelect, Viewport.TypeViewport.Side_2D_xz ) );
+            mPoints.Add( new Points( brushSelect, Viewport.TypeViewport.Side_2D_xy ) );
         }
 
         //-------------------------------------------------------------------------//
