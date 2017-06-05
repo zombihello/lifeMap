@@ -162,7 +162,7 @@ namespace lifeMap.src.system
 
             for ( int i = 0; i < Entitys.Count; i++ )
             {
-                CodeMap += "<Entity Name=\"" + Entitys[ i ].EntityName + "\"/>\n";
+                CodeMap += "<Entity Name=\"" + Entitys[ i ].EntityName + "\">\n";
                 CodeMap += "<Position X=\"" + Entitys[ i ].Position.X + "\" Y=\"" + Entitys[ i ].Position.Y + "\" Z=\"" + Entitys[ i ].Position.Z + "\"/>\n";
 
                 for ( int j = 0; j < Entitys[ i ].Values.Keys.Count; j++ )
