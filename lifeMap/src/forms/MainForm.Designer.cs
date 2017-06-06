@@ -888,6 +888,7 @@
             this.Text = "lifeMap";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.MainForm_Load);
+            this.Shown += new System.EventHandler(this.MainForm_Shown);
             this.panel_textureView.ResumeLayout(false);
             this.panel_textureView.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.image_previewTexture)).EndInit();

@@ -60,7 +60,7 @@ namespace lifeMap
             Viewport4.Camera.SetPosition( new Vector3f( view4.Width / 2, view4.Height / 2, 0 ) );
 
             SerializationSettings settings = new SerializationSettings();
-            settings.Load( "settings.cfg", options );
+            settings.Load( Path.GetDirectoryName( Program.args[ 0 ] ) + "\\settings.cfg", options );
 
             LoadListEntity();
 
@@ -108,7 +108,76 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
+        private void MainForm_Shown( object sender, EventArgs e )
+        {
+            if ( Program.args.Length > 1 )
+                if ( options.GetRouteToDEG().Count == 0 )
+                    MessageBox.Show( "No upload game data files (entity)", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error );
+                else
+                    LoadMap( Program.args[ 1 ] );
+        }
 
+        //-------------------------------------------------------------------------//
+
+        private void ClearMap()
+        {
+            Scene.Clear();
+            ManagerTexture.ClearTextures();
+            image_previewTexture.Image = null;
+            comboBox_textureView.SelectedIndex = -1;
+            comboBox_textureView.Items.Clear();
+        }
+
+        //-------------------------------------------------------------------------//
+
+        private void LoadMap( string Route )
+        {
+            Serialization serialization = new Serialization();
+            serialization.LoadMap( Route );
+
+            serialization.GetMapSettings( mapProperties );
+            ManagerTexture.mTextures = serialization.GetLoadTextures( options.GetTexturesDirecoty() );
+
+            for ( int i = 0; i < ManagerTexture.mTextures.Count; i++ )
+            {
+                ManagerTexture.mTextures[ i ].Route = options.GetTexturesDirecoty() + "\\" + ManagerTexture.mTextures[ i ].Name;
+
+                if ( File.Exists( ManagerTexture.mTextures[ i ].Route ) )
+                {
+                    comboBox_textureView.Items.Add( ManagerTexture.mTextures[ i ].Name );
+                    ManagerTexture.mPicTextures.Add( new Bitmap( ManagerTexture.mTextures[ i ].Route ) );
+                }
+                else
+                    ManagerTexture.mTextures.RemoveAt( i );
+            }
+
+            Scene.SetAllBrushes( serialization.GetSolidBrushes() );
+            Scene.SetAllEntitys( serialization.GetEntitys() );
+
+            menuBar.Items[ 1 ].Visible = true;
+
+            menuBar_File.DropDownItems[ 3 ].Enabled = true; // Save Map
+            menuBar_File.DropDownItems[ 4 ].Enabled = true; // Save as...
+            menuBar_File.DropDownItems[ 6 ].Enabled = true; // Export
+            menuBar_File.DropDownItems[ 8 ].Enabled = true; // Close Map
+
+            button_cursor.Enabled = true;
+            button_camera.Enabled = true;
+            button_entitytool.Enabled = true;
+            button_boxtool.Enabled = true;
+
+            Viewport1.bEnabled = true;
+            Viewport2.bEnabled = true;
+            Viewport3.bEnabled = true;
+            Viewport4.bEnabled = true;
+
+            panel_entitytool.Enabled = true;
+            panel_textureView.Enabled = true;
+
+            Refresh();
+        }
+
+        //-------------------------------------------------------------------------//
 
         //-------------------------------------------------------------------------//
         //                             VIEWPORT                                    //
@@ -733,11 +802,7 @@ namespace lifeMap
                 return;
             }
 
-            Scene.Clear();
-            ManagerTexture.ClearTextures();
-            image_previewTexture.Image = null;
-            comboBox_textureView.SelectedIndex = -1;
-            comboBox_textureView.Items.Clear();
+            ClearMap();
 
             menuBar.Items[ 1 ].Visible = true;
 
@@ -778,56 +843,8 @@ namespace lifeMap
             if ( openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK )
             {
                 saveFileDialog.FileName = openFileDialog.FileName;
-
-                Scene.Clear();
-                ManagerTexture.ClearTextures();
-                image_previewTexture.Image = null;
-                comboBox_textureView.SelectedIndex = -1;
-                comboBox_textureView.Items.Clear();
-
-                Serialization serialization = new Serialization();
-                serialization.LoadMap( openFileDialog.FileName );
-
-                serialization.GetMapSettings( mapProperties );
-                ManagerTexture.mTextures = serialization.GetLoadTextures( options.GetTexturesDirecoty() );
-
-                for ( int i = 0; i < ManagerTexture.mTextures.Count; i++ )
-                {
-                    ManagerTexture.mTextures[ i ].Route = options.GetTexturesDirecoty() + "\\" + ManagerTexture.mTextures[ i ].Name;
-
-                    if ( File.Exists( ManagerTexture.mTextures[ i ].Route ) )
-                    {
-                        comboBox_textureView.Items.Add( ManagerTexture.mTextures[ i ].Name );
-                        ManagerTexture.mPicTextures.Add( new Bitmap( ManagerTexture.mTextures[ i ].Route ) );
-                    }
-                    else
-                        ManagerTexture.mTextures.RemoveAt( i );
-                }
-
-                Scene.SetAllBrushes( serialization.GetSolidBrushes() );
-                Scene.SetAllEntitys( serialization.GetEntitys() );
-
-                menuBar.Items[ 1 ].Visible = true;
-
-                menuBar_File.DropDownItems[ 3 ].Enabled = true; // Save Map
-                menuBar_File.DropDownItems[ 4 ].Enabled = true; // Save as...
-                menuBar_File.DropDownItems[ 6 ].Enabled = true; // Export
-                menuBar_File.DropDownItems[ 8 ].Enabled = true; // Close Map
-
-                button_cursor.Enabled = true;
-                button_camera.Enabled = true;
-                button_entitytool.Enabled = true;
-                button_boxtool.Enabled = true;
-
-                Viewport1.bEnabled = true;
-                Viewport2.bEnabled = true;
-                Viewport3.bEnabled = true;
-                Viewport4.bEnabled = true;
-
-                panel_entitytool.Enabled = true;
-                panel_textureView.Enabled = true;
-
-                Refresh();
+                ClearMap();
+                LoadMap( openFileDialog.FileName );
             }
         }
 
@@ -941,12 +958,7 @@ namespace lifeMap
             panel_entitytool.Enabled = false;
             panel_textureView.Enabled = false;
 
-            Scene.Clear();
-            ManagerTexture.ClearTextures();
-            image_previewTexture.Image = null;
-            comboBox_textureView.SelectedIndex = -1;
-            comboBox_textureView.Items.Clear();
-
+            ClearMap();
             Refresh();
         }
 
@@ -1011,7 +1023,7 @@ namespace lifeMap
             }
 
             SerializationSettings saveSettings = new SerializationSettings();
-            saveSettings.Save( "settings.cfg", options );
+            saveSettings.Save( Path.GetDirectoryName( Program.args[ 0 ] ) + "\\settings.cfg", options );
 
             Refresh();
         }

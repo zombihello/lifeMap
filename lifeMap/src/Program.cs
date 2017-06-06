@@ -34,7 +34,7 @@ namespace lifeMap
 
         [STAThread]
         static void Main()
-        {       
+        {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );        
             Application.Run( new MainForm() );
@@ -74,8 +74,9 @@ namespace lifeMap
         //-------------------------------------------------------------------------//
 
         public static string Version = "Alpha 1.4.0";
-        public static SelectTool selectTool = SelectTool.None;
         public static string SelectCategoryEntity;
+        public static string[] args = Environment.GetCommandLineArgs();
+        public static SelectTool selectTool = SelectTool.None;     
         public static Dictionary<string, string> SelectEntity = new Dictionary<string, string>();
     }
 }
