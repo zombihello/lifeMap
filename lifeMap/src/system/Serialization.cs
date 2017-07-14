@@ -126,7 +126,12 @@ namespace lifeMap.src.system
                     CodeMap += "<PositionVertex>\n";
 
                     for ( int j = 0; j < mVertex.Count; j++ )
-                        CodeMap += "<Vertex X=\"" + mVertex[ j ].X + "\" Y=\"" + mVertex[ j ].Y + "\" Z=\"" + mVertex[ j ].Z + "\"/>\n";
+                    {
+                        string VertexX = mVertex[j].X.ToString().Replace( ",", "." );
+                        string VertexY = mVertex[j].Y.ToString().Replace( ",", "." );
+                        string VertexZ = mVertex[j].Z.ToString().Replace( ",", "." );
+                        CodeMap += "<Vertex X=\"" + VertexX + "\" Y=\"" + VertexY + "\" Z=\"" + VertexZ + "\"/>\n";
+                    }
 
                     CodeMap += "</PositionVertex>\n";
 
@@ -136,8 +141,8 @@ namespace lifeMap.src.system
 
                     for ( int j = 0; j < mTextureCoords.Count; j++ )
                     {
-                        string textureX = string.Format( "{0:0}", mTextureCoords[ j ].X );
-                        string textureY = string.Format( "{0:0}", mTextureCoords[ j ].Y ); // TODO: некоректно сохраняються координаты, исправить
+                        string textureX = mTextureCoords[j].X.ToString().Replace( ",", "." );
+                        string textureY = mTextureCoords[j].Y.ToString().Replace( ",", "." );
                         CodeMap += "<Point X=\"" + textureX + "\" Y=\"" + textureY + "\"/>\n";
                     }
 
