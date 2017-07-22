@@ -40,6 +40,7 @@ namespace lifeMap.src.brushes
             AddVertex( 0, Size.Y, Size.Z, Vertex.TypeVertex.Back_LeftTop ); // 7
 
             GenerateTextureCoords();
+            GenerateNormals();
             ToGloablCoords();
         }
 

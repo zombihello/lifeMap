@@ -38,6 +38,7 @@ namespace lifeMap.src.system
         public Vector3f Size;
         public List<Vector3f> Vertex;
         public List<Vertex> LocalVertex;
+        public List<Vector3f> Normals;
         public List<Vector3f> TextureCoords;
     };
 
@@ -49,8 +50,8 @@ namespace lifeMap.src.system
 
         public Serialization()
         {
-            Brushes[ "Solid" ] = new List<SaveBrush>();
-            Brushes[ "Triggers" ] = new List<SaveBrush>();
+            Brushes["Solid"] = new List<SaveBrush>();
+            Brushes["Triggers"] = new List<SaveBrush>();
         }
 
         //-------------------------------------------------------------------------//
@@ -101,7 +102,7 @@ namespace lifeMap.src.system
                 CodeMap += "<Textures>\n";
 
                 for ( int i = 0; i < Textures.Count; i++ )
-                    CodeMap += "<Texture Name=\"" + Textures[ i ].Name + "\" Route=\"" + TextureRoute + "\\" + Textures[ i ].Name + "\"/>\n";
+                    CodeMap += "<Texture Name=\"" + Textures[i].Name + "\" Route=\"" + TextureRoute + "\\" + Textures[i].Name + "\"/>\n";
 
                 CodeMap += "</Textures>\n";
             }
@@ -110,19 +111,19 @@ namespace lifeMap.src.system
             CodeMap += "<Brushes>\n";
 
             //Solid
-            if ( Brushes[ "Solid" ].Count > 0 )
+            if ( Brushes["Solid"].Count > 0 )
             {
-                List<SaveBrush> mSaveBrush = Brushes[ "Solid" ];
+                List<SaveBrush> mSaveBrush = Brushes["Solid"];
                 CodeMap += "<Solid>\n";
 
                 for ( int i = 0; i < mSaveBrush.Count; i++ )
                 {
                     CodeMap += "<Brush>\n";
-                    CodeMap += "<Type Value=\"" + mSaveBrush[ i ].Type + "\"/>\n";
-                    CodeMap += "<TextureName Value=\"" + mSaveBrush[ i ].TextureName + "\"/>\n";
+                    CodeMap += "<Type Value=\"" + mSaveBrush[i].Type + "\"/>\n";
+                    CodeMap += "<TextureName Value=\"" + mSaveBrush[i].TextureName + "\"/>\n";
 
                     //Position Vertex
-                    List<Vector3f> mVertex = mSaveBrush[ i ].Vertex;
+                    List<Vector3f> mVertex = mSaveBrush[i].Vertex;
                     CodeMap += "<PositionVertex>\n";
 
                     for ( int j = 0; j < mVertex.Count; j++ )
@@ -135,8 +136,23 @@ namespace lifeMap.src.system
 
                     CodeMap += "</PositionVertex>\n";
 
+                    //Normals
+                    List<Vector3f> mNormals = mSaveBrush[i].Normals;
+
+                    CodeMap += "<Normals>\n";
+
+                    for ( int j = 0; j < mNormals.Count; j++ )
+                    {
+                        string NormalX = mNormals[j].X.ToString().Replace( ",", "." );
+                        string NormalY = mNormals[j].Y.ToString().Replace( ",", "." );
+                        string NormalZ = mNormals[j].Z.ToString().Replace( ",", "." );
+                        CodeMap += "<Point X=\"" + NormalX + "\" Y=\"" + NormalY + "\" Z=\"" + NormalZ + "\"/>\n";
+                    }
+
+                    CodeMap += "</Normals>\n";
+
                     //Texture Coords
-                    List<Vector3f> mTextureCoords = mSaveBrush[ i ].TextureCoords;
+                    List<Vector3f> mTextureCoords = mSaveBrush[i].TextureCoords;
                     CodeMap += "<TextureCoords>\n";
 
                     for ( int j = 0; j < mTextureCoords.Count; j++ )
@@ -154,7 +170,7 @@ namespace lifeMap.src.system
             }
 
             //Triggers
-            if ( Brushes[ "Triggers" ].Count > 0 )
+            if ( Brushes["Triggers"].Count > 0 )
             {
                 CodeMap += "<Triggers>\n";
                 //TODO: добавить тригеры
@@ -167,13 +183,13 @@ namespace lifeMap.src.system
 
             for ( int i = 0; i < Entitys.Count; i++ )
             {
-                CodeMap += "<Entity Name=\"" + Entitys[ i ].EntityName + "\">\n";
-                CodeMap += "<Position X=\"" + Entitys[ i ].Position.X + "\" Y=\"" + Entitys[ i ].Position.Y + "\" Z=\"" + Entitys[ i ].Position.Z + "\"/>\n";
+                CodeMap += "<Entity Name=\"" + Entitys[i].EntityName + "\">\n";
+                CodeMap += "<Position X=\"" + Entitys[i].Position.X + "\" Y=\"" + Entitys[i].Position.Y + "\" Z=\"" + Entitys[i].Position.Z + "\"/>\n";
 
-                for ( int j = 0; j < Entitys[ i ].Values.Keys.Count; j++ )
+                for ( int j = 0; j < Entitys[i].Values.Keys.Count; j++ )
                 {
-                    string nameValue = Entitys[ i ].Values.Keys.ToList()[ j ].ToString();
-                    CodeMap += "<Value Name=\"" + nameValue + "\" Value=\"" + Entitys[ i ].Values[ nameValue ] + "\"/>\n";
+                    string nameValue = Entitys[i].Values.Keys.ToList()[j].ToString();
+                    CodeMap += "<Value Name=\"" + nameValue + "\" Value=\"" + Entitys[i].Values[nameValue] + "\"/>\n";
                 }
 
                 CodeMap += "</Entity>\n";
@@ -220,7 +236,7 @@ namespace lifeMap.src.system
             for ( int i = 0; i < textures.Count; i++ )
             {
                 SaveTexture saveTexture = new SaveTexture();
-                saveTexture.Name = textures[ i ].Name;
+                saveTexture.Name = textures[i].Name;
                 Textures.Add( saveTexture );
             }
         }
@@ -234,11 +250,11 @@ namespace lifeMap.src.system
                 SaveBrush saveBrush = new SaveBrush();
 
                 if ( !IsExport )
-                    saveBrush = brushes[ i ].ToSave();
+                    saveBrush = brushes[i].ToSave();
                 else
-                    saveBrush = brushes[ i ].ToExport();
+                    saveBrush = brushes[i].ToExport();
 
-                Brushes[ "Solid" ].Add( saveBrush );
+                Brushes["Solid"].Add( saveBrush );
             }
         }
 
@@ -249,7 +265,7 @@ namespace lifeMap.src.system
             for ( int i = 0; i < entitys.Count; i++ )
             {
                 SaveEntity saveEntity = new SaveEntity();
-                saveEntity = entitys[ i ].ToSave();
+                saveEntity = entitys[i].ToSave();
 
                 Entitys.Add( saveEntity );
             }
@@ -273,7 +289,7 @@ namespace lifeMap.src.system
             for ( int i = 0; i < Textures.Count; i++ )
             {
                 Texture texture = new Texture();
-                texture.LoadTexture( DirectoryTextures + "\\" + Textures[ i ].Name );
+                texture.LoadTexture( DirectoryTextures + "\\" + Textures[i].Name );
                 mTexture.Add( texture );
             }
 
@@ -286,10 +302,10 @@ namespace lifeMap.src.system
         {
             List<BasicBrush> mBrushes = new List<BasicBrush>();
 
-            for ( int i = 0; i < Brushes[ "Solid" ].Count; i++ )
-                if ( Brushes[ "Solid" ][ i ].Type == "Cube" )
+            for ( int i = 0; i < Brushes["Solid"].Count; i++ )
+                if ( Brushes["Solid"][i].Type == "Cube" )
                 {
-                    mBrushes.Add( new BrushBox( Brushes[ "Solid" ][ i ] ) );
+                    mBrushes.Add( new BrushBox( Brushes["Solid"][i] ) );
                 }
 
             return mBrushes;
@@ -305,8 +321,8 @@ namespace lifeMap.src.system
                 return mEntitys;
 
             for ( int i = 0; i < Entitys.Count; i++ )
-                if ( Entity.listEntity.Entity.ContainsKey( Entitys[ i ].EntityName ) )
-                    mEntitys.Add( new Entity( Entitys[ i ] ) );
+                if ( Entity.listEntity.Entity.ContainsKey( Entitys[i].EntityName ) )
+                    mEntitys.Add( new Entity( Entitys[i] ) );
 
             return mEntitys;
         }

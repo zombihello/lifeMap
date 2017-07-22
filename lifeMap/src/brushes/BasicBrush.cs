@@ -561,7 +561,7 @@ namespace lifeMap.src.brushes
             for ( int i = 0; i < mLocalVertex.Count; i++ )
                 mGlobalVertex[ i ] = mLocalVertex[ i ].Position + Position;
 
-            CenterBrush = Position + Size / 2;
+                CenterBrush = Position + Size / 2;
         }
 
         //-------------------------------------------------------------------------//
@@ -1122,6 +1122,29 @@ namespace lifeMap.src.brushes
 
         //-------------------------------------------------------------------------//
 
+        protected void GenerateNormals()
+        {
+            if ( mNormals.Count == 0 )
+            {
+                for ( int i = 0, j = 0; i < mIdVertex_Triangles.Count / 3; i++ )
+                {
+                    Vector3f A = mLocalVertex[mIdVertex_Triangles[j]].Position;
+                    Vector3f B = mLocalVertex[mIdVertex_Triangles[j + 1]].Position;
+                    Vector3f C = mLocalVertex[mIdVertex_Triangles[j + 2]].Position;
+                    j += 3;
+
+                    Vector3f Normal = Vector3f.CrossProduct( B - A, C - A );
+                    Normal.Normalize();
+
+                    mNormals.Add( Normal );
+                    mNormals.Add( Normal );
+                    mNormals.Add( Normal );
+                }
+            }
+        }
+
+        //-------------------------------------------------------------------------//
+
         protected void GenerateTextureCoords()
         {
             mTextureCoord.Clear();
@@ -1186,6 +1209,7 @@ namespace lifeMap.src.brushes
             saveBrush.Size = Size;
             saveBrush.LocalVertex = mLocalVertex;
             saveBrush.TextureCoords = mTextureCoord;
+            saveBrush.Normals = mNormals;
 
             return saveBrush;
         }
@@ -1199,6 +1223,7 @@ namespace lifeMap.src.brushes
             saveBrush.Type = Type.ToString();
             saveBrush.Vertex = mGlobalVertex;
             saveBrush.TextureCoords = mTextureCoord;
+            saveBrush.Normals = mNormals;
             return saveBrush;
         }
 
@@ -1215,6 +1240,7 @@ namespace lifeMap.src.brushes
         protected Color ColorBrush = new Color( 255, 0, 0 );
         protected Texture TextureBrush = new Texture();
 
+        private List<Vector3f> mNormals = new List<Vector3f>();
         private List<Vertex> mLocalVertex = new List<Vertex>();
         private List<Vector3f> mGlobalVertex = new List<Vector3f>();
         private List<Vector3f> mTextureCoord = new List<Vector3f>();

@@ -109,7 +109,7 @@ namespace lifeMap
 
         //-------------------------------------------------------------------------//
 
-        public static string Version = "Alpha 1.4.2";
+        public static string Version = "Alpha 1.4.3";
         public static string SelectCategoryEntity;
         public static string[] args = Environment.GetCommandLineArgs();
         public static SelectTool selectTool = SelectTool.None;

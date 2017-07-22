@@ -121,6 +121,9 @@ namespace lifeMap.src.system
         {
             float size = ( float )Math.Sqrt( Math.Pow( X, 2 ) + Math.Pow( Y, 2 ) + Math.Pow( Z, 2 ) );
 
+            if ( size == 0 )
+                size = 1;
+
             X /= size;
             Y /= size;
             Z /= size;
