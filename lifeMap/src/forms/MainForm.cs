@@ -895,6 +895,7 @@ namespace lifeMap
             {
                 saveFileDialog.Filter = "lifeEngine Map | *.lmap";
                 saveFileDialog.InitialDirectory = options.GetExportMapDirectory();
+                string ExportRoute = "";
 
                 if ( saveFileDialog.ShowDialog() == DialogResult.OK )
                 {
@@ -903,7 +904,7 @@ namespace lifeMap
 
                     string GameRootDir = options.GetGameDirectory();
                     string GamaExeDir = options.GetGameExecutable();
-                    string TextureRoute = "";
+                    string TextureRoute = "";                   
 
                     int idChar = GamaExeDir.LastIndexOf( "\\" );
                     GamaExeDir = GamaExeDir.Remove( idChar );
@@ -913,15 +914,23 @@ namespace lifeMap
                         idChar = GamaExeDir.LastIndexOf( "\\" );
                         GamaExeDir = GamaExeDir.Remove( idChar );
                         TextureRoute += "..\\";
+                        ExportRoute += "..\\";
                     }
 
                     TextureRoute += options.GetTexturesDirecoty().Remove( 0, GameRootDir.Length + 1 );
+                    ExportRoute += options.GetExportMapDirectory().Remove(0, GameRootDir.Length + 1);
                     serialization.SetLoadTextures( ManagerTexture.mTextures );
                     serialization.SetSolidBrushes( Scene.GetAllBrushes(), true );
                     serialization.SetEntitys( Scene.GetAllEntitys() );
 
-                    serialization.ExportMap( saveFileDialog.FileName, TextureRoute );
+                    serialization.ExportMap( saveFileDialog.FileName, TextureRoute, ExportRoute );
                 }
+
+                System.Diagnostics.Process LightmapMaker = new System.Diagnostics.Process();
+                LightmapMaker.StartInfo.FileName = Application.ExecutablePath.Remove(Application.ExecutablePath.LastIndexOf("\\")) + "\\lm.exe";
+                LightmapMaker.StartInfo.WorkingDirectory = Path.GetDirectoryName(ExportRoute + saveFileDialog.FileName.Remove(0, saveFileDialog.FileName.LastIndexOf("\\") + 1));
+                LightmapMaker.StartInfo.Arguments = saveFileDialog.FileName + " " + mapProperties.GetValue("Lightmap Size");
+                LightmapMaker.Start();
 
                 if ( runMap.IsStartGame() )
                 {

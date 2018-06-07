@@ -16,10 +16,38 @@
 	"Value": {
       "Name": "",
       "Color": "255 255 255",
-      "Radius": "20"
+      "Radius": "20",
+	  "Intensivity": "1"
 	  },
 	 "Settings": {
 	  "Color": "234 20 239",
+	  "Texture": "",	  
+	  "Size": "16 16 16"	 
+	  }
+    },
+	"lightDirectional": {
+	"Value": {
+      "Name": "",
+      "Color": "255 255 255",
+	  "Intensivity": "1"
+	  },
+	 "Settings": {
+	  "Color": "160 12 165",
+	  "Texture": "",	  
+	  "Size": "16 16 16"	 
+	  }
+    },
+	"SpotLight": {
+	"Value": {
+      "Name": "",
+	  "Rotation": "0 0 0",
+	  "Radius": "20",
+	  "Height": "20",
+      "Color": "255 255 255",
+	  "Intensivity": "1"
+	  },
+	 "Settings": {
+	  "Color": "210 20 210",
 	  "Texture": "",	  
 	  "Size": "16 16 16"	 
 	  }

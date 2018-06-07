@@ -40,6 +40,8 @@ namespace lifeMap.src.system
         public List<Vertex> LocalVertex;
         public List<Vector3f> Normals;
         public List<Vector3f> TextureCoords;
+        public List<Vector3f> TextureCoord_LightMap;
+        public List<string> LightMaps;
     };
 
     //-------------------------------------------------------------------------//
@@ -79,7 +81,7 @@ namespace lifeMap.src.system
 
         //-------------------------------------------------------------------------//
 
-        public void ExportMap( string Route, string TextureRoute )
+        public void ExportMap( string Route, string TextureRoute, string ExportRoute )
         {
             string CodeMap = "";
 
@@ -121,6 +123,7 @@ namespace lifeMap.src.system
                     CodeMap += "<Brush>\n";
                     CodeMap += "<Type Value=\"" + mSaveBrush[i].Type + "\"/>\n";
                     CodeMap += "<TextureName Value=\"" + mSaveBrush[i].TextureName + "\"/>\n";
+                    CodeMap += "<Position X=\"" + mSaveBrush[i].Position.X + "\" Y=\"" + mSaveBrush[i].Position.Y + "\" Z=\"" + mSaveBrush[i].Position.Z + "\"/>\n";
 
                     //Position Vertex
                     List<Vector3f> mVertex = mSaveBrush[i].Vertex;
@@ -163,6 +166,36 @@ namespace lifeMap.src.system
                     }
 
                     CodeMap += "</TextureCoords>\n";
+
+                    //Lightmap Coords
+                    List<Vector3f> mTextureCoords_LightMap = mSaveBrush[i].TextureCoord_LightMap;
+                    CodeMap += "<TextureCoords_LightMap>\n";
+
+                    for (int j = 0; j < mTextureCoords.Count; j++)
+                    {
+                        string textureX = mTextureCoords_LightMap[j].X.ToString().Replace(",", ".");
+                        string textureY = mTextureCoords_LightMap[j].Y.ToString().Replace(",", ".");
+                        CodeMap += "<Point X=\"" + textureX + "\" Y=\"" + textureY + "\"/>\n";
+                    }
+
+                    CodeMap += "</TextureCoords_LightMap>\n";
+
+                    //Lightmaps route
+                    List<string> mLightMaps = mSaveBrush[i].LightMaps;
+                    string NameMap = Route;
+                    NameMap = NameMap.Remove(0, NameMap.LastIndexOf("\\")+1);
+                    NameMap = NameMap.Remove( NameMap.LastIndexOf(".") );
+                    
+                    CodeMap += "<LightMaps>\n";
+
+                    for (int j = 0; j < mLightMaps.Count; j++)
+                    {
+                        string RouteToLightmap = ExportRoute + "\\lm-" + NameMap + "\\" + mLightMaps[j]; 
+                        CodeMap += "<Triangle Route=\"" + RouteToLightmap + "\"/>\n";
+                    }
+
+                    CodeMap += "</LightMaps>\n";
+
                     CodeMap += "</Brush>\n";
                 }
 

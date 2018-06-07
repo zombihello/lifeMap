@@ -94,6 +94,7 @@ namespace lifeMap.src.system
                 BrushBox.Create( BrushSelect.startPosition, BrushSelect.endPosition );
                 mBrush.Add( BrushBox );
                 ClearBrushSelect();
+                CountTriangles += 12;
             }
         }
 
@@ -267,6 +268,7 @@ namespace lifeMap.src.system
         public static void SetAllBrushes( List<BasicBrush> brushes )
         {
             mBrush = brushes;
+            CountTriangles = mBrush.Count * 12;
         }
 
         //-------------------------------------------------------------------------//
@@ -283,6 +285,7 @@ namespace lifeMap.src.system
             mBrush.Clear();
             mEntity.Clear();
             BrushSelect = null;
+            CountTriangles = 0;
         }
 
         //-------------------------------------------------------------------------//
@@ -300,6 +303,7 @@ namespace lifeMap.src.system
                 if ( mBrush[ i ] == SelectBrush )
                 {
                     mBrush.Remove( SelectBrush );
+                    CountTriangles -= 12;
                     ManagerPoints.PointsClear();
                     return;
                 }
@@ -338,6 +342,7 @@ namespace lifeMap.src.system
         //-------------------------------------------------------------------------//
 
         public static Camera WorldCamera = new Camera();
+        public static int CountTriangles = 0;
 
         private static BrushSelect BrushSelect = null;
         private static List<BasicBrush> mBrush = new List<BasicBrush>();

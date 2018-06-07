@@ -37,7 +37,7 @@ namespace lifeMap
         [STAThread]
         static void Main()
         {
-            AsociationMap();
+            //AsociationMap();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault( false );
