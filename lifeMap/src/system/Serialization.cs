@@ -339,6 +339,7 @@ namespace lifeMap.src.system
                 if ( Brushes["Solid"][i].Type == "Cube" )
                 {
                     mBrushes.Add( new BrushBox( Brushes["Solid"][i] ) );
+                    Scene.CountTriangles += 12;
                 }
 
             return mBrushes;

@@ -546,6 +546,8 @@ namespace lifeMap.src.brushes
 
             mLocalVertex = saveBrush.LocalVertex;
             mTextureCoord = saveBrush.TextureCoords;
+            mTextureCoord_LightMap = saveBrush.TextureCoord_LightMap;
+            mLightMaps = saveBrush.LightMaps;
 
             CenterBrush = Position + Size / 2;
 
