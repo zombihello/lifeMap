@@ -528,7 +528,7 @@ namespace lifeMap.src.brushes
             SelectSize = new Vector3f(Size / 2);
             InitIdVertex(Type);
 
-            for (int i = Scene.CountTriangles; i < Scene.CountTriangles + 12; i++)
+            for (int i = Scene.CountPlanes; i < Scene.CountPlanes + 6; i++)
                 mLightMaps.Add("lm_" + i.ToString() + ".png");
         }
 
@@ -1154,6 +1154,7 @@ namespace lifeMap.src.brushes
         protected void GenerateTextureCoords()
         {
             mTextureCoord.Clear();
+            mTextureCoord_LightMap.Clear();
 
             for (int i = 0, j = 0; i < mIdVertex_Triangles.Count / 3; i++)
             {
@@ -1203,49 +1204,24 @@ namespace lifeMap.src.brushes
                 mTextureCoord.Add(new Vector3f(U, V, 0));
 
                 int IdStart = mTextureCoord_LightMap.Count;
-                Vector3f UV = new Vector3f();
 
                 if (Math.Abs(Normal.X) > Math.Abs(Normal.Y) && Math.Abs(Normal.X) > Math.Abs(Normal.Z))
                 {
-                    UV.X = A.Y;
-                    UV.Y = A.Z;
-                    mTextureCoord_LightMap.Add(new Vector3f(UV.X, UV.Y, 0));
-
-                    UV.X = B.Y;
-                    UV.Y = B.Z;
-                    mTextureCoord_LightMap.Add(new Vector3f(UV.X, UV.Y, 0));
-
-                    UV.X = C.Y;
-                    UV.Y = C.Z;
-                    mTextureCoord_LightMap.Add(new Vector3f(UV.X, UV.Y, 0));
+                    mTextureCoord_LightMap.Add(new Vector3f(A.Y, A.Z, 0));
+                    mTextureCoord_LightMap.Add(new Vector3f(B.Y, B.Z, 0));
+                    mTextureCoord_LightMap.Add(new Vector3f(C.Y, C.Z, 0));
                 }
                 else if (Math.Abs(Normal.Y) > Math.Abs(Normal.X) && Math.Abs(Normal.Y) > Math.Abs(Normal.Z))
                 {
-                    UV.X = A.X;
-                    UV.Y = A.Z;
-                    mTextureCoord_LightMap.Add(new Vector3f(UV.X, UV.Y, 0));
-
-                    UV.X = B.X;
-                    UV.Y = B.Z;
-                    mTextureCoord_LightMap.Add(new Vector3f(UV.X, UV.Y, 0));
-
-                    UV.X = C.X;
-                    UV.Y = C.Z;
-                    mTextureCoord_LightMap.Add(new Vector3f(UV.X, UV.Y, 0));
+                    mTextureCoord_LightMap.Add(new Vector3f(A.X, A.Z, 0));
+                    mTextureCoord_LightMap.Add(new Vector3f(B.X, B.Z, 0));
+                    mTextureCoord_LightMap.Add(new Vector3f(C.X, C.Z, 0));
                 }
                 else
                 {
-                    UV.X = A.X;
-                    UV.Y = A.Y;
-                    mTextureCoord_LightMap.Add(new Vector3f(UV.X, UV.Y, 0));
-
-                    UV.X = B.X;
-                    UV.Y = B.Y;
-                    mTextureCoord_LightMap.Add(new Vector3f(UV.X, UV.Y, 0));
-
-                    UV.X = C.X;
-                    UV.Y = C.Y;
-                    mTextureCoord_LightMap.Add(new Vector3f(UV.X, UV.Y, 0));
+                    mTextureCoord_LightMap.Add(new Vector3f(A.X, A.Y, 0));
+                    mTextureCoord_LightMap.Add(new Vector3f(B.X, B.Y, 0));
+                    mTextureCoord_LightMap.Add(new Vector3f(C.X, C.Y, 0));
                 }
 
                 Vector3f UVMin = new Vector3f(mTextureCoord_LightMap[IdStart]);

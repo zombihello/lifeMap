@@ -248,6 +248,7 @@ namespace lifeMap.src.system
             NameMap = serialization.NameMap;
             DescriptionMap = serialization.DescriptionMap;
             SkyBoxName = serialization.SkyBoxName;
+            LightmapSize = serialization.LightmapSize;
             Textures = serialization.Textures;
             Brushes = serialization.Brushes;
             Entitys = serialization.Entitys;
@@ -260,6 +261,7 @@ namespace lifeMap.src.system
             NameMap = mapProperties.GetValue( "Name Map" );
             DescriptionMap = mapProperties.GetValue( "Description Map" );
             SkyBoxName = mapProperties.GetValue( "SkyBox Name" );
+            LightmapSize = mapProperties.GetValue( "Lightmap Size" );
         }
 
         //-------------------------------------------------------------------------//
@@ -311,6 +313,7 @@ namespace lifeMap.src.system
             mapProperties.SetValue( "Name Map", NameMap );
             mapProperties.SetValue( "Description Map", DescriptionMap );
             mapProperties.SetValue( "SkyBox Name", SkyBoxName );
+            mapProperties.SetValue( "Lightmap Size", LightmapSize );
         }
 
         //-------------------------------------------------------------------------//
@@ -339,7 +342,7 @@ namespace lifeMap.src.system
                 if ( Brushes["Solid"][i].Type == "Cube" )
                 {
                     mBrushes.Add( new BrushBox( Brushes["Solid"][i] ) );
-                    Scene.CountTriangles += 12;
+                    Scene.CountPlanes += 6;
                 }
 
             return mBrushes;
@@ -368,6 +371,7 @@ namespace lifeMap.src.system
             NameMap = "";
             DescriptionMap = "";
             SkyBoxName = "";
+            LightmapSize = "";
 
             Textures.Clear();
             Brushes.Clear();
@@ -379,6 +383,7 @@ namespace lifeMap.src.system
         public string NameMap = "";
         public string DescriptionMap = "";
         public string SkyBoxName = "";
+        public string LightmapSize = "";
 
         public List<SaveTexture> Textures = new List<SaveTexture>();
         public Dictionary<string, List<SaveBrush>> Brushes = new Dictionary<string, List<SaveBrush>>();
