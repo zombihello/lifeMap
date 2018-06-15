@@ -96,6 +96,7 @@ namespace lifeMap.src.system
             CodeMap += "<NameMap Value=\"" + NameMap + "\"/>\n";
             CodeMap += "<DescriptionMap Value=\"" + DescriptionMap + "\"/>\n";
             CodeMap += "<SkyBoxName Value=\"" + SkyBoxName + "\"/>\n";
+            CodeMap += "<AmbienceColor Value=\"" + AmbienceColor + "\"/>\n";
             CodeMap += "</Settings>\n";
 
             //Textures
@@ -248,6 +249,7 @@ namespace lifeMap.src.system
             NameMap = serialization.NameMap;
             DescriptionMap = serialization.DescriptionMap;
             SkyBoxName = serialization.SkyBoxName;
+            AmbienceColor = serialization.AmbienceColor;
             LightmapSize = serialization.LightmapSize;
             Textures = serialization.Textures;
             Brushes = serialization.Brushes;
@@ -261,6 +263,7 @@ namespace lifeMap.src.system
             NameMap = mapProperties.GetValue( "Name Map" );
             DescriptionMap = mapProperties.GetValue( "Description Map" );
             SkyBoxName = mapProperties.GetValue( "SkyBox Name" );
+            AmbienceColor = mapProperties.GetValue("Ambience Color");
             LightmapSize = mapProperties.GetValue( "Lightmap Size" );
         }
 
@@ -313,6 +316,7 @@ namespace lifeMap.src.system
             mapProperties.SetValue( "Name Map", NameMap );
             mapProperties.SetValue( "Description Map", DescriptionMap );
             mapProperties.SetValue( "SkyBox Name", SkyBoxName );
+            mapProperties.SetValue( "Ambience Color", AmbienceColor );
             mapProperties.SetValue( "Lightmap Size", LightmapSize );
         }
 
@@ -371,6 +375,7 @@ namespace lifeMap.src.system
             NameMap = "";
             DescriptionMap = "";
             SkyBoxName = "";
+            AmbienceColor = "";
             LightmapSize = "";
 
             Textures.Clear();
@@ -383,6 +388,7 @@ namespace lifeMap.src.system
         public string NameMap = "";
         public string DescriptionMap = "";
         public string SkyBoxName = "";
+        public string AmbienceColor = "";
         public string LightmapSize = "";
 
         public List<SaveTexture> Textures = new List<SaveTexture>();

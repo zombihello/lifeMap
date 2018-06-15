@@ -20,6 +20,7 @@ namespace lifeMap.src
             TableProperties.Rows.Add( "Name Map", "" );
             TableProperties.Rows.Add( "Description Map", "" );
             TableProperties.Rows.Add( "SkyBox Name", "" );
+            TableProperties.Rows.Add( "Ambience Color", "" );
             TableProperties.Rows.Add( "Lightmap Size", "16");
         }
 

@@ -302,6 +302,8 @@ namespace lifeMap.src.system
             for ( int i = 0; i < mBrush.Count; i++ )
                 if ( mBrush[ i ] == SelectBrush )
                 {
+                    //TODO: [zombiHello] - При удалении браша сбиваются лайтмапы
+
                     mBrush.Remove( SelectBrush );
                     CountPlanes -= 6;
                     ManagerPoints.PointsClear();

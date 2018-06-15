@@ -929,8 +929,9 @@ namespace lifeMap
                 System.Diagnostics.Process LightmapMaker = new System.Diagnostics.Process();
                 LightmapMaker.StartInfo.FileName = Application.ExecutablePath.Remove(Application.ExecutablePath.LastIndexOf("\\")) + "\\lm.exe";
                 LightmapMaker.StartInfo.WorkingDirectory = Path.GetDirectoryName(ExportRoute + saveFileDialog.FileName.Remove(0, saveFileDialog.FileName.LastIndexOf("\\") + 1));
-                LightmapMaker.StartInfo.Arguments = saveFileDialog.FileName + " " + mapProperties.GetValue("Lightmap Size");
+                LightmapMaker.StartInfo.Arguments = "-map " + saveFileDialog.FileName + " -size " + mapProperties.GetValue("Lightmap Size");
                 LightmapMaker.Start();
+                LightmapMaker.WaitForExit();
 
                 if ( runMap.IsStartGame() )
                 {
