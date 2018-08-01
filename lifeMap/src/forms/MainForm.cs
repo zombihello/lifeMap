@@ -255,7 +255,7 @@ namespace lifeMap
                         case Program.SelectTool.CursorTool:
                             if ( Mouse.IsSelect )
                             {
-                                Vector3f OffsetPosition = new Vector3f( Mouse.Position.X - Mouse.OldPosition.X, Mouse.Position.Y - Mouse.OldPosition.Y, 0 );
+                                Vector3f OffsetPosition = new Vector3f(Mouse.Position.X - Mouse.OldPosition.X, Mouse.Position.Y - Mouse.OldPosition.Y, 0);
 
                                 switch ( Mouse.typeSelect )
                                 {
@@ -373,7 +373,7 @@ namespace lifeMap
                     Scene.WorldCamera.Move( KeyCode );
                 else
                     if ( KeyCode == Keys.Delete )
-                        Scene.RemoveBrush( Mouse.BrushSelect );
+                    Scene.RemoveBrush( Mouse.BrushSelect );
 
                 Refresh();
             }
@@ -904,9 +904,9 @@ namespace lifeMap
 
                     string GameRootDir = options.GetGameDirectory();
                     string GamaExeDir = options.GetGameExecutable();
-                    string TextureRoute = "";                   
+                    string TextureRoute = "";
 
-                    int idChar = GamaExeDir.LastIndexOf( "\\" );
+                    int idChar = GamaExeDir.LastIndexOf("\\");
                     GamaExeDir = GamaExeDir.Remove( idChar );
 
                     while ( GameRootDir != GamaExeDir )
@@ -918,7 +918,7 @@ namespace lifeMap
                     }
 
                     TextureRoute += options.GetTexturesDirecoty().Remove( 0, GameRootDir.Length + 1 );
-                    ExportRoute += options.GetExportMapDirectory().Remove(0, GameRootDir.Length + 1);
+                    ExportRoute += options.GetExportMapDirectory().Remove( 0, GameRootDir.Length + 1 );
                     serialization.SetLoadTextures( ManagerTexture.mTextures );
                     serialization.SetSolidBrushes( Scene.GetAllBrushes(), true );
                     serialization.SetEntitys( Scene.GetAllEntitys() );
@@ -927,9 +927,9 @@ namespace lifeMap
                 }
 
                 System.Diagnostics.Process LightmapMaker = new System.Diagnostics.Process();
-                LightmapMaker.StartInfo.FileName = Application.ExecutablePath.Remove(Application.ExecutablePath.LastIndexOf("\\")) + "\\lm.exe";
-                LightmapMaker.StartInfo.WorkingDirectory = Path.GetDirectoryName(ExportRoute + saveFileDialog.FileName.Remove(0, saveFileDialog.FileName.LastIndexOf("\\") + 1));
-                LightmapMaker.StartInfo.Arguments = "-map " + saveFileDialog.FileName + " -size " + mapProperties.GetValue("Lightmap Size");
+                LightmapMaker.StartInfo.FileName = Application.ExecutablePath.Remove( Application.ExecutablePath.LastIndexOf( "\\" ) ) + "\\lm.exe";
+                LightmapMaker.StartInfo.WorkingDirectory = Path.GetDirectoryName( ExportRoute + saveFileDialog.FileName.Remove( 0, saveFileDialog.FileName.LastIndexOf( "\\" ) + 1 ) );
+                LightmapMaker.StartInfo.Arguments = "-map " + saveFileDialog.FileName + " -textures " + options.GetTexturesDirecoty() + " -size " + mapProperties.GetValue( "Lightmap Size" ) + " -numpasses " + mapProperties.GetValue( "Radiosity Number Passes" );
                 LightmapMaker.Start();
                 LightmapMaker.WaitForExit();
 
@@ -1164,7 +1164,7 @@ namespace lifeMap
         private void comboBox_CategEntity_SelectedIndexChanged( object sender, EventArgs e )
         {
             int IndexSelect = comboBox_CategEntity.SelectedIndex;
-            string selectCategory = comboBox_CategEntity.Items[ IndexSelect ].ToString();
+            string selectCategory = comboBox_CategEntity.Items[IndexSelect].ToString();
 
             comboBox_ObjEntity.Items.Clear();
             comboBox_ObjEntity.Items.Add( "" );
@@ -1176,7 +1176,7 @@ namespace lifeMap
 
                 for ( int i = 0; i < listEntity.Entity.Keys.Count; i++ )
                 {
-                    string key = listEntity.Entity.Keys.ToList()[ i ];
+                    string key = listEntity.Entity.Keys.ToList()[i];
                     comboBox_ObjEntity.Items.Add( key );
                 }
             }
@@ -1198,7 +1198,7 @@ namespace lifeMap
         private void comboBox_ObjEntity_SelectedIndexChanged( object sender, EventArgs e )
         {
             int IndexSelect = comboBox_ObjEntity.SelectedIndex;
-            string selectEntity = comboBox_ObjEntity.Items[ IndexSelect ].ToString();
+            string selectEntity = comboBox_ObjEntity.Items[IndexSelect].ToString();
 
             Program.SelectEntity[ comboBox_CategEntity.SelectedItem.ToString() ] = selectEntity;
         }
@@ -1225,7 +1225,7 @@ namespace lifeMap
         private SaveFileDialog saveFileDialog = new SaveFileDialog();
         private MapProperties mapProperties = new MapProperties();
         private RunMap runMap = new RunMap();
-        private Vector3f FactorMoveCamera = new Vector3f( 0, 0, 0 );
+        private Vector3f FactorMoveCamera = new Vector3f(0, 0, 0);
         private ListEntity listEntity = new ListEntity();
 
         private Viewport TmpViewport;

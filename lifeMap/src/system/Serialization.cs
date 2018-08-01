@@ -52,8 +52,8 @@ namespace lifeMap.src.system
 
         public Serialization()
         {
-            Brushes["Solid"] = new List<SaveBrush>();
-            Brushes["Triggers"] = new List<SaveBrush>();
+            Brushes[ "Solid" ] = new List<SaveBrush>();
+            Brushes[ "Triggers" ] = new List<SaveBrush>();
         }
 
         //-------------------------------------------------------------------------//
@@ -105,7 +105,7 @@ namespace lifeMap.src.system
                 CodeMap += "<Textures>\n";
 
                 for ( int i = 0; i < Textures.Count; i++ )
-                    CodeMap += "<Texture Name=\"" + Textures[i].Name + "\" Route=\"" + TextureRoute + "\\" + Textures[i].Name + "\"/>\n";
+                    CodeMap += "<Texture Name=\"" + Textures[ i ].Name + "\" Route=\"" + TextureRoute + "\\" + Textures[ i ].Name + "\"/>\n";
 
                 CodeMap += "</Textures>\n";
             }
@@ -114,7 +114,7 @@ namespace lifeMap.src.system
             CodeMap += "<Brushes>\n";
 
             //Solid
-            if ( Brushes["Solid"].Count > 0 )
+            if ( Brushes[ "Solid" ].Count > 0 )
             {
                 List<SaveBrush> mSaveBrush = Brushes["Solid"];
                 CodeMap += "<Solid>\n";
@@ -122,9 +122,9 @@ namespace lifeMap.src.system
                 for ( int i = 0; i < mSaveBrush.Count; i++ )
                 {
                     CodeMap += "<Brush>\n";
-                    CodeMap += "<Type Value=\"" + mSaveBrush[i].Type + "\"/>\n";
-                    CodeMap += "<TextureName Value=\"" + mSaveBrush[i].TextureName + "\"/>\n";
-                    CodeMap += "<Position X=\"" + mSaveBrush[i].Position.X + "\" Y=\"" + mSaveBrush[i].Position.Y + "\" Z=\"" + mSaveBrush[i].Position.Z + "\"/>\n";
+                    CodeMap += "<Type Value=\"" + mSaveBrush[ i ].Type + "\"/>\n";
+                    CodeMap += "<TextureName Value=\"" + mSaveBrush[ i ].TextureName + "\"/>\n";
+                    CodeMap += "<Position X=\"" + mSaveBrush[ i ].Position.X + "\" Y=\"" + mSaveBrush[ i ].Position.Y + "\" Z=\"" + mSaveBrush[ i ].Position.Z + "\"/>\n";
 
                     //Position Vertex
                     List<Vector3f> mVertex = mSaveBrush[i].Vertex;
@@ -172,7 +172,7 @@ namespace lifeMap.src.system
                     List<Vector3f> mTextureCoords_LightMap = mSaveBrush[i].TextureCoord_LightMap;
                     CodeMap += "<TextureCoords_LightMap>\n";
 
-                    for (int j = 0; j < mTextureCoords.Count; j++)
+                    for ( int j = 0; j < mTextureCoords.Count; j++ )
                     {
                         string textureX = mTextureCoords_LightMap[j].X.ToString().Replace(",", ".");
                         string textureY = mTextureCoords_LightMap[j].Y.ToString().Replace(",", ".");
@@ -184,14 +184,14 @@ namespace lifeMap.src.system
                     //Lightmaps route
                     List<string> mLightMaps = mSaveBrush[i].LightMaps;
                     string NameMap = Route;
-                    NameMap = NameMap.Remove(0, NameMap.LastIndexOf("\\")+1);
-                    NameMap = NameMap.Remove( NameMap.LastIndexOf(".") );
-                    
+                    NameMap = NameMap.Remove( 0, NameMap.LastIndexOf( "\\" ) + 1 );
+                    NameMap = NameMap.Remove( NameMap.LastIndexOf( "." ) );
+
                     CodeMap += "<LightMaps>\n";
 
-                    for (int j = 0; j < mLightMaps.Count; j++)
+                    for ( int j = 0; j < mLightMaps.Count; j++ )
                     {
-                        string RouteToLightmap = ExportRoute + "\\lm-" + NameMap + "\\" + mLightMaps[j]; 
+                        string RouteToLightmap = ExportRoute + "\\lm-" + NameMap + "\\" + mLightMaps[j];
                         CodeMap += "<Triangle Route=\"" + RouteToLightmap + "\"/>\n";
                     }
 
@@ -204,7 +204,7 @@ namespace lifeMap.src.system
             }
 
             //Triggers
-            if ( Brushes["Triggers"].Count > 0 )
+            if ( Brushes[ "Triggers" ].Count > 0 )
             {
                 CodeMap += "<Triggers>\n";
                 //TODO: добавить тригеры
@@ -217,13 +217,13 @@ namespace lifeMap.src.system
 
             for ( int i = 0; i < Entitys.Count; i++ )
             {
-                CodeMap += "<Entity Name=\"" + Entitys[i].EntityName + "\">\n";
-                CodeMap += "<Position X=\"" + Entitys[i].Position.X + "\" Y=\"" + Entitys[i].Position.Y + "\" Z=\"" + Entitys[i].Position.Z + "\"/>\n";
+                CodeMap += "<Entity Name=\"" + Entitys[ i ].EntityName + "\">\n";
+                CodeMap += "<Position X=\"" + Entitys[ i ].Position.X + "\" Y=\"" + Entitys[ i ].Position.Y + "\" Z=\"" + Entitys[ i ].Position.Z + "\"/>\n";
 
-                for ( int j = 0; j < Entitys[i].Values.Keys.Count; j++ )
+                for ( int j = 0; j < Entitys[ i ].Values.Keys.Count; j++ )
                 {
                     string nameValue = Entitys[i].Values.Keys.ToList()[j].ToString();
-                    CodeMap += "<Value Name=\"" + nameValue + "\" Value=\"" + Entitys[i].Values[nameValue] + "\"/>\n";
+                    CodeMap += "<Value Name=\"" + nameValue + "\" Value=\"" + Entitys[ i ].Values[ nameValue ] + "\"/>\n";
                 }
 
                 CodeMap += "</Entity>\n";
@@ -251,6 +251,7 @@ namespace lifeMap.src.system
             SkyBoxName = serialization.SkyBoxName;
             AmbienceColor = serialization.AmbienceColor;
             LightmapSize = serialization.LightmapSize;
+            RadiosityNumberPasses = serialization.RadiosityNumberPasses;
             Textures = serialization.Textures;
             Brushes = serialization.Brushes;
             Entitys = serialization.Entitys;
@@ -263,8 +264,9 @@ namespace lifeMap.src.system
             NameMap = mapProperties.GetValue( "Name Map" );
             DescriptionMap = mapProperties.GetValue( "Description Map" );
             SkyBoxName = mapProperties.GetValue( "SkyBox Name" );
-            AmbienceColor = mapProperties.GetValue("Ambience Color");
+            AmbienceColor = mapProperties.GetValue( "Ambience Color" );
             LightmapSize = mapProperties.GetValue( "Lightmap Size" );
+            RadiosityNumberPasses = mapProperties.GetValue( "Radiosity Number Passes" );
         }
 
         //-------------------------------------------------------------------------//
@@ -274,7 +276,7 @@ namespace lifeMap.src.system
             for ( int i = 0; i < textures.Count; i++ )
             {
                 SaveTexture saveTexture = new SaveTexture();
-                saveTexture.Name = textures[i].Name;
+                saveTexture.Name = textures[ i ].Name;
                 Textures.Add( saveTexture );
             }
         }
@@ -288,11 +290,11 @@ namespace lifeMap.src.system
                 SaveBrush saveBrush = new SaveBrush();
 
                 if ( !IsExport )
-                    saveBrush = brushes[i].ToSave();
+                    saveBrush = brushes[ i ].ToSave();
                 else
-                    saveBrush = brushes[i].ToExport();
+                    saveBrush = brushes[ i ].ToExport();
 
-                Brushes["Solid"].Add( saveBrush );
+                Brushes[ "Solid" ].Add( saveBrush );
             }
         }
 
@@ -303,7 +305,7 @@ namespace lifeMap.src.system
             for ( int i = 0; i < entitys.Count; i++ )
             {
                 SaveEntity saveEntity = new SaveEntity();
-                saveEntity = entitys[i].ToSave();
+                saveEntity = entitys[ i ].ToSave();
 
                 Entitys.Add( saveEntity );
             }
@@ -318,6 +320,7 @@ namespace lifeMap.src.system
             mapProperties.SetValue( "SkyBox Name", SkyBoxName );
             mapProperties.SetValue( "Ambience Color", AmbienceColor );
             mapProperties.SetValue( "Lightmap Size", LightmapSize );
+            mapProperties.SetValue( "Radiosity Number Passes", RadiosityNumberPasses );
         }
 
         //-------------------------------------------------------------------------//
@@ -329,7 +332,7 @@ namespace lifeMap.src.system
             for ( int i = 0; i < Textures.Count; i++ )
             {
                 Texture texture = new Texture();
-                texture.LoadTexture( DirectoryTextures + "\\" + Textures[i].Name );
+                texture.LoadTexture( DirectoryTextures + "\\" + Textures[ i ].Name );
                 mTexture.Add( texture );
             }
 
@@ -342,10 +345,10 @@ namespace lifeMap.src.system
         {
             List<BasicBrush> mBrushes = new List<BasicBrush>();
 
-            for ( int i = 0; i < Brushes["Solid"].Count; i++ )
-                if ( Brushes["Solid"][i].Type == "Cube" )
+            for ( int i = 0; i < Brushes[ "Solid" ].Count; i++ )
+                if ( Brushes[ "Solid" ][ i ].Type == "Cube" )
                 {
-                    mBrushes.Add( new BrushBox( Brushes["Solid"][i] ) );
+                    mBrushes.Add( new BrushBox( Brushes[ "Solid" ][ i ] ) );
                     Scene.CountPlanes += 6;
                 }
 
@@ -362,8 +365,8 @@ namespace lifeMap.src.system
                 return mEntitys;
 
             for ( int i = 0; i < Entitys.Count; i++ )
-                if ( Entity.listEntity.Entity.ContainsKey( Entitys[i].EntityName ) )
-                    mEntitys.Add( new Entity( Entitys[i] ) );
+                if ( Entity.listEntity.Entity.ContainsKey( Entitys[ i ].EntityName ) )
+                    mEntitys.Add( new Entity( Entitys[ i ] ) );
 
             return mEntitys;
         }
@@ -377,6 +380,7 @@ namespace lifeMap.src.system
             SkyBoxName = "";
             AmbienceColor = "";
             LightmapSize = "";
+            RadiosityNumberPasses = "";
 
             Textures.Clear();
             Brushes.Clear();
@@ -390,6 +394,7 @@ namespace lifeMap.src.system
         public string SkyBoxName = "";
         public string AmbienceColor = "";
         public string LightmapSize = "";
+        public string RadiosityNumberPasses = "";
 
         public List<SaveTexture> Textures = new List<SaveTexture>();
         public Dictionary<string, List<SaveBrush>> Brushes = new Dictionary<string, List<SaveBrush>>();

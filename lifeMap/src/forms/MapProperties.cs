@@ -22,6 +22,7 @@ namespace lifeMap.src
             TableProperties.Rows.Add( "SkyBox Name", "" );
             TableProperties.Rows.Add( "Ambience Color", "" );
             TableProperties.Rows.Add( "Lightmap Size", "16");
+            TableProperties.Rows.Add( "Radiosity Number Passes", "3" );
         }
 
         //-------------------------------------------------------------------------//

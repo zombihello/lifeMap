@@ -12,7 +12,7 @@
 	  "Size": "16 32 16"	 
 	  }
     },
-    "light": {
+    "Dinamic_Light": {
 	"Value": {
       "Name": "",
       "Color": "255 255 255",
@@ -25,7 +25,20 @@
 	  "Size": "16 16 16"	 
 	  }
     },
-	"lightDirectional": {
+	"Static_Light": {
+	"Value": {
+      "Name": "",
+      "Color": "255 255 255",
+      "Radius": "20",
+	  "Intensivity": "1"
+	  },
+	 "Settings": {
+	  "Color": "254 50 259",
+	  "Texture": "",	  
+	  "Size": "16 16 16"	 
+	  }
+    },
+	"Dinamic_DirectionalLight": {
 	"Value": {
       "Name": "",
       "Color": "255 255 255",
@@ -37,7 +50,19 @@
 	  "Size": "16 16 16"	 
 	  }
     },
-	"SpotLight": {
+	"Static_DirectionalLight": {
+	"Value": {
+      "Name": "",
+      "Color": "255 255 255",
+	  "Intensivity": "1"
+	  },
+	 "Settings": {
+	  "Color": "180 32 185",	  
+	  "Texture": "",	  
+	  "Size": "16 16 16"	 
+	  }
+    },
+	"Dinamic_SpotLight": {
 	"Value": {
       "Name": "",
 	  "Rotation": "0 0 0",
@@ -48,6 +73,21 @@
 	  },
 	 "Settings": {
 	  "Color": "210 20 210",
+	  "Texture": "",	  
+	  "Size": "16 16 16"	 
+	  }
+    },
+	"Static_SpotLight": {
+	"Value": {
+      "Name": "",
+	  "Rotation": "0 0 0",
+	  "Radius": "20",
+	  "Height": "20",
+      "Color": "255 255 255",
+	  "Intensivity": "1"
+	  },
+	 "Settings": {
+	  "Color": "230 50 260",
 	  "Texture": "",	  
 	  "Size": "16 16 16"	 
 	  }

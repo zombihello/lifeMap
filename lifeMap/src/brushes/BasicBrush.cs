@@ -1246,8 +1246,8 @@ namespace lifeMap.src.brushes
 
                 for (int z = IdStart; z < IdStart + 3; z++)
                 {
-                    mTextureCoord_LightMap[IdStart] -= UVMin;
-                    mTextureCoord_LightMap[IdStart] /= UVDelta;
+                    mTextureCoord_LightMap[z] -= UVMin;
+                    mTextureCoord_LightMap[z] /= UVDelta;
                 }
             }
         }
