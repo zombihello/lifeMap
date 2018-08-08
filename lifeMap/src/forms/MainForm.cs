@@ -929,7 +929,14 @@ namespace lifeMap
                 System.Diagnostics.Process LightmapMaker = new System.Diagnostics.Process();
                 LightmapMaker.StartInfo.FileName = Application.ExecutablePath.Remove( Application.ExecutablePath.LastIndexOf( "\\" ) ) + "\\lm.exe";
                 LightmapMaker.StartInfo.WorkingDirectory = Path.GetDirectoryName( ExportRoute + saveFileDialog.FileName.Remove( 0, saveFileDialog.FileName.LastIndexOf( "\\" ) + 1 ) );
-                LightmapMaker.StartInfo.Arguments = "-map " + saveFileDialog.FileName + " -textures " + options.GetTexturesDirecoty() + " -size " + mapProperties.GetValue( "Lightmap Size" ) + " -numpasses " + mapProperties.GetValue( "Radiosity Number Passes" );
+                LightmapMaker.StartInfo.Arguments = "-map " + saveFileDialog.FileName + " -textures " + options.GetTexturesDirecoty() + " -maxsize " + mapProperties.GetValue( "Lightmap Size" ) + " -numpasses " + mapProperties.GetValue( "Radiosity Number Passes" );
+
+                if ( runMap.IsNoShadows() )
+                    LightmapMaker.StartInfo.Arguments += " -noshadows";
+
+                if ( runMap.IsNoRadiosity())
+                    LightmapMaker.StartInfo.Arguments += " -noradiosity";
+
                 LightmapMaker.Start();
                 LightmapMaker.WaitForExit();
 

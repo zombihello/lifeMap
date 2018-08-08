@@ -83,6 +83,15 @@ namespace lifeMap.src.system
 
         public void ExportMap( string Route, string TextureRoute, string ExportRoute )
         {
+            // Обновляем имена лайтмапов для полигонов
+            int CountPlane = 0;
+
+            for ( int i = 0; i < Brushes[ "Solid" ].Count; i++ )
+            {
+                for ( int j = 0; j < Brushes[ "Solid" ][ i ].LightMaps.Count; j++, CountPlane++ )
+                    Brushes[ "Solid" ][ i ].LightMaps[ j ] = "lm_" + CountPlane + ".png";
+            }
+
             string CodeMap = "";
 
             FileStream fileStream = new FileStream( Route, FileMode.Create );
@@ -125,7 +134,8 @@ namespace lifeMap.src.system
                     CodeMap += "<Type Value=\"" + mSaveBrush[ i ].Type + "\"/>\n";
                     CodeMap += "<TextureName Value=\"" + mSaveBrush[ i ].TextureName + "\"/>\n";
                     CodeMap += "<Position X=\"" + mSaveBrush[ i ].Position.X + "\" Y=\"" + mSaveBrush[ i ].Position.Y + "\" Z=\"" + mSaveBrush[ i ].Position.Z + "\"/>\n";
-
+                    CodeMap += "<Size X=\"" + mSaveBrush[ i ].Size.X + "\" Y=\"" + mSaveBrush[ i ].Size.Y + "\" Z=\"" + mSaveBrush[ i ].Size.Z + "\"/>\n";
+                    
                     //Position Vertex
                     List<Vector3f> mVertex = mSaveBrush[i].Vertex;
                     CodeMap += "<PositionVertex>\n";

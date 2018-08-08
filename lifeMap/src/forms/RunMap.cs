@@ -43,6 +43,20 @@ namespace lifeMap.src.forms
 
         //-------------------------------------------------------------------------//
 
+        public bool IsNoShadows()
+        {
+            return checkBox_noshadows.Checked;
+        }
+
+        //-------------------------------------------------------------------------//
+
+        public bool IsNoRadiosity()
+        {
+            return checkBox_noradiosity.Checked;
+        }
+
+        //-------------------------------------------------------------------------//
+
         public string GetParametesGame()
         {
             return textBox_additionalGamePar.Text;

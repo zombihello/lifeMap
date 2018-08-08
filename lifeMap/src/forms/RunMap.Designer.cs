@@ -34,6 +34,8 @@
             this.textBox_additionalGamePar = new System.Windows.Forms.TextBox();
             this.button_ok = new System.Windows.Forms.Button();
             this.button_cancel = new System.Windows.Forms.Button();
+            this.checkBox_noshadows = new System.Windows.Forms.CheckBox();
+            this.checkBox_noradiosity = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // checkBox_startGame
@@ -51,7 +53,7 @@
             // label_additionalGamePar
             // 
             this.label_additionalGamePar.AutoSize = true;
-            this.label_additionalGamePar.Location = new System.Drawing.Point(12, 43);
+            this.label_additionalGamePar.Location = new System.Drawing.Point(12, 86);
             this.label_additionalGamePar.Name = "label_additionalGamePar";
             this.label_additionalGamePar.Size = new System.Drawing.Size(140, 13);
             this.label_additionalGamePar.TabIndex = 1;
@@ -59,7 +61,7 @@
             // 
             // textBox_additionalGamePar
             // 
-            this.textBox_additionalGamePar.Location = new System.Drawing.Point(12, 59);
+            this.textBox_additionalGamePar.Location = new System.Drawing.Point(12, 102);
             this.textBox_additionalGamePar.Name = "textBox_additionalGamePar";
             this.textBox_additionalGamePar.Size = new System.Drawing.Size(246, 20);
             this.textBox_additionalGamePar.TabIndex = 2;
@@ -67,7 +69,7 @@
             // 
             // button_ok
             // 
-            this.button_ok.Location = new System.Drawing.Point(102, 85);
+            this.button_ok.Location = new System.Drawing.Point(102, 128);
             this.button_ok.Name = "button_ok";
             this.button_ok.Size = new System.Drawing.Size(75, 23);
             this.button_ok.TabIndex = 3;
@@ -77,7 +79,7 @@
             // 
             // button_cancel
             // 
-            this.button_cancel.Location = new System.Drawing.Point(183, 85);
+            this.button_cancel.Location = new System.Drawing.Point(183, 128);
             this.button_cancel.Name = "button_cancel";
             this.button_cancel.Size = new System.Drawing.Size(75, 23);
             this.button_cancel.TabIndex = 4;
@@ -85,11 +87,33 @@
             this.button_cancel.UseVisualStyleBackColor = true;
             this.button_cancel.Click += new System.EventHandler(this.button_cancel_Click);
             // 
+            // checkBox_noshadows
+            // 
+            this.checkBox_noshadows.AutoSize = true;
+            this.checkBox_noshadows.Location = new System.Drawing.Point(12, 35);
+            this.checkBox_noshadows.Name = "checkBox_noshadows";
+            this.checkBox_noshadows.Size = new System.Drawing.Size(183, 17);
+            this.checkBox_noshadows.TabIndex = 5;
+            this.checkBox_noshadows.Text = "Disable Shadow In The Lightmap";
+            this.checkBox_noshadows.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_noradiosity
+            // 
+            this.checkBox_noradiosity.AutoSize = true;
+            this.checkBox_noradiosity.Location = new System.Drawing.Point(12, 58);
+            this.checkBox_noradiosity.Name = "checkBox_noradiosity";
+            this.checkBox_noradiosity.Size = new System.Drawing.Size(192, 17);
+            this.checkBox_noradiosity.TabIndex = 6;
+            this.checkBox_noradiosity.Text = "Disable Multipaths In The Lightmap";
+            this.checkBox_noradiosity.UseVisualStyleBackColor = true;
+            // 
             // RunMap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(267, 116);
+            this.ClientSize = new System.Drawing.Size(267, 161);
+            this.Controls.Add(this.checkBox_noradiosity);
+            this.Controls.Add(this.checkBox_noshadows);
             this.Controls.Add(this.button_cancel);
             this.Controls.Add(this.button_ok);
             this.Controls.Add(this.textBox_additionalGamePar);
@@ -116,5 +140,7 @@
         private System.Windows.Forms.TextBox textBox_additionalGamePar;
         private System.Windows.Forms.Button button_ok;
         private System.Windows.Forms.Button button_cancel;
+        private System.Windows.Forms.CheckBox checkBox_noshadows;
+        private System.Windows.Forms.CheckBox checkBox_noradiosity;
     }
 }

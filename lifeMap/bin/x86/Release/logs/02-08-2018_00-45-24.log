@@ -1,172 +1,0 @@
-[00:45:24] LightmapMaker 1.1.0 (Build 496)
-[00:45:24]  - Route To Map: C:\Users\Egor\Desktop\Stalingrad.map
-[00:45:24]  - Max Size Lightmap: 32
-[00:45:24]  - Size Render Texture: 128
-[00:45:24]  - Radiosity Number Passes: 3
-[00:45:24] 
-[00:45:24] *** OpenGL Info ***
-[00:45:24]   OpenGL Version: 4.5.13399 Compatibility Profile Context 15.201.1151.1008
-[00:45:24]   OpenGL Vendor: ATI Technologies Inc.
-[00:45:24]   OpenGL Renderer: AMD Radeon HD 6670
-[00:45:24]   OpenGL GLSL Version: 4.40
-[00:45:24] *** OpenGL Info End ***
-[00:45:24] 
-[00:45:24] *** Loading Level ***
-[00:45:24]  - Load Textures
-[00:45:24]    Texture With Name [dirt_m03i.jpg] Loaded
-[00:45:24]    Texture With Name [fs_madbrick.jpg] Loaded
-[00:45:24]    Texture With Name [fs_madbrick_plain.jpg] Loaded
-[00:45:24]    Texture With Name [brk_window1.jpg] Loaded
-[00:45:24]    Texture With Name [brk_window2.jpg] Loaded
-[00:45:24] 
-[00:45:24]  - Add Point Light
-[00:45:24]    Intensivity: 1
-[00:45:24]    Radius: 35
-[00:45:24]    Color: 255, 255, 255, 255
-[00:45:24]    Position: -160, 48, -80
-[00:45:24] 	****
-[00:45:24] 
-[00:45:24]  - Add Point Light
-[00:45:24]    Intensivity: 1
-[00:45:24]    Radius: 20
-[00:45:24]    Color: 253, 126, 0, 255
-[00:45:24]    Position: -240, 80, -64
-[00:45:24] 	****
-[00:45:24] 
-[00:45:24]  - Add Point Light
-[00:45:24]    Intensivity: 1
-[00:45:24]    Radius: 20
-[00:45:24]    Color: 253, 126, 0, 255
-[00:45:24]    Position: -240, 80, -96
-[00:45:24] 	****
-[00:45:24] 
-[00:45:24]  - Add Point Light
-[00:45:24]    Intensivity: 1
-[00:45:24]    Radius: 20
-[00:45:24]    Color: 253, 126, 0, 255
-[00:45:24]    Position: -160, 48, -160
-[00:45:24] 	****
-[00:45:24] 
-[00:45:24]  - Total Brushes: 39
-[00:45:24]  - Total Planes: 234
-[00:45:24]  - Total Point Lights: 4
-[00:45:24] *** Level Loaded ***
-[00:45:24] 
-[00:45:24] *** Lightmaps Generate ***
-[00:45:24]  - Progress: [                              ] 0% | Radiosity Step: 1/3
-[00:45:26]  - Progress: [                              ] 0% | Radiosity Step: 1/3
-[00:45:29]  - Progress: [                              ] 0% | Radiosity Step: 1/3
-[00:45:32]  - Progress: [                              ] 0% | Radiosity Step: 1/3
-[00:45:34]  - Progress: [                              ] 0% | Radiosity Step: 1/3
-[00:45:37]  - Progress: [                              ] 0% | Radiosity Step: 1/3
-[00:45:39]  - Progress: [                              ] 0% | Radiosity Step: 1/3
-[00:45:42]  - Progress: [                              ] 0% | Radiosity Step: 1/3
-[00:45:45]  - Progress: [                              ] 1% | Radiosity Step: 1/3
-[00:45:47]  - Progress: [                              ] 1% | Radiosity Step: 1/3
-[00:45:50]  - Progress: [                              ] 1% | Radiosity Step: 1/3
-[00:45:52]  - Progress: [                              ] 1% | Radiosity Step: 1/3
-[00:45:55]  - Progress: [                              ] 1% | Radiosity Step: 1/3
-[00:45:57]  - Progress: [                              ] 1% | Radiosity Step: 1/3
-[00:46:00]  - Progress: [                              ] 1% | Radiosity Step: 1/3
-[00:46:03]  - Progress: [                              ] 2% | Radiosity Step: 1/3
-[00:46:05]  - Progress: [                              ] 2% | Radiosity Step: 1/3
-[00:46:08]  - Progress: [                              ] 2% | Radiosity Step: 1/3
-[00:46:11]  - Progress: [                              ] 2% | Radiosity Step: 1/3
-[00:46:13]  - Progress: [                              ] 2% | Radiosity Step: 1/3
-[00:46:16]  - Progress: [                              ] 2% | Radiosity Step: 1/3
-[00:46:19]  - Progress: [                              ] 2% | Radiosity Step: 1/3
-[00:46:21]  - Progress: [                              ] 3% | Radiosity Step: 1/3
-[00:46:24]  - Progress: [                              ] 3% | Radiosity Step: 1/3
-[00:46:27]  - Progress: [                              ] 3% | Radiosity Step: 1/3
-[00:46:29]  - Progress: [                              ] 3% | Radiosity Step: 1/3
-[00:46:32]  - Progress: [                              ] 3% | Radiosity Step: 1/3
-[00:46:35]  - Progress: [                              ] 3% | Radiosity Step: 1/3
-[00:46:38]  - Progress: [                              ] 3% | Radiosity Step: 1/3
-[00:46:40]  - Progress: [#                             ] 4% | Radiosity Step: 1/3
-[00:46:43]  - Progress: [#                             ] 4% | Radiosity Step: 1/3
-[00:46:46]  - Progress: [#                             ] 4% | Radiosity Step: 1/3
-[00:46:49]  - Progress: [#                             ] 4% | Radiosity Step: 1/3
-[00:46:52]  - Progress: [#                             ] 4% | Radiosity Step: 1/3
-[00:46:54]  - Progress: [#                             ] 4% | Radiosity Step: 1/3
-[00:46:57]  - Progress: [#                             ] 4% | Radiosity Step: 1/3
-[00:47:00]  - Progress: [#                             ] 5% | Radiosity Step: 1/3
-[00:47:03]  - Progress: [#                             ] 5% | Radiosity Step: 1/3
-[00:47:05]  - Progress: [#                             ] 5% | Radiosity Step: 1/3
-[00:47:08]  - Progress: [#                             ] 5% | Radiosity Step: 1/3
-[00:47:10]  - Progress: [#                             ] 5% | Radiosity Step: 1/3
-[00:47:13]  - Progress: [#                             ] 5% | Radiosity Step: 1/3
-[00:47:16]  - Progress: [#                             ] 5% | Radiosity Step: 1/3
-[00:47:19]  - Progress: [#                             ] 6% | Radiosity Step: 1/3
-[00:47:21]  - Progress: [#                             ] 6% | Radiosity Step: 1/3
-[00:47:24]  - Progress: [#                             ] 6% | Radiosity Step: 1/3
-[00:47:27]  - Progress: [#                             ] 6% | Radiosity Step: 1/3
-[00:47:29]  - Progress: [#                             ] 6% | Radiosity Step: 1/3
-[00:47:32]  - Progress: [#                             ] 6% | Radiosity Step: 1/3
-[00:47:35]  - Progress: [#                             ] 6% | Radiosity Step: 1/3
-[00:47:38]  - Progress: [##                            ] 7% | Radiosity Step: 1/3
-[00:47:40]  - Progress: [##                            ] 7% | Radiosity Step: 1/3
-[00:47:43]  - Progress: [##                            ] 7% | Radiosity Step: 1/3
-[00:47:46]  - Progress: [##                            ] 7% | Radiosity Step: 1/3
-[00:47:48]  - Progress: [##                            ] 7% | Radiosity Step: 1/3
-[00:47:51]  - Progress: [##                            ] 7% | Radiosity Step: 1/3
-[00:47:54]  - Progress: [##                            ] 7% | Radiosity Step: 1/3
-[00:47:57]  - Progress: [##                            ] 8% | Radiosity Step: 1/3
-[00:48:00]  - Progress: [##                            ] 8% | Radiosity Step: 1/3
-[00:48:03]  - Progress: [##                            ] 8% | Radiosity Step: 1/3
-[00:48:05]  - Progress: [##                            ] 8% | Radiosity Step: 1/3
-[00:48:11]  - Progress: [##                            ] 8% | Radiosity Step: 1/3
-[00:48:14]  - Progress: [##                            ] 8% | Radiosity Step: 1/3
-[00:48:18]  - Progress: [##                            ] 8% | Radiosity Step: 1/3
-[00:48:21]  - Progress: [##                            ] 9% | Radiosity Step: 1/3
-[00:48:24]  - Progress: [##                            ] 9% | Radiosity Step: 1/3
-[00:48:28]  - Progress: [##                            ] 9% | Radiosity Step: 1/3
-[00:48:32]  - Progress: [##                            ] 9% | Radiosity Step: 1/3
-[00:48:35]  - Progress: [##                            ] 9% | Radiosity Step: 1/3
-[00:48:38]  - Progress: [##                            ] 9% | Radiosity Step: 1/3
-[00:48:41]  - Progress: [##                            ] 9% | Radiosity Step: 1/3
-[00:48:44]  - Progress: [###                           ] 10% | Radiosity Step: 1/3
-[00:48:47]  - Progress: [###                           ] 10% | Radiosity Step: 1/3
-[00:48:50]  - Progress: [###                           ] 10% | Radiosity Step: 1/3
-[00:48:53]  - Progress: [###                           ] 10% | Radiosity Step: 1/3
-[00:48:56]  - Progress: [###                           ] 10% | Radiosity Step: 1/3
-[00:48:59]  - Progress: [###                           ] 10% | Radiosity Step: 1/3
-[00:49:01]  - Progress: [###                           ] 10% | Radiosity Step: 1/3
-[00:49:04]  - Progress: [###                           ] 11% | Radiosity Step: 1/3
-[00:49:07]  - Progress: [###                           ] 11% | Radiosity Step: 1/3
-[00:49:13]  - Progress: [###                           ] 11% | Radiosity Step: 1/3
-[00:49:18]  - Progress: [###                           ] 11% | Radiosity Step: 1/3
-[00:49:25]  - Progress: [###                           ] 11% | Radiosity Step: 1/3
-[00:49:28]  - Progress: [###                           ] 11% | Radiosity Step: 1/3
-[00:49:34]  - Progress: [###                           ] 11% | Radiosity Step: 1/3
-[00:49:38]  - Progress: [###                           ] 12% | Radiosity Step: 1/3
-[00:49:41]  - Progress: [###                           ] 12% | Radiosity Step: 1/3
-[00:49:45]  - Progress: [###                           ] 12% | Radiosity Step: 1/3
-[00:49:49]  - Progress: [###                           ] 12% | Radiosity Step: 1/3
-[00:49:52]  - Progress: [###                           ] 12% | Radiosity Step: 1/3
-[00:49:55]  - Progress: [###                           ] 12% | Radiosity Step: 1/3
-[00:49:57]  - Progress: [###                           ] 12% | Radiosity Step: 1/3
-[00:50:00]  - Progress: [###                           ] 13% | Radiosity Step: 1/3
-[00:50:03]  - Progress: [###                           ] 13% | Radiosity Step: 1/3
-[00:50:05]  - Progress: [###                           ] 13% | Radiosity Step: 1/3
-[00:50:08]  - Progress: [###                           ] 13% | Radiosity Step: 1/3
-[00:50:12]  - Progress: [###                           ] 13% | Radiosity Step: 1/3
-[00:50:16]  - Progress: [###                           ] 13% | Radiosity Step: 1/3
-[00:50:19]  - Progress: [###                           ] 13% | Radiosity Step: 1/3
-[00:50:22]  - Progress: [####                          ] 14% | Radiosity Step: 1/3
-[00:50:25]  - Progress: [####                          ] 14% | Radiosity Step: 1/3
-[00:50:28]  - Progress: [####                          ] 14% | Radiosity Step: 1/3
-[00:50:31]  - Progress: [####                          ] 14% | Radiosity Step: 1/3
-[00:50:34]  - Progress: [####                          ] 14% | Radiosity Step: 1/3
-[00:50:37]  - Progress: [####                          ] 14% | Radiosity Step: 1/3
-[00:50:40]  - Progress: [####                          ] 14% | Radiosity Step: 1/3
-[00:50:44]  - Progress: [####                          ] 15% | Radiosity Step: 1/3
-[00:50:47]  - Progress: [####                          ] 15% | Radiosity Step: 1/3
-[00:50:50]  - Progress: [####                          ] 15% | Radiosity Step: 1/3
-[00:50:53]  - Progress: [####                          ] 15% | Radiosity Step: 1/3
-[00:50:56]  - Progress: [####                          ] 15% | Radiosity Step: 1/3
-[00:50:58]  - Progress: [####                          ] 15% | Radiosity Step: 1/3
-[00:51:01]  - Progress: [####                          ] 15% | Radiosity Step: 1/3
-[00:51:04]  - Progress: [####                          ] 16% | Radiosity Step: 1/3
-[00:51:07]  - Progress: [####                          ] 16% | Radiosity Step: 1/3
-[00:51:09]  - Progress: [####                          ] 16% | Radiosity Step: 1/3
-[00:51:12]  - Progress: [####                          ] 16% | Radiosity Step: 1/3

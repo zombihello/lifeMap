@@ -1,0 +1,214 @@
+[14:53:48] LightmapMaker 1.1.0 (Build 938)
+[14:53:48]  - Route To Map: D:\Projects\C++\GameEngine\lifeEngine\testBed\exe\maps\base.lmap
+[14:53:48]  - Max Size Lightmap: 16
+[14:53:48]  - Size Render Texture: 32
+[14:53:48]  - Radiosity Number Passes: 3
+[14:53:48] 
+[14:53:48] *** OpenGL Info ***
+[14:53:48]   OpenGL Version: 4.5.13399 Compatibility Profile Context 15.201.1151.1008
+[14:53:48]   OpenGL Vendor: ATI Technologies Inc.
+[14:53:48]   OpenGL Renderer: AMD Radeon HD 6670
+[14:53:48]   OpenGL GLSL Version: 4.40
+[14:53:48] *** OpenGL Info End ***
+[14:53:48] 
+[14:53:48] *** Loading Level ***
+[14:53:48]  - Load Textures
+[14:53:48]    Texture With Name [brick1.jpg] Loaded
+[14:53:48]    Texture With Name [grass_dm01.jpg] Loaded
+[14:53:48]    Texture With Name [fs_madbrick.jpg] Loaded
+[14:53:48]    Texture With Name [fs_madbrick_plain.jpg] Loaded
+[14:53:48]    Texture With Name [floor_c02.jpg] Loaded
+[14:53:48]    Texture With Name [church_c01dm.jpg] Loaded
+[14:53:48]    Texture With Name [wood1.jpg] Loaded
+[14:53:48]    Texture With Name [metal1.jpg] Loaded
+[14:53:48]    Texture With Name [floor_d01.jpg] Loaded
+[14:53:48]    Texture With Name [light_m16.jpg] Loaded
+[14:53:48]    Texture With Name [light_tp_m07.jpg] Loaded
+[14:53:48]    Texture With Name [light_m32.jpg] Loaded
+[14:53:48] 
+[14:53:48]  - Add Directional Light
+[14:53:48]    Intensivity: 1
+[14:53:48]    Color: 255, 255, 255
+[14:53:48]    Direction: 396, 172, 56
+[14:53:48] 	****
+[14:53:48] 
+[14:53:48]  - Add Point Light
+[14:53:48]    Intensivity: 1
+[14:53:48]    Radius: 200
+[14:53:48]    Color: 255, 255, 255
+[14:53:48]    Position: -152, 24, 56
+[14:53:48] 	****
+[14:53:48] 
+[14:53:48]  - Add Point Light
+[14:53:48]    Intensivity: 1
+[14:53:48]    Radius: 200
+[14:53:48]    Color: 255, 255, 255
+[14:53:48]    Position: -140, 24, 136
+[14:53:48] 	****
+[14:53:48] 
+[14:53:48]  - Total Brushes: 25
+[14:53:48]  - Total Planes: 150
+[14:53:48]  - Total Point Lights: 2
+[14:53:48]  - Total Spot Lights: 0
+[14:53:48]  - Total Directional Lights: 1
+[14:53:48] *** Level Loaded ***
+[14:53:48] 
+[14:53:48] *** Lightmaps Generate ***
+[14:53:48]  - Generate Primary Illumination
+[14:53:48]  - Progress: [                              ] 0% 
+[14:53:48]  - Progress: [                              ] 0%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [                              ] 0%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [                              ] 1%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [                              ] 2%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [                              ] 2%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [                              ] 3%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#                             ] 4%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#                             ] 4%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#                             ] 5%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#                             ] 6%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#                             ] 6%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##                            ] 7%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##                            ] 8%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##                            ] 8%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##                            ] 9%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###                           ] 10%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###                           ] 10%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###                           ] 11%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###                           ] 12%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###                           ] 12%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###                           ] 13%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [####                          ] 14%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [####                          ] 14%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [####                          ] 15%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [####                          ] 16%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [####                          ] 16%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####                         ] 17%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####                         ] 18%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####                         ] 18%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####                         ] 19%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######                        ] 20%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######                        ] 20%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######                        ] 21%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######                        ] 22%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######                        ] 22%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######                        ] 23%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#######                       ] 24%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#######                       ] 24%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#######                       ] 25%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#######                       ] 26%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#######                       ] 26%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########                      ] 27%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########                      ] 28%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########                      ] 28%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########                      ] 29%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########                     ] 30%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########                     ] 30%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########                     ] 31%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########                     ] 32%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########                     ] 32%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########                     ] 33%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##########                    ] 34%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##########                    ] 34%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##########                    ] 35%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##########                    ] 36%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##########                    ] 36%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###########                   ] 37%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###########                   ] 38%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###########                   ] 38%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###########                   ] 39%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [############                  ] 40%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [############                  ] 40%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [############                  ] 41%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [############                  ] 42%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [############                  ] 42%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [############                  ] 43%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#############                 ] 44%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#############                 ] 44%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#############                 ] 45%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#############                 ] 46%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#############                 ] 46%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##############                ] 47%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##############                ] 48%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##############                ] 48%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##############                ] 49%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###############               ] 50%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###############               ] 50%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###############               ] 51%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###############               ] 52%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###############               ] 52%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###############               ] 53%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [################              ] 54%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [################              ] 54%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [################              ] 55%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [################              ] 56%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [################              ] 56%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#################             ] 57%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#################             ] 58%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#################             ] 58%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#################             ] 59%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##################            ] 60%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##################            ] 60%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##################            ] 61%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##################            ] 62%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##################            ] 62%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##################            ] 63%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###################           ] 64%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###################           ] 64%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###################           ] 65%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###################           ] 66%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [###################           ] 66%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [####################          ] 67%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [####################          ] 68%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [####################          ] 68%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [####################          ] 69%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####################         ] 70%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####################         ] 70%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####################         ] 71%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####################         ] 72%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####################         ] 72%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#####################         ] 73%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######################        ] 74%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######################        ] 74%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######################        ] 75%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######################        ] 76%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [######################        ] 76%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#######################       ] 77%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#######################       ] 78%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#######################       ] 78%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#######################       ] 79%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########################      ] 80%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########################      ] 80%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########################      ] 81%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########################      ] 82%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########################      ] 82%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [########################      ] 83%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########################     ] 84%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########################     ] 84%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########################     ] 85%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########################     ] 86%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [#########################     ] 86%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##########################    ] 87%  | Time Left: 00:00:00
+[14:53:48]  - Progress: [##########################    ] 88%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [##########################    ] 88%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [##########################    ] 89%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [###########################   ] 90%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [###########################   ] 90%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [###########################   ] 91%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [###########################   ] 92%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [###########################   ] 92%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [###########################   ] 93%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [############################  ] 94%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [############################  ] 94%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [############################  ] 95%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [############################  ] 96%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [############################  ] 96%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [############################# ] 97%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [############################# ] 98%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [############################# ] 98%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [############################# ] 99%  | Time Left: 00:00:00
+[14:53:49]  - Progress: [##############################] 100%                       
+
+[14:53:49] 
+[14:53:49]  - Generate Secondary Light
+[14:53:49]  - Progress: [                              ] 0% 
+[14:53:49]  - Progress: [                              ] 0% | Radiosity Step: 1/3 | Time Left: 00:01:03

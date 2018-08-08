@@ -1283,6 +1283,7 @@ namespace lifeMap.src.brushes
             saveBrush.Normals = mNormals;
             saveBrush.Position = CenterBrush;
             saveBrush.LightMaps = mLightMaps;
+            saveBrush.Size = Size;
             return saveBrush;
         }
 

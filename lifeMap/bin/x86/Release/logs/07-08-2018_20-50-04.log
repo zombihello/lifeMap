@@ -1,0 +1,149 @@
+[20:50:04] LightmapMaker 1.1.0 (Build 949)
+[20:50:04]  - Route To Map: D:\Projects\C++\GameEngine\lifeEngine\testBed\exe\maps\prototype.lmap
+[20:50:04]  - Max Size Lightmap: 16
+[20:50:04]  - Size Render Texture: 32
+[20:50:04]  - Radiosity Number Passes: 3
+[20:50:04] 
+[20:50:05] *** OpenGL Info ***
+[20:50:05]   OpenGL Version: 4.5.13399 Compatibility Profile Context 15.201.1151.1008
+[20:50:05]   OpenGL Vendor: ATI Technologies Inc.
+[20:50:05]   OpenGL Renderer: AMD Radeon HD 6670
+[20:50:05]   OpenGL GLSL Version: 4.40
+[20:50:05] *** OpenGL Info End ***
+[20:50:05] 
+[20:50:05] *** Loading Level ***
+[20:50:05]  - Load Textures
+[20:50:05]    Texture With Name [brick1.jpg] Loaded
+[20:50:05]    Texture With Name [grass_dm01.jpg] Loaded
+[20:50:05]    Texture With Name [fs_madbrick.jpg] Loaded
+[20:50:05]    Texture With Name [fs_madbrick_plain.jpg] Loaded
+[20:50:05]    Texture With Name [floor_c02.jpg] Loaded
+[20:50:05]    Texture With Name [church_c01dm.jpg] Loaded
+[20:50:05]    Texture With Name [wood1.jpg] Loaded
+[20:50:05]    Texture With Name [metal1.jpg] Loaded
+[20:50:05]    Texture With Name [floor_d01.jpg] Loaded
+[20:50:05]    Texture With Name [light_m16.jpg] Loaded
+[20:50:05]    Texture With Name [light_tp_m07.jpg] Loaded
+[20:50:05]    Texture With Name [light_m32.jpg] Loaded
+[20:50:05]    Texture With Name [green.png] Loaded
+[20:50:05]    Texture With Name [dirt_m03i.jpg] Loaded
+[20:50:05]    Texture With Name [red.png] Loaded
+[20:50:05]    Texture With Name [white.png] Loaded
+[20:50:05]    Texture With Name [sf2_redbrick2.jpg] Loaded
+[20:50:05]    Texture With Name [Graph.png] Loaded
+[20:50:05] 
+[20:50:05]  - Add Directional Light
+[20:50:05]    Intensivity: 2
+[20:50:05]    Color: 65025, 65025, 65025
+[20:50:05]    Direction: 484, 172, 40
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Add Point Light
+[20:50:05]    Intensivity: 1
+[20:50:05]    Radius: 45
+[20:50:05]    Color: 65025, 65025, 65025
+[20:50:05]    Position: -152, 24, 56
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Add Point Light
+[20:50:05]    Intensivity: 1
+[20:50:05]    Radius: 45
+[20:50:05]    Color: 65025, 65025, 65025
+[20:50:05]    Position: -140, 24, 136
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Add Point Light
+[20:50:05]    Intensivity: 1
+[20:50:05]    Radius: 45
+[20:50:05]    Color: 0, 65025, 0
+[20:50:05]    Position: -124, 20, -20
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Add Point Light
+[20:50:05]    Intensivity: 1
+[20:50:05]    Radius: 45
+[20:50:05]    Color: 65025, 0, 0
+[20:50:05]    Position: -172, 20, -20
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Add Point Light
+[20:50:05]    Intensivity: 1
+[20:50:05]    Radius: 35
+[20:50:05]    Color: 65025, 65025, 65025
+[20:50:05]    Position: 176, 16, -132
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Add Point Light
+[20:50:05]    Intensivity: 1
+[20:50:05]    Radius: 35
+[20:50:05]    Color: 65025, 65025, 65025
+[20:50:05]    Position: 176, 20, -44
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Add Point Light
+[20:50:05]    Intensivity: 1
+[20:50:05]    Radius: 35
+[20:50:05]    Color: 65025, 65025, 65025
+[20:50:05]    Position: 176, 20, 28
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Add Point Light
+[20:50:05]    Intensivity: 1
+[20:50:05]    Radius: 35
+[20:50:05]    Color: 65025, 65025, 65025
+[20:50:05]    Position: 176, 20, 100
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Add Point Light
+[20:50:05]    Intensivity: 1
+[20:50:05]    Radius: 35
+[20:50:05]    Color: 65025, 65025, 65025
+[20:50:05]    Position: 176, 20, 152
+[20:50:05] 	****
+[20:50:05] 
+[20:50:05]  - Total Brushes: 52
+[20:50:05]  - Total Planes: 312
+[20:50:05]  - Total Point Lights: 9
+[20:50:05]  - Total Spot Lights: 0
+[20:50:05]  - Total Directional Lights: 1
+[20:50:05] *** Level Loaded ***
+[20:50:05] 
+[20:50:05] *** Lightmaps Generate ***
+[20:50:05]  - Generate Primary Illumination
+[20:50:05]  - Progress: [                              ] 0% 
+[20:50:05]  - Progress: [                              ] 0%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [                              ] 0%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [                              ] 0%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [                              ] 0%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [                              ] 1%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [                              ] 1%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [                              ] 1%  | Time Left: 00:00:01
+[20:50:05]  - Progress: [                              ] 2%  | Time Left: 00:00:01
+[20:50:05]  - Progress: [                              ] 2%  | Time Left: 00:00:06
+[20:50:05]  - Progress: [                              ] 2%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [                              ] 3%  | Time Left: 00:00:01
+[20:50:05]  - Progress: [                              ] 3%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [                              ] 3%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [#                             ] 4%  | Time Left: 00:00:02
+[20:50:05]  - Progress: [#                             ] 4%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [#                             ] 4%  | Time Left: 00:00:03
+[20:50:05]  - Progress: [#                             ] 5%  | Time Left: 00:00:02
+[20:50:05]  - Progress: [#                             ] 5%  | Time Left: 00:00:05
+[20:50:05]  - Progress: [#                             ] 5%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [#                             ] 6%  | Time Left: 00:00:07
+[20:50:05]  - Progress: [#                             ] 6%  | Time Left: 00:00:03
+[20:50:05]  - Progress: [#                             ] 6%  | Time Left: 00:00:02
+[20:50:05]  - Progress: [##                            ] 7%  | Time Left: 00:00:01
+[20:50:05]  - Progress: [##                            ] 7%  | Time Left: 00:00:01
+[20:50:05]  - Progress: [##                            ] 7%  | Time Left: 00:00:06
+[20:50:05]  - Progress: [##                            ] 8%  | Time Left: 00:00:01
+[20:50:05]  - Progress: [##                            ] 8%  | Time Left: 00:00:04
+[20:50:05]  - Progress: [##                            ] 8%  | Time Left: 00:00:04
+[20:50:05]  - Progress: [##                            ] 8%  | Time Left: 00:00:11
+[20:50:05]  - Progress: [##                            ] 9%  | Time Left: 00:00:00
+[20:50:05]  - Progress: [##                            ] 9%  | Time Left: 00:00:07
+[20:50:05]  - Progress: [##                            ] 9%  | Time Left: 00:00:02
+[20:50:05]  - Progress: [###                           ] 10%  | Time Left: 00:00:03
+[20:50:05]  - Progress: [###                           ] 10%  | Time Left: 00:00:04
+[20:50:05]  - Progress: [###                           ] 10%  | Time Left: 00:00:04
+[20:50:05]  - Progress: [###                           ] 11%  | Time Left: 00:00:01
